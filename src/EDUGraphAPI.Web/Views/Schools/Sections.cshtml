@@ -1,0 +1,127 @@
+﻿@model SectionsViewModel
+@{
+    ViewBag.Title = "Section";
+    var isMySections = (bool?)ViewBag.IsMySections == true;
+}
+<div class="container">
+    <div class="tophero">
+        <div class="container">
+            <div class="col-md-6 secondnav">
+                <a href="/schools"> All Schools</a> > @Model.School.Name
+            </div>
+            <div class="col-md-6 displayname">
+                @Model.UserDisplayName
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-6 a-heading ">
+               Classes 
+            </div>
+            <div class="col-md-6 ">
+                <div class="infocontainer">
+                    <div class="infoheader">
+                        Address
+                    </div>
+                    <div class="infobody">
+                        @Model.School.Address
+                    </div>
+                </div>
+
+
+                <div class="infocontainer">
+
+                    <div class="infoheader">
+                        PRINCIPAL
+                    </div>
+                    <div class="infobody">
+                        @Model.School.PrincipalName
+                    </div>
+                </div>
+
+                <div class="infocontainer">
+                    <div class="infoheader">
+                        Grade level
+                    </div>
+                    <div class="infobody">
+                        @Model.School.LowestGrade - @Model.School.HighestGrade
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-6 sectionschoolname">
+                @Model.School.Name
+            </div>
+            <div class="col-md-6 mysection section-link-container">
+                VIEW:
+                @Html.ActionLink("My Sections", "MySections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) | 
+                @Html.ActionLink("All Sections", "Sections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
+            </div>
+        </div>
+        <div style="clear:both;" />
+
+    </div>
+    <table class="table table-green ignore">
+        <tr class="table-green-header">
+            <th>
+                Course Name
+            </th>
+            <th>
+                Course Number
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+            <th>Teacher</th>
+        </tr>
+
+        @foreach (var s in Model.Sections)
+        {
+            <tr class="tr-content">
+                <td>
+                    @Html.ActionLink(s.DisplayName, "SectionDetails", null, new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId }, null)
+                </td>
+                <td>
+                    @s.CourseNumber
+                </td>
+                <td>@s.CourseDescription </td>
+                <td>@s.EducationStatus</td>
+                <td>
+
+                    @foreach (var teacher in s.Teachers)
+                    {
+                        <div>@teacher.DisplayName</div>
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    <div class="section-tiles">
+        @foreach (var s in Model.Sections)
+        {
+            <div class="tile-container">
+                <a href="@Url.Action("SectionDetails",new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
+                    <div class="tile">
+                        <h5>@s.DisplayName</h5>
+                        <h2>@s.SectionNumber</h2>
+                    </div>
+                </a>
+                <div class="detail">
+                    <h5>Description:</h5>
+                    <h6>@s.CourseDescription</h6>
+                    <h5>Teachers:</h5>
+                    @foreach (var teacher in s.Teachers)
+                    {
+                        <h6>@teacher.DisplayName</h6>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+    @Scripts.Render("~/bundles/section")

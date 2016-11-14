@@ -1,0 +1,98 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/*Top navigation*/
+.navbar-inverse{background-color:#237e17;border-color:#237e17;}
+.navbar-inverse .navbar-brand, 
+.navbar-inverse .navbar-nav > li > a
+{color:white;}
+
+/*Schools and sections */
+.displayname{text-align:right;padding:12px 30px 12px 12px;}
+.secondnav{padding:6px 0 12px 0;}
+.a-heading{font-size:48px;color:#666565;padding-left: 0;}
+.infocontainer {
+    text-align: center;
+    border: 1px solid #c2c2c2;
+    width: 160px;
+    min-height: 60px;
+    background-image: url('/Images/contaerbg.gif');
+    float: right;
+    margin-right: 15px;
+     color:#666565;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+    -moz-border-radius : 5px; 
+}
+.infocontainer .infoheader{font-size:12px;font-weight:bold;text-align:center;height:25px;line-height:25px; text-transform:uppercase;}
+.infocontainer .infobody{font-size:18px;text-align:center;height:35px;}
+.myschool{    padding-right: 45px;    margin: 12px 0 12px 0;}
+.myschool .schoolenrolled{float:right; font-size:14px;}
+.myschool .greenicon{width:12px;height:12px;background-color:#1fe405;float:right;margin:5px 6px 0 0;}
+.sectionschoolname{font-size:24px;color:#666565;padding-left: 0;}
+.mysection{text-align:right;    padding-right: 30px;}
+.tophero{background-color:#f7f7f7;padding-left:6px;}
+#myMap{position:absolute;}
+.bingMapLink{margin-left:12px;}
+
+.table-green { border:none;background-color:white;}
+.table-green tr:nth-child(2n+1){background-color:#f8f8f8}
+.table-green tr:nth-child(1){background:#237e17;color:white;}
+.table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
+.table-green .table-green-header{ background:#237e17;color:white; border-bottom: 1px solid #237e17}
+.table-green .table-green-header th{text-transform:uppercase;}
+.table-green .tdleft{border-left:12px solid #237e17;border-collapse:inherit;   }
+.table-green .table-green-header th{padding:20px 0 20px 6px ;border-top:0; border-bottom: 1px solid #237e17}
+.table-green .td-green{border-left:12px solid #1fe405;}
+.table-green .tr-content td{padding-top:20px;padding-bottom:20px;}
+.table-green > tbody > tr > td{border-top:none;}
+.table-schools th, .table-schools .tr-content td {
+    width: 20%;
+}
+.table-schools th:nth-child(4),.table-schools .tr-content td:nth-child(4) {
+    width: 40%;
+}
+
+/*sections*/
+.table-green.ignore{display:none;}
+.section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
+.section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background: linear-gradient(to bottom, #4E9F42, #B8E2B2); color:#fff;cursor:pointer;}
+.section-tiles .tile>h5{text-align: center;margin-top: 60px;font-size:14px;margin-bottom:0;}
+.section-tiles .tile>h2{text-align: center;margin-top:4px;}
+.section-tiles .detail {display:none;position:absolute; background:#fff; color:#000;top:-5px; left:188px;width:360px; min-height:230px;padding:8px 30px 30px 20px;z-index:10;border:solid #C2C2C2 1px;border-radius:5px;-moz-border-radius:5px;-moz-box-shadow:1px 2px 1px 2px #c2c2c2;-webkit-box-shadow: 1px 2px 1px 2px #c2c2c2;box-shadow:1px 2px 1px 2px #c2c2c2;}
+.section-tiles h5{margin-top: 10px;font-weight: 600;text-transform:uppercase;}
+
+/*section detail*/
+.b-title{font-size:24px;color:#666565;}
+.coursedetail .col-md-6{padding:12px 0 6px 0;}
+.students .col-md-6:nth-child(1){padding-left:0;padding-right:8px;}
+.students .col-md-6:nth-child(2){padding-left:8px;padding-right:0;}
+.students .b-title{padding-left:6px;}
+
+.section-link-container .current,
+.section-link-container .current:hover {
+    color: black;
+    cursor: none;
+}

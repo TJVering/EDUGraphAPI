@@ -1,0 +1,117 @@
+﻿@model SectionDetailsViewModel
+@{
+    ViewBag.Title = "SectionDetail";
+}
+<div class="container">
+    <div class="tophero">
+        <div class="container">
+            <div class="col-md-6 secondnav">
+                <a href="/schools"> All Schools</a>
+                > <a href="/schools/sections?schoolId=@Model.School.SchoolId&objectId=@Model.School.ObjectId">@Model.School.Name</a>
+                > @Model.Section.CourseName
+            </div>
+            <div class="col-md-6 displayname">
+                @Model.UserDisplayName
+            </div>
+        </div>
+        <div class="container">
+            <div class="a-heading ">
+                SECTION DETAILS
+            </div>
+            <div class="b-title">
+                @Model.Section.CourseNumber | @Model.Section.DisplayName
+            </div>
+        </div>
+        <div class="container coursedetail">
+
+            <div class="col-md-6">
+                <b>Course Name:</b> @Model.Section.CourseName
+                <br />
+                <b>Description:</b> @Model.Section.CourseDescription
+                <br />
+                <b>Period:</b> @Model.Section.Period
+                <br />
+                <b>Teacher:</b> @string.Join(", ", Model.Section.Teachers.Select(i=>i.DisplayName))
+            </div>
+            <div class="col-md-6">
+                <b>Status:</b> @Model.Section.EducationStatus
+                <br />
+                <b>Term Name:</b> @Model.Section.TermName
+                <br />
+                <b>Start/Finish Date:</b>@Convert.ToDateTime(Model.Section.TermStartDate).ToString("MMMM y") - @Convert.ToDateTime(Model.Section.TermEndDate).ToString("MMMM y")
+            </div>
+        </div>
+        <div style="clear:both;" />
+    </div>
+    <div class="students">
+
+        <div class="col-md-6">
+            <dvi class="coursename b-title">
+                Student Conversation(s)
+            </dvi>
+            <table class="table  table-green">
+                <tr class="table-green-header">
+                    <th class="tdleft">
+                        student name
+                    </th>
+                    <th>
+                        grade
+                    </th>
+                    <th>
+                        conversations(s)
+                    </th>
+
+                </tr>
+                @foreach (var stu in Model.Section.Students)
+                {
+                    <tr class="tr-content">
+                        <td>@stu.DisplayName</td>
+                        <td>@stu.EducationGrade</td>
+                        <td>a link here.</td>
+
+                    </tr>
+                }
+
+
+            </table>
+
+
+        </div>
+
+        <div class="col-md-6">
+            <dvi class="coursename b-title">
+                Reading Links
+            </dvi>
+            <table class="table  table-green">
+                <tr class="table-green-header">
+                    <th class="tdleft">
+                        reading list
+                    </th>
+                    <th>
+                       due date
+                    </th>
+                    <th>
+                        download links
+                    </th>
+
+                </tr>
+                @foreach (var stu in Model.Section.Students)
+                {
+                    <tr class="tr-content">
+                        <td><a>@stu.DisplayName</a></td>
+                        <td>@stu.EducationGrade</td>
+                        <td>a link here.</td>
+
+                    </tr>
+                }
+
+
+            </table>
+
+
+        </div>
+    </div>
+
+
+
+</div>

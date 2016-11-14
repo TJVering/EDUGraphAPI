@@ -1,0 +1,97 @@
+﻿@model SchoolsViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <div class="tophero">
+        <div class="container">
+            <div class="col-md-6"></div>
+            <div class="col-md-6 displayname">
+                @Model.UserDisplayName
+            </div>
+        </div>
+
+        <div class="container ">
+            <div class="col-md-6 a-heading ">
+                All Schools
+            </div>
+            <div class="col-md-6 ">
+                <div class="infocontainer">
+                    <div class="infoheader">
+                        School Enrolled
+                    </div>
+                    <div class="infobody">
+                        @Model.MySchoolId
+                    </div>
+                </div>
+                <div class="infocontainer">
+                    <div class="infoheader">
+                        Grade level
+                    </div>
+                    <div class="infobody">
+                        @Model.EducationGrade
+                    </div>
+                </div>
+
+                <div class="infocontainer">
+
+                    <div class="infoheader">
+                        Student/Teacher Id
+                    </div>
+                    <div class="infobody">
+                        @Model.UserId
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="container myschool">
+            <div class="schoolenrolled">
+                Current school(s) enrolled
+            </div>
+            <div class="greenicon"></div>
+        </div>
+        <div style="clear:both;"/>
+    </div>
+    <table class="table  table-green table-schools">
+        <tr class="table-green-header">
+            <th class="tdleft">
+                School Name
+            </th>
+            <th>
+                Principal
+            </th>
+            <th>
+                Grade Levels
+            </th>
+            <th>
+                Address
+            </th>
+  
+        </tr>
+        @foreach (var school in Model.Schools)
+    {
+        var style = "";
+        if (Model.MySchoolId == school.SchoolId)
+        {
+            style = "td-green";
+        }
+        <tr class="tr-content">
+            <td class="@style">@Html.ActionLink(school.Name, "Sections", null, new { schoolId = school.ObjectId  }, null)</td>
+            <td>@school.PrincipalName</td>
+            <td>@school.LowestGrade - @school.HighestGrade</td>
+            <td>
+                @school.Address
+                <a class="bingMapLink"  @*onclick="BingMapHelper.BingMap.displayPin('@school.Latitude','@school.Longitude')"*@ lat="@school.Latitude" lon="@school.Longitude"  href="javascript:void(0)" ><img src="~/Images/bing.png" /></a>
+            </td>   
+        </tr>
+    }
+    </table>
+</div>
+<div id='myMap' ></div>
+<input type="hidden" name="BingMapKey" id="BingMapKey" value="@Model.BingMapKey" />
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol' async defer></script>
+@Scripts.Render("~/bundles/section")

@@ -1,0 +1,51 @@
+﻿@model AdminContext
+@{
+    ViewBag.Title = "Admin";
+}
+<h2>Admin</h2>
+
+@if (!Model.IsAdminConsented)
+{
+    <div>
+        <h3>Sign up your tenant</h3>
+        <hr />
+        @using (Html.BeginForm("SignUp", null, FormMethod.Post, null))
+        {
+            <p>Click the button below to sign up.</p>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <p class="form-group">
+                <input type="submit" value="SignUp" class="btn btn-primary" />
+            </p>
+        }
+    </div>
+}
+else
+{
+    <div>
+        <p>You tenant is signed up.</p>
+    </div>
+    <br />
+    <div>
+        <p>If you want to view your linked account or unlink accounts, please click the button below.</p>
+        <p>@Html.ActionLink("Manage Linked Accounts", "LinkedAccounts", "Admin", null, new { @class = "btn btn-default" })</p>
+    </div>
+    <br />
+    <hr />
+    <div>
+        <p>Click the button below to install the App in your Office 365 tenancy.</p>
+        @using (Html.BeginForm("InstallApp", null, FormMethod.Post, null))
+        {
+            <input type="submit" value="Install App" class="btn btn-default" />
+        }
+        <br />
+        <p>Note: The App will take a while to show on the Navigation Menu.</p>
+    </div>
+    <br />
+    <hr />
+    <p>@Html.ActionLink("Return to home", "Index", "Home", null, new { @class = "btn btn-default" })</p>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
