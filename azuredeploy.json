@@ -173,7 +173,7 @@
           ],
           "properties": {
             "ida:ClientId": "[parameters('clientId')]",
-            "ida:ClientSecret": "[parameters('clientId')]",
+            "ida:ClientSecret": "[parameters('clientSecret')]",
             "CertPath": "EduGraphAPI App Only Cert.pfx",
             "CertPassword": "J48W23RQeZv85vj",
             "project": "src/EDUGraphAPI.Web/EDUGraphAPI.Web.csproj"
@@ -188,8 +188,8 @@
             "[resourceId('Microsoft.Sql/servers/', variables('sqlServerName'))]"
           ],
           "properties": {
-            "EDUGraphAPI": {
-              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=MobileClaims;User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
+            "DefaultConnection": {
+              "value": "[concat('Server=tcp:', reference(concat('Microsoft.Sql/servers/', variables('sqlServerName'))).fullyQualifiedDomainName, ',1433;Database=', variables('sqlDatabaseName'), ';User Id=', parameters('sqlAdministratorLoginUsername'), '@', variables('sqlServerName'), ';Password=', parameters('sqlAdministratorLoginPassword'), ';')]",
               "type": "SQLAzure"
             },
             "AzureWebJobsStorage": {

@@ -1,9 +1,9 @@
 ﻿{
   "$schema": "http://schemastore.org/schemas/json/webjob-publish-settings.json",
-  "webJobName": "EDUGraphAPISyncData",
-  "startTime": "2016-11-09T00:00:00+08:00",
+  "webJobName": "SyncData",
+  "startTime": null,
   "endTime": null,
-  "jobRecurrenceFrequency": "Hour",
-  "interval": 1,
-  "runMode": "Scheduled"
+  "jobRecurrenceFrequency": null,
+  "interval": null,
+  "runMode": "Continuous"
 }
