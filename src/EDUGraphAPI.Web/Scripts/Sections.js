@@ -5,7 +5,8 @@ BingMapHelper.BingMap = {
         var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
             credentials: bingMapKey,
             center: new Microsoft.Maps.Location(latitude, longitude),
-            mapTypeId: Microsoft.Maps.MapTypeId.aerial,
+            mapTypeId: Microsoft.Maps.MapTypeId.road,
+            showMapTypeSelector:false,
             zoom: 10
         });
         var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), null);

@@ -16,7 +16,7 @@
         </div>
         <div class="container">
             <div class="a-heading ">
-                SECTION DETAILS
+                Class DETAILS
             </div>
             <div class="b-title">
                 @Model.Section.CourseNumber | @Model.Section.DisplayName
@@ -45,7 +45,7 @@
     </div>
     <div class="students">
 
-        <div class="col-md-6">
+        <div class="col-md-6 ignore">
             <dvi class="coursename b-title">
                 Student Conversation(s)
             </dvi>
@@ -78,7 +78,7 @@
 
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6 ignore">
             <dvi class="coursename b-title">
                 Reading Links
             </dvi>
@@ -109,6 +109,65 @@
             </table>
 
 
+        </div>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#students">Enrolled Students</a></li>
+            <li><a data-toggle="tab" href="#documents">Class Documents</a></li>
+            <li><a data-toggle="tab" href="#conversations">Conversations</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="students" class="tab-pane fade in active">
+                <table class="table  table-green">
+                    <tr class="table-green-header">
+                        <th class="tdleft">
+                            student name
+                        </th>
+                        <th>
+                            grade
+                        </th>
+                    </tr>
+                    @foreach (var stu in Model.Section.Students)
+                    {
+                        <tr class="tr-content">
+                            <td>@stu.DisplayName</td>
+                            <td>@stu.EducationGrade</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div id="documents" class="tab-pane fade">
+                <table class="table  table-green">
+                    <tr class="table-green-header">
+                        <th class="tdleft">
+                            document name
+                        </th>
+                    </tr>
+                    @foreach (var doc in Model.DriveItems)
+                    {
+                        <tr class="tr-content">
+                            <td><a href="@doc.WebUrl">@doc.Name</a></td>
+                        </tr>
+                    }
+                </table>
+                <span><a href="@Model.SeeMoreFilesUrl">See MoreConversations Url</a></span>
+            </div>
+            <div id="conversations" class="tab-pane fade">
+                <table class="table  table-green">
+                    <tr class="table-green-header">
+                        <th class="tdleft">
+                           topic
+                        </th>
+                    </tr>
+                @foreach (var con in Model.Conversations)
+                {
+                    <tr class="tr-content">
+                        <td><a href="@Model.SeeMoreConversationsUrl">@con.Topic</a></td>
+                    </tr>
+                }
+                </table>
+                <span><a href="@Model.SeeMoreConversationsUrl"></a></span>
+            </div>
         </div>
     </div>
 

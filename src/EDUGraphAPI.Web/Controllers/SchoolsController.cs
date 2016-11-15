@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace EDUGraphAPI.Web.Controllers
 {
-    [HandleAdalException]
+    [HandleAdalException, EduAuthorize]
     public class SchoolsController : Controller
     {
         private SchoolsService schoolsService;

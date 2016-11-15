@@ -10,7 +10,7 @@
                 <a href="/schools"> All Schools</a> > @Model.School.Name
             </div>
             <div class="col-md-6 displayname">
-                @Model.UserDisplayName
+                @Model.School.Name
             </div>
         </div>
         <div class="container">
@@ -105,12 +105,22 @@
         @foreach (var s in Model.Sections)
         {
             <div class="tile-container">
-                <a href="@Url.Action("SectionDetails",new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
+                @if (Model.IsMy(s))
+                {
+                    <a href="@Url.Action("SectionDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
+                        <div class="tile">
+                            <h5>@s.DisplayName</h5>
+                            <h2>@s.SectionNumber</h2>
+                        </div>
+                    </a>
+                }
+                else
+                {
                     <div class="tile">
                         <h5>@s.DisplayName</h5>
                         <h2>@s.SectionNumber</h2>
                     </div>
-                </a>
+                }
                 <div class="detail">
                     <h5>Description:</h5>
                     <h6>@s.CourseDescription</h6>

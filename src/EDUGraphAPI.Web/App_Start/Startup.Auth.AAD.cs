@@ -1,6 +1,5 @@
 ﻿using EDUGraphAPI.Data;
 using EDUGraphAPI.Utils;
-using EDUGraphAPI.Web.Exceptions;
 using EDUGraphAPI.Web.Services.GraphClients;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Owin.Security;
@@ -48,18 +47,6 @@ namespace EDUGraphAPI.Web
                             context.ProtocolMessage.PostLogoutRedirectUri = appBaseUrl;
                             return Task.FromResult(0);
                         },
-                        // we use this notification for injecting our custom logic
-                        //SecurityTokenValidated = async (context) =>
-                        //{
-                        //    var tenantID = context.AuthenticationTicket.Identity.GetTenantId();
-                        //    if (!await db.Organizations.AnyAsync(a => a.TenantId == tenantID && a.AdminConsented))
-                        //        throw new TenantNotByAdminConsentException();
-                        //},
-                        //SecurityTokenValidated = (context) =>
-                        //{
-                        //    var identity = context.AuthenticationTicket.Identity;
-                        //    return Task.FromResult(0);
-                        //},
                         AuthorizationCodeReceived = async (context) =>
                         {
                             var identity = context.AuthenticationTicket.Identity;
@@ -79,7 +66,7 @@ namespace EDUGraphAPI.Web
                         },
                         AuthenticationFailed = (context) =>
                         {
-                            var redirectUrl = context.Exception is TenantNotByAdminConsentException ? "/Admin/" : "/Home/Error";
+                            var redirectUrl = "/Error?message=" + Uri.EscapeDataString(context.Exception.Message);
                             context.OwinContext.Response.Redirect(redirectUrl);
                             context.HandleResponse(); // Suppress the exception
                             return Task.FromResult(0);

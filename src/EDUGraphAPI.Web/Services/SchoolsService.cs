@@ -50,7 +50,7 @@ namespace EDUGraphAPI.Web.Services
                 ? await eduServiceClient.GetMySectionsAsync(school.SchoolId)
                 : await eduServiceClient.GetAllSectionsAsync(school.SchoolId);
 
-            return new SectionsViewModel(userContext.UserDisplayName, school, sections.OrderByDescending(c => c.CourseName));
+            return new SectionsViewModel(userContext.User.O365Email, school, sections.OrderByDescending(c => c.CourseName));
         }
 
         public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string sectionId)
@@ -63,7 +63,7 @@ namespace EDUGraphAPI.Web.Services
             var graphServiceClient = await AuthenticationHelper.GetGraphServiceClientAsync(Permissions.Delegated);
             var group = graphServiceClient.Groups[sectionId];
             var driveRootFolder = await group.Drive.Root.Request().GetAsync();
-            
+
             return new SectionDetailsViewModel
             {
                 UserDisplayName = userContext.UserDisplayName,
@@ -75,6 +75,5 @@ namespace EDUGraphAPI.Web.Services
                 SeeMoreFilesUrl = driveRootFolder.WebUrl
             };
         }
-
     }
 }
