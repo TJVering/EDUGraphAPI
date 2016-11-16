@@ -1,9 +1,10 @@
-﻿@model SectionsViewModel
+﻿@using Microsoft.Education.Data
+@model SectionsViewModel
 @{
     ViewBag.Title = "Section";
     var isMySections = (bool?)ViewBag.IsMySections == true;
 }
-<div class="container">
+<div class="row schools">
     <div class="tophero">
         <div class="container">
             <div class="col-md-6 secondnav">
@@ -15,7 +16,7 @@
         </div>
         <div class="container">
             <div class="col-md-6 a-heading ">
-               Classes 
+                Classes
             </div>
             <div class="col-md-6 ">
                 <div class="infocontainer">
@@ -50,16 +51,15 @@
         </div>
         <div class="container">
             <div class="col-md-6 sectionschoolname">
-                @Model.School.Name
+                
             </div>
             <div class="col-md-6 mysection section-link-container">
                 VIEW:
-                @Html.ActionLink("My Sections", "MySections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) | 
-                @Html.ActionLink("All Sections", "Sections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
+                @Html.ActionLink("My Classes", "MySections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
+                @Html.ActionLink("All Classes", "Sections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
             </div>
         </div>
         <div style="clear:both;" />
-
     </div>
     <table class="table table-green ignore">
         <tr class="table-green-header">
@@ -101,6 +101,7 @@
         }
 
     </table>
+    <hr class="hr-green" />
     <div class="section-tiles">
         @foreach (var s in Model.Sections)
         {
@@ -108,18 +109,12 @@
                 @if (Model.IsMy(s))
                 {
                     <a href="@Url.Action("SectionDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
-                        <div class="tile">
-                            <h5>@s.DisplayName</h5>
-                            <h2>@s.SectionNumber</h2>
-                        </div>
+                        @Tile(s)
                     </a>
                 }
                 else
                 {
-                    <div class="tile">
-                        <h5>@s.DisplayName</h5>
-                        <h2>@s.SectionNumber</h2>
-                    </div>
+                    @Tile(s)
                 }
                 <div class="detail">
                     <h5>Description:</h5>
@@ -134,4 +129,11 @@
         }
     </div>
 </div>
-    @Scripts.Render("~/bundles/section")
+@helper Tile(Section section)
+{
+    <div class="tile">
+        <h5>@(section.DisplayName)</h5>
+        <h2>@(section.CourseName.Substring(0, 3).ToUpper() + section.CourseNumber)</h2>
+    </div>
+}
+@Scripts.Render("~/bundles/section")

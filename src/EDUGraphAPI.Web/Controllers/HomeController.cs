@@ -17,8 +17,13 @@ namespace EDUGraphAPI.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var context = await applicationService.GetUserContext();
-            if (context.IsLinked) return RedirectToAction("Index", "Schools");
+            var context = await applicationService.GetUserContextAsync();
+            if (context.IsLinked)
+            {
+                if (context.IsAdmin && !context.IsTenantConsented)
+                    return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Index", "Schools");
+            }
             return View(context);
         }
 

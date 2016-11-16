@@ -33,7 +33,7 @@ namespace EDUGraphAPI.Web.Controllers
 
         public async Task<ActionResult> Index()
         {
-            var userContext = await applicationService.GetUserContext();
+            var userContext = await applicationService.GetUserContextAsync();
             return View(userContext);
         }
 
@@ -105,7 +105,7 @@ namespace EDUGraphAPI.Web.Controllers
             }
 
             var tenantId = User.GetTenantId();
-            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync(Permissions.Delegated);
+            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync();
 
             IGraphClient graphClient = new AADGraphClient(activeDirectoryClient);
             var user = await graphClient.GetCurrentUserAsync();
@@ -118,7 +118,7 @@ namespace EDUGraphAPI.Web.Controllers
 
         public async Task<ActionResult> CreateLocalAccount()
         {
-            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync(Permissions.Delegated);
+            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
             var aadUser = await client.Me.ExecuteAsync();
 
             var viewModel = new EducationRegisterViewModel
@@ -151,7 +151,7 @@ namespace EDUGraphAPI.Web.Controllers
 
             // Update the local user
             var tenantId = User.GetTenantId();
-            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync(Permissions.Delegated);
+            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync();
 
             IGraphClient graphClient = new AADGraphClient(activeDirectoryClient);
             var user = await graphClient.GetCurrentUserAsync();

@@ -44,6 +44,11 @@ namespace EDUGraphAPI.DataSync
             var consentedOrganizations = await dbContext.Organizations
                 .Where(i => i.IsAdminConsented)
                 .ToArrayAsync();
+            if (!consentedOrganizations.Any())
+            {
+                await WriteLogAsync($"No consented organization found. This synch was canceled.");
+                return;
+            }
 
             foreach (var org in consentedOrganizations)
             {

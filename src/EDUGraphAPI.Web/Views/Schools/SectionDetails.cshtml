@@ -1,17 +1,15 @@
 ﻿@model SectionDetailsViewModel
 @{
     ViewBag.Title = "SectionDetail";
+    var teachersList = Model.Section.Teachers.ToList();
 }
-<div class="container">
+<div class="row schools">
     <div class="tophero">
         <div class="container">
             <div class="col-md-6 secondnav">
                 <a href="/schools"> All Schools</a>
-                > <a href="/schools/sections?schoolId=@Model.School.SchoolId&objectId=@Model.School.ObjectId">@Model.School.Name</a>
+                > @Html.ActionLink(Model.School.Name, "Sections", null, new { schoolId = Model.School.ObjectId }, null)
                 > @Model.Section.CourseName
-            </div>
-            <div class="col-md-6 displayname">
-                @Model.UserDisplayName
             </div>
         </div>
         <div class="container">
@@ -31,14 +29,19 @@
                 <br />
                 <b>Period:</b> @Model.Section.Period
                 <br />
-                <b>Teacher:</b> @string.Join(", ", Model.Section.Teachers.Select(i=>i.DisplayName))
-            </div>
-            <div class="col-md-6">
-                <b>Status:</b> @Model.Section.EducationStatus
-                <br />
                 <b>Term Name:</b> @Model.Section.TermName
                 <br />
                 <b>Start/Finish Date:</b>@Convert.ToDateTime(Model.Section.TermStartDate).ToString("MMMM y") - @Convert.ToDateTime(Model.Section.TermEndDate).ToString("MMMM y")
+            </div>
+            <div class="col-md-6">
+                @for (var i = 0; i < teachersList.Count(); i++)
+                {
+                    <b>Teacher:</b> @teachersList[i].DisplayName
+                    if (i < teachersList.Count() - 1)
+                    {
+                        <br/>
+                    }
+                }
             </div>
         </div>
         <div style="clear:both;" />
@@ -150,7 +153,7 @@
                         </tr>
                     }
                 </table>
-                <span><a href="@Model.SeeMoreFilesUrl">See MoreConversations Url</a></span>
+                <span class="see-more"><a href="@Model.SeeMoreFilesUrl">See More</a></span>
             </div>
             <div id="conversations" class="tab-pane fade">
                 <table class="table  table-green">
@@ -166,7 +169,7 @@
                     </tr>
                 }
                 </table>
-                <span><a href="@Model.SeeMoreConversationsUrl"></a></span>
+                <span class="see-more"><a href="@Model.SeeMoreConversationsUrl">See More</a></span>
             </div>
         </div>
     </div>

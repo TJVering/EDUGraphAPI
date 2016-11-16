@@ -1,13 +1,20 @@
-﻿body {
+﻿html{height:100%;}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image:url(/Images/pencilsandbooks-bg-image.jpg); 
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height:100%;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    height:100%;
 }
+
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
@@ -29,9 +36,22 @@ textarea {
 .navbar-inverse .navbar-nav > li > a
 {color:white;}
 
+/* Message */
+.message-container {
+    font-size: 14px;
+    padding: 0.5em 1em;
+    border: 1px solid #b0b0b0;
+    border-radius: 8px;
+    margin: 0.5em 0;
+}
+
+    .message-container p {
+        margin: 0.25em 0;
+    }
+
 /*Schools and sections */
 .displayname{text-align:right;padding:12px 30px 12px 12px;}
-.secondnav{padding:6px 0 12px 0;}
+.secondnav{padding:20px 0 12px 0;}
 .a-heading{font-size:48px;color:#666565;padding-left: 0;text-transform:uppercase;}
 .infocontainer {
     text-align: center;
@@ -52,8 +72,8 @@ textarea {
 .myschool .schoolenrolled{float:right; font-size:14px;}
 .myschool .greenicon{width:12px;height:12px;background-color:#1fe405;float:right;margin:5px 6px 0 0;}
 .sectionschoolname{font-size:24px;color:#666565;padding-left: 0;}
-.mysection{text-align:right;    padding-right: 30px;}
-.tophero{background-color:#f7f7f7;padding-left:6px;}
+.mysection{text-align:right;padding-right: 30px;padding-top: 25px;}
+.tophero{background-color:#f7f7f7;padding-left:0px;}
 #myMap{position:absolute;}
 .bingMapLink{margin-left:12px;}
 
@@ -74,19 +94,30 @@ textarea {
 .table-schools th:nth-child(4),.table-schools .tr-content td:nth-child(4) {
     width: 40%;
 }
-
 .ignore{display:none;}
+.container>div.row{height:100%;background-color:#fff;}
+.container.body-content{height:100%; background-color:#fff;}
+.schools{height:100%;background-color:#fff;padding:0;}
+.hr-green{border: 0;height: 10px;background: #127604;margin-top: 10px;}
 /*sections*/
+.section-tiles{padding-left:15px;}
 .section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
 .section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background: linear-gradient(to bottom, #4E9F42, #B8E2B2); color:#fff;}
-.section-tiles .tile>h5{text-align: center;margin-top: 60px;font-size:14px;margin-bottom:0;}
-.section-tiles .tile>h2{text-align: center;margin-top:4px;}
+.section-tiles .tile>h5{text-align: center;margin-top: 60px;font-size:14px;margin-bottom:0;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-style: normal;font-variant: normal;}
+.section-tiles .tile>h2{text-align: center;margin-top:4px;font-size:30px;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.section-tiles .tile:hover{background-image:url('/Images/ClassDetailsTiles-bg.jpg');color:#000;}
+.section-tiles .tile:hover>h5{font-weight:bold;font-size:16px;}
+.section-tiles .tile:hover>h2{font-weight:bold;font-size:36px;}
 .section-tiles .detail {display:none;position:absolute; background:#fff; color:#000;top:-5px; left:188px;width:360px; min-height:230px;padding:8px 30px 30px 20px;z-index:10;border:solid #C2C2C2 1px;border-radius:5px;-moz-border-radius:5px;-moz-box-shadow:1px 2px 1px 2px #c2c2c2;-webkit-box-shadow: 1px 2px 1px 2px #c2c2c2;box-shadow:1px 2px 1px 2px #c2c2c2;}
-.section-tiles h5{margin-top: 10px;font-weight: 600;text-transform:uppercase;}
+.section-tiles .detail>h5{margin-top: 10px;font-weight: 800;font-size:12px;text-transform:uppercase;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.section-tiles .detail>h6{margin-top: 10px;font-size:12px;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 
 /*section detail*/
 .b-title{font-size:24px;color:#666565;}
 .coursedetail .col-md-6{padding:12px 0 6px 0;}
+.coursedetail .col-md-6:last-child{padding:12px 0 6px 0;}
+.coursedetail .col-md-6:last-child > b{color:#F7F7F7;}
+.coursedetail .col-md-6:last-child > b:first-child{color:#333;}
 .students .col-md-6:nth-child(1){padding-left:0;padding-right:8px;}
 .students .col-md-6:nth-child(2){padding-left:8px;padding-right:0;}
 .students .b-title{padding-left:6px;}
@@ -98,10 +129,13 @@ textarea {
 }
 
 .students{margin-top:20px;}
-.students > ul > li{width:30%;margin-right:20px;text-align: center;}
-.students > ul > li>a{color:#ABABAB;height:56px;font-size:21px;text-transform:uppercase;background-color:#fff;border-radius:0 0 0 0;}
-.students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {background-color:#ABABAB;color:#fff;font-weight:600;}
+.students > ul > li{width:31%;margin-right:20px;text-align: center;}
+.students > ul > li:first-child{margin-left:20px;}
+.students > ul > li>a{color:#ABABAB;height:56px;font-size:18px;text-transform:uppercase;background-color:#fff;border-radius:0 0 0 0;font-weight:400;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;padding-top:15px;}
+.students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {background-color:#ABABAB;color:#fff;font-weight:700;}
 .students .table-green .table-green-header{border-bottom:1px solid #ABABAB}
 .students .table-green .table-green-header th {background-color:#ABABAB;border-bottom:1px solid #ABABAB}
 .students .table-green tr:nth-child(1){background-color:#ABABAB;}
 .students .table-green .tdleft{border-left-color:#ABABAB;}
+
+.students .see-more{margin-left:12px;}

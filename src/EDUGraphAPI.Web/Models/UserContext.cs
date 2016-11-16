@@ -30,5 +30,10 @@ namespace EDUGraphAPI.Web.Models
 
         public bool IsAdmin => HttpContext.User.IsInRole(Constants.Roles.Admin);
 
+        public bool IsTenantConsented => User != null && User.Organization != null && User.Organization.IsAdminConsented;
+
+        public string UserO365Email => IsLinked
+            ? User.O365Email
+            : (IsO365Account ? HttpContext.User.Identity.Name : null);
     }
 }

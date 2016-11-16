@@ -35,10 +35,6 @@
                         {
                             <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                         }
-                        if (System.Diagnostics.Debugger.IsAttached)
-                        {
-                            <li>@Html.ActionLink("Test", "Index", "Test")</li>
-                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -62,9 +58,8 @@
             </div>
         }
         @RenderBody()
-    
-        <footer>
-        </footer>
+
+        <footer></footer>
     </div>
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")

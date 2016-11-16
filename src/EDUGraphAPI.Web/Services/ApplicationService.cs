@@ -31,14 +31,22 @@ namespace EDUGraphAPI.Web.Services
             this(dbContext, userManager, new HttpContextWrapper(HttpContext.Current))
         { }
 
+        public ApplicationUser GetCurrentUser()
+        {
+            var userId = GetUserId();
+            if (userId.IsNullOrEmpty()) return null;
+
+            return dbContext.Users
+                .Include(i => i.Organization)
+                .Where(i => i.Id == userId || i.O365UserId == userId)
+                .FirstOrDefault();
+        }
+
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
-            var userId = httpContext.User.Identity.GetUserId();
-
-            var aadUserId = httpContext.User.GetObjectIdentifier();
-            if (aadUserId.IsNotNullAndEmpty()) userId = aadUserId;
-
+            var userId = GetUserId();
             if (userId.IsNullOrEmpty()) return null;
+
             return await dbContext.Users
                 .Include(i => i.Organization)
                 .Where(i => i.Id == userId || i.O365UserId == userId)
@@ -52,11 +60,17 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
+        
+        public UserContext GetUserContext()
+        {
+            var currentUser = GetCurrentUser();
+            return new UserContext(HttpContext.Current, currentUser);
+        }
 
-        public async Task<UserContext> GetUserContext()
+        public async Task<UserContext> GetUserContextAsync()
         {
             var currentUser = await GetCurrentUserAsync();
-            return new UserContext(HttpContext.Current, currentUser); ;
+            return new UserContext(HttpContext.Current, currentUser);
         }
 
         public async Task<AdminContext> GetAdminContextAsync()
@@ -93,6 +107,43 @@ namespace EDUGraphAPI.Web.Services
 
             organization.IsAdminConsented = adminConsented;
             await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<ApplicationUser[]> GetLinkedUsers(Expression<Func<ApplicationUser, bool>> predicate = null)
+        {
+            return await dbContext.Users
+                .Where(i => !string.IsNullOrEmpty(i.O365UserId))
+                .WhereIf(predicate, predicate != null)
+                .ToArrayAsync();
+        }
+
+        public async Task UnlinkAccountsAsync(string id)
+        {
+            var user = await GetUserAsync(id);
+
+            // Remove token caches
+            var caches = await dbContext.UserTokenCacheList
+                .Where(i => i.webUserUniqueId == user.O365UserId)
+                .ToArrayAsync();
+            dbContext.UserTokenCacheList.RemoveRange(caches);
+
+            // remove o365 user info
+            user.O365Email = null;
+            user.O365UserId = null;
+            await dbContext.SaveChangesAsync();
+
+            // remove roles ?
+            // userManager.RemoveFromRolesAsync(user.Id, )
+        }
+
+
+        private string GetUserId()
+        {
+            var userId = httpContext.User.Identity.GetUserId();
+
+            var aadUserId = httpContext.User.GetObjectIdentifier();
+            if (aadUserId.IsNotNullAndEmpty()) userId = aadUserId;
+            return userId;
         }
 
         private async Task UpdateUserRoles(ApplicationUser localUser, UserInfo o365User)
@@ -133,34 +184,6 @@ namespace EDUGraphAPI.Web.Services
                 localUser.Organization = organization;
             }
         }
-
-        public async Task<ApplicationUser[]> GetLinkedUsers(Expression<Func<ApplicationUser, bool>> predicate = null)
-        {
-            return await dbContext.Users
-                .Where(i => !string.IsNullOrEmpty(i.O365UserId))
-                .WhereIf(predicate, predicate != null)
-                .ToArrayAsync();
-        }
-
-        public async Task UnlinkAccountsAsync(string id)
-        {
-            var user = await GetUserAsync(id);
-
-            // Remove token caches
-            var caches = await dbContext.UserTokenCacheList
-                .Where(i => i.webUserUniqueId == user.O365UserId)
-                .ToArrayAsync();
-            dbContext.UserTokenCacheList.RemoveRange(caches);
-
-            // remove o365 user info
-            user.O365Email = null;
-            user.O365UserId = null;
-            await dbContext.SaveChangesAsync();
-
-            // remove roles ?
-            // userManager.RemoveFromRolesAsync(user.Id, )
-        }
-
 
         private void InitOrganization(Organization organization, TenantInfo tenant)
         {

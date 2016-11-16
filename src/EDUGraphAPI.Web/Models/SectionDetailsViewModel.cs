@@ -8,9 +8,7 @@ namespace EDUGraphAPI.Web.ViewModels
         public School School { get; set; }
 
         public Section Section { get; set; }
-
-        public string UserDisplayName { get; set; }
-
+        
         public Conversation[] Conversations { get; set; }
 
         public string SeeMoreConversationsUrl { get; set; }
