@@ -124,6 +124,19 @@
                     {
                         <h6>@teacher.DisplayName</h6>
                     }
+                    <h5>Term Name:</h5>
+                    <h6>
+                        @s.TermName
+                    </h6>
+                    <h5>Start/Finish Date:</h5>
+                    
+                    <h6>
+                        @Convert.ToDateTime(s.TermStartDate).ToString("MMMM y")
+                     - 
+                        @Convert.ToDateTime(s.TermEndDate).ToString("MMMM y")
+                    </h6>
+                    <h5>Period:</h5>
+                    <h6>@s.Period</h6>
                 </div>
             </div>
         }
@@ -133,7 +146,7 @@
 {
     <div class="tile">
         <h5>@(section.DisplayName)</h5>
-        <h2>@(section.CourseName.Substring(0, 3).ToUpper() + section.CourseNumber)</h2>
+        <h2>@(section.CombinedCourseNumber)</h2>
     </div>
 }
 @Scripts.Render("~/bundles/section")

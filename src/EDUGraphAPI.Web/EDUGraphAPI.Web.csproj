@@ -288,7 +288,6 @@
     <Content Include="Images\ClassDetailsTiles-bg.jpg" />
     <Content Include="Images\contaerbg.gif" />
     <Content Include="Images\microsoft-icon.png" />
-    <Content Include="Images\pencilsandbooks-bg-image.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

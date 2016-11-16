@@ -79,6 +79,8 @@ namespace Microsoft.Education.Data
         [JsonProperty("extension_fe2174665583431c953114ff7268b7b3_Education_Status")]
         public string EducationStatus { get; set; }
 
+        public string CombinedCourseNumber => CourseName.Substring(0, 3).ToUpper() + CourseNumber;
+
         public List<SectionUser> Members { get; set; }
 
         public IEnumerable<SectionUser> Students => Members.Where(c => c.ObjectType == EduConstants.StudentObjectType);

@@ -1,5 +1,4 @@
-﻿using EDUGraphAPI.Utils;
-using EDUGraphAPI.Web.Models;
+﻿using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.ViewModels;
 using Microsoft.Education;
 using Microsoft.Education.Data;
@@ -23,12 +22,20 @@ namespace EDUGraphAPI.Web.Services
             var currentUser = userContext.IsStudent
                 ? await educationServiceClient.GetStudentAsync() as SectionUser
                 : await educationServiceClient.GetTeacherAsync() as SectionUser;
-            var schools = await educationServiceClient.GetSchoolsAsync();
 
-            var mySchool = schools.Where(i => i.SchoolId == currentUser.SchoolId).FirstOrDefault();
-            var grade = userContext.IsStudent ? currentUser.EducationGrade : mySchool?.EducationGrade;
+            var schools = (await educationServiceClient.GetSchoolsAsync())
+                .OrderBy(i => i.Name)
+                .ToArray();
+            var mySchools = schools
+                .Where(i => i.SchoolId == currentUser.SchoolId)
+                .ToArray();
 
-            return new SchoolsViewModel(schools.OrderByDescending(i => i.Name))
+            var myFirstSchool = mySchools.FirstOrDefault();
+            var grade = userContext.IsStudent ? currentUser.EducationGrade : myFirstSchool?.EducationGrade;
+
+            var sortedSchools = mySchools
+                .Union(schools.Except(mySchools));
+            return new SchoolsViewModel(sortedSchools)
             {
                 IsStudent = userContext.IsStudent,
                 UserId = currentUser.UserId,
@@ -46,7 +53,7 @@ namespace EDUGraphAPI.Web.Services
                 ? await educationServiceClient.GetMySectionsAsync(school.SchoolId)
                 : await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
 
-            return new SectionsViewModel(userContext.UserO365Email, school, sections.OrderByDescending(c => c.CourseName));
+            return new SectionsViewModel(userContext.UserO365Email, school, sections.OrderBy(c => c.CombinedCourseNumber));
         }
 
         public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string sectionId, IGroupRequestBuilder group)

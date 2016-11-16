@@ -16,27 +16,19 @@
                 All Schools
             </div>
             <div class="col-md-6 ">
-                <div class="infocontainer">
-                    <div class="infoheader">
-                        School Enrolled
-                    </div>
-                    <div class="infobody">
-                        @Model.MySchoolId
-                    </div>
-                </div>
-                <div class="infocontainer">
-                    <div class="infoheader">
-                        Grade level
-                    </div>
-                    <div class="infobody">
-                        @Model.EducationGrade
-                    </div>
-                </div>
 
                 <div class="infocontainer">
 
                     <div class="infoheader">
-                        Student/Teacher Id
+                        @if (Model.IsStudent)
+                        {
+                            @Html.Raw("Student")
+                        }
+                        else
+                        {
+                            @Html.Raw("Teacher")
+                        }
+                        Id
                     </div>
                     <div class="infobody">
                         @Model.UserId
@@ -81,8 +73,14 @@
             <td>@school.PrincipalName</td>
             <td>@school.LowestGrade - @school.HighestGrade</td>
             <td>
-                @school.Address
-                <a class="bingMapLink"  @*onclick="BingMapHelper.BingMap.displayPin('@school.Latitude','@school.Longitude')"*@ lat="@school.Latitude" lon="@school.Longitude"  href="javascript:void(0)" ><img src="~/Images/bing.png" /></a>
+                <div class="schooladdress">
+                    @school.Address
+                    <br />
+                    @school.City, @school.State @school.Zip
+                </div>
+                <div class="schoolmap">
+                    <a class="bingMapLink" @*onclick="BingMapHelper.BingMap.displayPin('@school.Latitude','@school.Longitude')"*@ lat="@school.Latitude" lon="@school.Longitude" href="javascript:void(0)"><img src="~/Images/bing.png" /></a>
+                </div>
             </td>   
         </tr>
     }

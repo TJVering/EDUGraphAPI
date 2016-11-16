@@ -43,6 +43,11 @@ namespace EDUGraphAPI.Data
             if (O365UserId != null)
                 userIdentity.AddObjectIdentifierClaim(O365UserId);
 
+            if (FirstName.IsNotNullAndEmpty())
+                userIdentity.AddClaim(ClaimTypes.GivenName, FirstName);
+            if (LastName.IsNotNullAndEmpty())
+                userIdentity.AddClaim(ClaimTypes.Surname, LastName);
+
             var roles = await manager.GetRolesAsync(Id);
             foreach (var role in roles) userIdentity.AddClaim(ClaimTypes.Role, role);
 

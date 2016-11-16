@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Security.Principal;
+using Microsoft.AspNet.Identity;
 
 namespace EDUGraphAPI
 {
@@ -33,6 +34,26 @@ namespace EDUGraphAPI
             if (claimsIdentity == null) return null;
             return GetObjectIdentifier(claimsIdentity);
         }
+
+        public static string GetFullName(this IIdentity identity)
+        {
+            var fullName = string.Empty;
+
+            var claimsIdentity = identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+                var givenName = claimsIdentity.FindFirstValue(ClaimTypes.GivenName);
+                var surname = claimsIdentity.FindFirstValue(ClaimTypes.Surname);
+                if (givenName.IsNotNullAndEmpty() && surname.IsNotNullAndEmpty())
+                    fullName = givenName + " " + surname;
+            }
+
+            if(fullName.IsNullOrEmpty())
+                fullName = identity.GetUserName();
+
+            return fullName;
+        }
+
 
         public static void AddClaim(this ClaimsIdentity identity, string key, string value)
         {
