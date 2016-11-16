@@ -21,6 +21,131 @@ EDUGraphAPI is based on an ASP.NET MVC. [ASP.NET Identity](https://www.asp.net/i
 
 ## Documentation
 
+
+
+## How To: Configure your Development Environment
+
+Download and install the following tools to run, build and/or develop this application locally.
+
+- [Visual Studio 2015 Community](https://go.microsoft.com/fwlink/?LinkId=691978&clcid=0x409)
+
+**GitHub Authorization**
+
+1. Generate Token
+
+   - Open https://github.com/settings/tokens in your web browser.
+   - Sign into your GitHub account where you forked this repository.
+   - Click **Generate Token**
+   - Enter a value in the **Token description** text box
+   - Select all the **check boxes**
+
+   ![](Images/github-new-personal-access-token.png)
+
+   - Click **Generate token**
+   - Copy the token
+
+2. Add the GitHub Token to Azure in the Azure Resource Explorer
+
+   - Open https://resources.azure.com/providers/Microsoft.Web/sourcecontrols/GitHub in your web browser.
+   - Log in with your Azure account.
+   - Selected the correct Azure subscription.
+   - Select **Read/Write** mode.
+   - Click **Edit**.
+   - Paste the token into the **token parameter**.
+
+   ![](Images/update-github-token-in-azure-resource-explorer.png)
+
+   - Click **PUT**
+
+**Create a key to use the Bing Maps**
+
+1. Open [https://www.bingmapsportal.com/](https://www.bingmapsportal.com/) in your web browser and sign in.
+
+2. Click  **My account** -> **My keys**.
+
+3. Create a **Basic** key, select **Public website** as the application type.
+
+4. Copy aside the **Key**. 
+
+   ![](Images/bing-maps-key.png)
+
+> **Note:** The key will be used in a subsequent step.
+
+**Create an Application in you AAD**
+
+1. Sign into [https://manage.windowsazure.com](https://manage.windowsazure.com).
+
+2. Open the AAD in which you plan to create the application.
+
+3. Click **ADD** on the bottom bar.
+
+   ![](Images/aad-applications.png)
+
+4. Click **Add an application my organization is developing**.
+
+   ![](Images/aad-create-app-01.png)
+
+5. Input a **Name**, and select **WEB APPLICATION AND/OR WEB API**. 
+
+   ![](Images/aad-create-app-02.png)
+
+   Click **->**.
+
+
+5. Input the values:
+
+   * SIGN-ON URL: https://localhost:44311/
+
+   * APP ID URI: https://<<YOUR TENANT>>/EDUGraphAPI
+
+     > **Note**: A domain from you tenant must be used here, since we are going to create a multi-tenant application.
+
+   ![](Images/aad-create-app-03.png)
+
+   Click the **✓**.
+
+6. Click **CONFIGURE**.
+
+   ![](Images/aad-configure-app-01.png)
+
+7. Enable **APPLICATION IS MULTI-TENANT**.
+
+   ![](Images/aad-configure-app-02.png)
+
+8. Configure **permissions to other applications** as below.
+
+   |                                | Application Permissions       | Delegated Permissions                    |
+   | ------------------------------ | ----------------------------- | ---------------------------------------- |
+   | Windows Azure Active Directory | Read and write directory data | Sign in and read user profile<br>Read and write directory data |
+   | Microsoft Graph                | *None*                        | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
+
+9. Create a key
+
+   ![](Images/aad-configure-app-03.png)
+
+
+   Click **Save**.
+
+10. Copy the client id and section key aside.
+
+   ![](Images/aad-configure-app-04.png)
+
+**Deploy the Azure Components**
+
+1. Check to ensure that the build is passing VSTS Build
+
+2. Fork this repository to your GitHub account
+
+3. Click the Deploy to Azure Button
+
+   [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fEDUGraphAPI%2fmaster%2fazuredeploy.json)
+
+4. Fill in the values in the deployment page.
+
+   ![](Images/azure-auto-deploy.png)
+
+5. Click **Purchase**.
+
 ### Authentication flows
 
 In this sample, we allow users to login in with either a local account or an O365 account. Then connect to the other account.
