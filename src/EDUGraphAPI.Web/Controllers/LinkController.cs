@@ -79,6 +79,7 @@ namespace EDUGraphAPI.Web.Controllers
             await signInManager.SignInAsync(localUser, isPersistent: false, rememberBrowser: false);
 
             TempData["Message"] = Resources.LinkO365AccountSuccess;
+            TempData[HandleAdalExceptionAttribute.ChallengeImmediatelyTempDataKey] = true;
             return RedirectToAction("Index", "Home");
         }
 

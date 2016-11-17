@@ -30,7 +30,7 @@
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Link", "Index", "Link")</li>
+                        
                         if (User.IsInRole(Constants.Roles.Admin))
                         {
                             <li>@Html.ActionLink("Admin", "Index", "Admin")</li>

@@ -79,7 +79,7 @@ textarea {
 .schooladdress{width:auto;float:left;}
 .schoolmap{width:50%;float:left;}
 .toptiles{
-    padding: 30px 0 15px 0;
+    padding: 10px 0 15px 0;
     border: 1px solid #237e17;
     border-top: none;
     background-color: white;
@@ -130,6 +130,7 @@ textarea {
 .section-tiles .tile-container:nth-child(6n) .detail,.section-tiles .tile-container:nth-child(6n-1) .detail{left:-380px;}
 .section-tiles .detail>h5{margin-top: 10px;font-weight: 800;font-size:12px;text-transform:uppercase;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
 .section-tiles .detail>h6{margin-top: 10px;font-size:12px;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
+.section-school-name{width:100%;    padding: 0 20px 10px 0;    text-align: right;}
 
 /*section detail*/
 .b-title{font-size:24px;color:#666565;}
