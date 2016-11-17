@@ -75,7 +75,10 @@
                     @school.City, @school.State @school.Zip
                 </div>
                 <div class="schoolmap">
-                    <a class="bingMapLink" @*onclick="BingMapHelper.BingMap.displayPin('@school.Latitude','@school.Longitude')"*@ lat="@school.Latitude" lon="@school.Longitude" href="javascript:void(0)"><img src="~/Images/bing.png" /></a>
+                    @if (!string.IsNullOrEmpty(school.Latitude) && !string.IsNullOrEmpty(school.Longitude))
+                    {
+                        <a class="bingMapLink" lat="@school.Latitude" lon="@school.Longitude" href="javascript:void(0)"><img src="~/Images/bing.png" /></a>
+                    }
                 </div>
             </td>   
         </tr>
