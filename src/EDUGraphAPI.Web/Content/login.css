@@ -1,4 +1,4 @@
-﻿.body-content{background-image:url('/Images/longin-bg.jpg');margin:0;width:100%;min-height:1068px;}
+﻿.body-content{background-image:url('/Images/longin-bg.jpg') ; background-size:cover; margin:0;width:100%;min-height:1068px;}
 .container>div.row{background-color:transparent;}
 .loginbody{width:1170px;margin:auto;padding:110px 15px 0 15px;}
 .loginbody > .row{padding:0 20px 0 115px;}

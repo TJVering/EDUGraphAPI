@@ -114,12 +114,13 @@ textarea {
 .container>div.row{height:100%;background-color:#fff;}
 .container.body-content{height:100%; background-color:#fff;}
 .schools{height:100%;background-color:#fff;padding:0;}
-.schools .toptiles{float:right;}
+.schools .toptiles{float:right;padding-left: 15px;}
 .hr-green{border: 0;height: 10px;background: #127604;margin-top: 10px;}
 /*sections*/
 .section-tiles{padding-left:15px;}
 .section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
-.section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
+.section-tiles .tile-container:nth-child(6n){margin-right:0;}
+.section-tiles .tile{display:inline-block;width:175px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
 .mysectionlink .tile{border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background: linear-gradient(to bottom, #4E9F42, #B8E2B2); }
 .section-tiles .tile>h5{text-align: center;margin: 60px 5px 0 5px;font-size:14px;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;font-style: normal;font-variant: normal;}
 .section-tiles .tile>h2{text-align: center;margin-top:4px;font-size:30px;font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}
