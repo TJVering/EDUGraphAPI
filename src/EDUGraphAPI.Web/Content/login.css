@@ -1,0 +1,23 @@
+﻿.body-content{background-image:url('/Images/longin-bg.jpg');margin:0;width:100%;}
+.container>div.row{background-color:transparent;}
+.loginbody{width:1170px;margin:auto;padding:110px 15px 0 15px;}
+.loginbody > .row{padding:0 20px 0 115px;}
+.btn-ms-login{border:none;background-color:transparent;background-image:url('/Images/SignInWithMS-Button.png');width:230px;height:40px;}
+.margin-btm-20{margin-bottom:20px;}
+.margin-left-20{margin-left:20px;}
+.rememberme{margin-left:20px;}
+.btn-local-login{margin: 20px 0 5px 0;text-transform:uppercase;background-color:#237e17;color:white;}
+.form-group{margin-bottom:20px;}
+.form-control{width:380px;height:36px;border-radius:5px;border:1px solid #acacac;font-size:16px;}
+a,a:hover{color:#4b67f8;font-size:16px;font-family:Arial, Helvetica, sans-serif;}
+h4{color:#000000;font-size:16px;font-family:Arial, Helvetica, sans-serif;}
+input::-webkit-input-placeholder {
+    font-style:italic;
+   font-size:16px;
+   color:#f3f3f3;
+}
+input::-moz-placeholder {
+    font-style:italic;
+   font-size:16px;
+   color:#f3f3f3;
+}

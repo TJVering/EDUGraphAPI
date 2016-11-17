@@ -88,6 +88,8 @@ textarea {
     border-top-right-radius:0;
 }
 .schoolname{margin-top:20px;}
+.schooltiles{margin:20px 0 20px 0;    padding-right: 0;}
+.schooltiles .infocontainer{margin-right:0;}
 
 .table-green { border:none;background-color:white;opacity:0.9;}
 .table-green tr:nth-child(2n+1){background-color:#f8f8f8}

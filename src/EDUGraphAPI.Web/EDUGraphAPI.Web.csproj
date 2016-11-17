@@ -280,6 +280,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -287,7 +288,9 @@
     <Content Include="Images\bing.png" />
     <Content Include="Images\ClassDetailsTiles-bg.jpg" />
     <Content Include="Images\contaerbg.gif" />
+    <Content Include="Images\longin-bg.jpg" />
     <Content Include="Images\microsoft-icon.png" />
+    <Content Include="Images\SignInWithMS-Button.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
