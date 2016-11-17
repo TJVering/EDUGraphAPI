@@ -173,3 +173,6 @@ textarea {
 .subitem a{color:black;text-decoration:none;width:100%;height:100%;display:block;padding:10px 0 10px 20px;}
 .subitem:hover{background-color:#237e17;color:white;}
 .subitem a:hover{color:white;}
+.container {
+    width: 1170px;
+}
