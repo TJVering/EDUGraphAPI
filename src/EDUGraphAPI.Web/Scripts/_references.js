@@ -8,3 +8,4 @@
 /// <reference path="modernizr-2.6.2.js" />
 /// <reference path="respond.min.js" />
 /// <reference path="sections.js" />
+/// <reference path="site.js" />

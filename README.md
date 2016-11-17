@@ -4,20 +4,21 @@
 
 EDUGraphAPI  is a sample that demonstrates:
 
-* Link local users and Office 365 users. The below 2 kinds of Graph APIs will be used:
+* Linking local user accounts and Office 365 user accounts. 
+* Calling Graph APIs, including:
 
   * [Microsoft Azure Active Directory Graph API](https://www.nuget.org/packages/Microsoft.Azure.ActiveDirectory.GraphClient/)
   * [Microsoft Graph API](https://www.nuget.org/packages/Microsoft.Graph/)
 
-  After link, users could use either local or Office 365 account to log into the sample web site and use the functions as usually.
+  After linking accounts, users can use either local or Office 365 accounts to log into the sample web site and use it.
 
 * Get and show schools/sections/teachers/students from Office 365 Education:
 
   * [Office 365 Schools REST API reference](https://msdn.microsoft.com/office/office365/api/school-rest-operations)
 
-  [Differential query](https://msdn.microsoft.com/en-us/library/azure/ad/graph/howto/azure-ad-graph-api-differential-query) will be used to sync data that are cached in local database.
+  A [Differential query](https://msdn.microsoft.com/en-us/library/azure/ad/graph/howto/azure-ad-graph-api-differential-query) is used to sync data that is cached in a local database.
 
-EDUGraphAPI is based on an ASP.NET MVC. [ASP.NET Identity](https://www.asp.net/identity) is used in this project.
+EDUGraphAPI is based on ASP.NET MVC. [ASP.NET Identity](https://www.asp.net/identity) is used in this project.
 
 ## Documentation
 
@@ -65,17 +66,17 @@ Download and install the following tools to run, build and/or develop this appli
 
 3. Create a **Basic** key, select **Public website** as the application type.
 
-4. Copy aside the **Key**. 
+4. Copy the **Key** and save it. 
 
    ![](Images/bing-maps-key.png)
 
-> **Note:** The key will be used in a subsequent step.
+	>**Note:** The key is used in a subsequent step.
 
 **Create an Application in you AAD**
 
 1. Sign into [https://manage.windowsazure.com](https://manage.windowsazure.com).
 
-2. Open the AAD in which you plan to create the application.
+2. Open the AAD where you plan to create the application.
 
 3. Click **ADD** on the bottom bar.
 
@@ -89,46 +90,45 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/aad-create-app-02.png)
 
-   Click **->**.
+6. Click **->**.
 
 
-5. Input the values:
+7. Enter the following values:
 
-   * SIGN-ON URL: https://localhost:44311/
+   * **SIGN-ON URL:** https://localhost:44311/
 
-   * APP ID URI: https://<<YOUR TENANT>>/EDUGraphAPI
+   * **APP ID URI:** https://<<YOUR TENANT>>/EDUGraphAPI
 
-     > **Note**: A domain from you tenant must be used here, since we are going to create a multi-tenant application.
+   >**Note**: A domain from your tenant must be used here, since this is a multi-tenant application.
 
    ![](Images/aad-create-app-03.png)
 
-   Click the **✓**.
+8. Click the **✓**.
 
-6. Click **CONFIGURE**.
+9. Click **CONFIGURE**.
 
    ![](Images/aad-configure-app-01.png)
 
-7. Enable **APPLICATION IS MULTI-TENANT**.
+10. Enable **APPLICATION IS MULTI-TENANT**.
 
    ![](Images/aad-configure-app-02.png)
 
-8. Configure **permissions to other applications** as below.
+11. Configure the following **permissions to other applications**.
 
    |                                | Application Permissions       | Delegated Permissions                    |
    | ------------------------------ | ----------------------------- | ---------------------------------------- |
    | Windows Azure Active Directory | Read and write directory data | Sign in and read user profile<br>Read and write directory data |
    | Microsoft Graph                | *None*                        | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
 
-9. Create a key
+12. In the keys section, click the dropdown list and select a duration, then click **Save**.
 
    ![](Images/aad-configure-app-03.png)
 
-
-   Click **Save**.
-
-10. Copy the client id and section key aside.
+13. Copy the client id and save it.
 
    ![](Images/aad-configure-app-04.png)
+
+	>**Note:** The client id is used in a subsequent step.
 
 **Deploy the Azure Components**
 
@@ -140,7 +140,7 @@ Download and install the following tools to run, build and/or develop this appli
 
    [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3a%2f%2fraw.githubusercontent.com%2fTylerLu%2fEDUGraphAPI%2fmaster%2fazuredeploy.json)
 
-4. Fill in the values in the deployment page.
+4. Fill in the values in the deployment page and select the **I agree to the terms and conditions stated above** checkbox.
 
    ![](Images/azure-auto-deploy.png)
 
@@ -148,11 +148,11 @@ Download and install the following tools to run, build and/or develop this appli
 
 ### Authentication flows
 
-In this sample, we allow users to login in with either a local account or an O365 account. Then connect to the other account.
+This sample allows users to login in with either a local account or an Office 365 account, then connect to the other account.
 
 **User Login Local**
 
-To experience this sample, you should register a new user first. After register, the app will log you in automaticlly.
+To run this sample, you should register a new user first. After registering, the app will log you in automatically.
 
 ....
 

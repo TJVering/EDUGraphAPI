@@ -4,47 +4,43 @@
 }
 <div class="row schools">
     <div class="tophero">
-        <div class="container">
-            <div class="col-md-6"></div>
-            <div class="col-md-6 displayname">
-                @Model.UserDisplayName
+        <div class="col-md-6">
+            <div class="a-heading schoolname">
+                ALL SCHOOLS
             </div>
         </div>
+        <div class="col-md-6 toptiles">
+            <div class="infocontainer">
 
-        <div class="container ">
-            <div class="col-md-6 a-heading ">
-                All Schools
-            </div>
-            <div class="col-md-6 ">
-
-                <div class="infocontainer">
-
-                    <div class="infoheader">
-                        @if (Model.IsStudent)
-                        {
-                            @Html.Raw("Student")
-                        }
-                        else
-                        {
-                            @Html.Raw("Teacher")
-                        }
-                        Id
-                    </div>
-                    <div class="infobody">
-                        @Model.UserId
-                    </div>
+                <div class="infoheader">
+                    @if (Model.IsStudent)
+                    {
+                        @Html.Raw("Student")
+                    }
+                    else
+                    {
+                        @Html.Raw("Teacher")
+                    }
+                    Id
                 </div>
+                <div class="infobody">
+                    @Model.UserId
+                </div>
+            </div>
 
-            </div>
+
         </div>
-        <div class="container myschool">
-            <div class="schoolenrolled">
-                Current school(s) enrolled
+
+            <div class="container myschool">
+                <div class="schoolenrolled">
+                    Current school(s) enrolled
+                </div>
+                <div class="greenicon"></div>
             </div>
-            <div class="greenicon"></div>
-        </div>
-        <div style="clear:both;"/>
+
+        <div style="clear:both;" />
     </div>
+
     <table class="table  table-green table-schools">
         <tr class="table-green-header">
             <th class="tdleft">

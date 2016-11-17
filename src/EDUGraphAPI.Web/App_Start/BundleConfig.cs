@@ -27,6 +27,8 @@ namespace EDUGraphAPI.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/site").Include(
+          "~/Scripts/site.js"));
             bundles.Add(new ScriptBundle("~/bundles/section").Include(
           "~/Scripts/Sections.js"));
         }

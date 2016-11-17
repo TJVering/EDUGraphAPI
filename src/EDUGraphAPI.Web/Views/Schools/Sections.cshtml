@@ -6,53 +6,47 @@
 }
 <div class="row schools">
     <div class="tophero">
-        <div class="container">
-            <div class="col-md-6 secondnav">
+
+        <div class="col-md-6">
+            <div class="secondnav">
                 <a href="/schools"> All Schools</a> > @Model.School.Name
             </div>
-            <div class="col-md-6 displayname">
-                @Model.School.Name
-            </div>
-        </div>
-        <div class="container">
-            <div class="col-md-6 a-heading ">
+            <div class="a-heading">
                 Classes
             </div>
-            <div class="col-md-6 ">
-                <div class="infocontainer">
-                    <div class="infoheader">
-                        Address
-                    </div>
-                    <div class="infobody">
-                        @Model.School.Address
-                    </div>
+        </div>
+        <div class="col-md-6 toptiles">
+            <div class="infocontainer">
+                <div class="infoheader">
+                    Address
                 </div>
-
-
-                <div class="infocontainer">
-
-                    <div class="infoheader">
-                        PRINCIPAL
-                    </div>
-                    <div class="infobody">
-                        @Model.School.PrincipalName
-                    </div>
+                <div class="infobody">
+                    @Model.School.Address
                 </div>
+            </div>
 
-                <div class="infocontainer">
-                    <div class="infoheader">
-                        Grade level
-                    </div>
-                    <div class="infobody">
-                        @Model.School.LowestGrade - @Model.School.HighestGrade
-                    </div>
+
+            <div class="infocontainer">
+
+                <div class="infoheader">
+                    PRINCIPAL
+                </div>
+                <div class="infobody">
+                    @Model.School.PrincipalName
+                </div>
+            </div>
+
+            <div class="infocontainer">
+                <div class="infoheader">
+                    Grade level
+                </div>
+                <div class="infobody">
+                    @Model.School.LowestGrade - @Model.School.HighestGrade
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="col-md-6 sectionschoolname">
-                
-            </div>
+        <div >
+
             <div class="col-md-6 mysection section-link-container">
                 VIEW:
                 @Html.ActionLink("My Classes", "MySections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
@@ -108,7 +102,7 @@
             <div class="tile-container">
                 @if (Model.IsMy(s))
                 {
-                    <a href="@Url.Action("SectionDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
+                    <a class="mysectionlink" href="@Url.Action("SectionDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
                         @Tile(s)
                     </a>
                 }
