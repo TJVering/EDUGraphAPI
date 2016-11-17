@@ -29,6 +29,8 @@ namespace EDUGraphAPI.Web
 
             bundles.Add(new StyleBundle("~/Content/login").Include(
           "~/Content/login.css"));
+            bundles.Add(new StyleBundle("~/Content/register").Include(
+            "~/Content/register.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
           "~/Scripts/site.js"));

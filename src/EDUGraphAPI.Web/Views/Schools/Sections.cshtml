@@ -114,6 +114,8 @@
                     @Tile(s)
                 }
                 <div class="detail">
+                    <h5>Course Id:</h5>
+                    <h6>@s.CourseId</h6>
                     <h5>Description:</h5>
                     <h6>@s.CourseDescription</h6>
                     <h5>Teachers:</h5>
@@ -142,7 +144,7 @@
 @helper Tile(Section section)
 {
     <div class="tile">
-        <h5>@(section.DisplayName)</h5>
+        <h5>Intro to @(section.DisplayName)</h5>
         <h2>@(section.CombinedCourseNumber)</h2>
     </div>
 }
