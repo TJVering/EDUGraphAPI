@@ -5,7 +5,7 @@ using System.Reflection;
 namespace EDUGraphAPI.Web.Infrastructure
 {
     /// <summary>
-    /// This SimpleMapper is inefficiency, and should not be used in production environment.
+    /// This SimpleMapper is inefficient, and should not be used in production environment.
     /// </summary>
     public static class SimpleMapper
     {

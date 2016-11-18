@@ -1,8 +1,8 @@
 ﻿.body-content{background-image:url('/Images/longin-bg.jpg') ; background-size:cover; margin:0;width:100%;}
 .container>div.row{background-color:transparent;}
-.loginbody{width:1170px;margin:auto;padding:110px 15px 0 15px;}
+.loginbody{margin:auto;padding:110px 15px 0 15px;}
 .loginbody > .row{padding:0 20px 0 115px;}
-.btn-ms-login{border:none;background-color:transparent;background-image:url('/Images/SignInWithMS-Button.png');width:230px;height:40px;}
+.btn-ms-login{border:none;background-color:transparent;background-image:url('/Images/SignInWithOffice365-Button.png');width:234px;height:40px;}
 .margin-btm-20{margin-bottom:20px;}
 .margin-left-20{margin-left:20px;}
 .rememberme{margin-left:20px;}

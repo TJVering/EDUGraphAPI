@@ -59,10 +59,10 @@ namespace EDUGraphAPI.Web.Controllers
             var graphClient = new AADGraphClient(activeDirectoryClient);
             var tenant = await graphClient.GetTenantAsync(authResult.TenantId);
 
-            // Create (or update) a organization, and make it as AdminConsented
+            // Create (or update) an organization, and make it as AdminConsented
             await applicationService.CreateOrUpdateOrganizationAsync(tenant, true);
 
-            TempData["Message"] = "You siged up successfully!";
+            TempData["Message"] = "You signed up successfully!";
             return RedirectToAction("Index");
         }
 

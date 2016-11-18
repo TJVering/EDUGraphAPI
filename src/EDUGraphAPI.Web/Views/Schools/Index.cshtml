@@ -10,6 +10,10 @@
             </div>
         </div>
         <div class="col-md-6 schooltiles">
+            @if (!string.IsNullOrEmpty(Model.UserId))
+            {
+
+          
             <div class="infocontainer">
 
                 <div class="infoheader">
@@ -28,7 +32,7 @@
                 </div>
             </div>
 
-
+            }
         </div>
 
             <div class="container myschool">

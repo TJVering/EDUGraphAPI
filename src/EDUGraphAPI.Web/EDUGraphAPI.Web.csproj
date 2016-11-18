@@ -291,7 +291,7 @@
     <Content Include="Images\contaerbg.gif" />
     <Content Include="Images\longin-bg.jpg" />
     <Content Include="Images\microsoft-icon.png" />
-    <Content Include="Images\SignInWithMS-Button.png" />
+    <Content Include="Images\SignInWithOffice365-Button.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
