@@ -10,7 +10,7 @@ namespace EDUGraphAPI.Web.Infrastructure
         {
             var applicationService = DependencyResolver.Current.GetService<ApplicationService>();
             var user = applicationService.GetUserContext();
-            return user.IsLinked || user.IsO365Account;
+            return user.AreAccountsLinked || user.IsO365Account;
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

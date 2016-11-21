@@ -149,7 +149,7 @@
                     @foreach (var doc in Model.DriveItems)
                     {
                         <tr class="tr-content">
-                            <td><a href="@doc.WebUrl">@doc.Name</a></td>
+                            <td><a target="_blank"  href="@doc.WebUrl">@doc.Name</a></td>
                         </tr>
                     }
                 </table>
@@ -165,11 +165,11 @@
                 @foreach (var con in Model.Conversations)
                 {
                     <tr class="tr-content">
-                        <td><a href="@Model.SeeMoreConversationsUrl">@con.Topic</a></td>
+                        <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}",Model.SeeMoreConversationsUrl,Uri.EscapeDataString(con.Id).Replace("_","%2B")) ">@con.Topic</a></td>
                     </tr>
                 }
                 </table>
-                <span class="see-more"><a href="@Model.SeeMoreConversationsUrl">See More</a></span>
+                <span class="see-more"><a target="_blank"  href="@Model.SeeMoreConversationsUrl">See More</a></span>
             </div>
         </div>
     </div>

@@ -20,6 +20,11 @@ namespace Microsoft.Education
         }
 
         #region schools
+        /// <summary>
+        /// Get all schools that exist in the Azure Active Directory tenant. 
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-all-schools
+        /// </summary>
+        /// <returns></returns>
         public async Task<School[]> GetSchoolsAsync()
         {
             var schools = await HttpGetArrayAsync<School>("administrativeUnits?api-version=beta");
@@ -37,6 +42,12 @@ namespace Microsoft.Education
             return schools;
         }
 
+        /// <summary>
+        /// Get a school by using the object_id.
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-a-school.
+        /// </summary>
+        /// <param name="objectId">The Object ID of the school administrative unit in Azure Active Directory.</param>
+        /// <returns></returns>
         public Task<School> GetSchoolAsync(string objectId)
         {
             return HttpGetObjectAsync<School>($"administrativeUnits/{objectId}?api-version=beta");
@@ -45,6 +56,12 @@ namespace Microsoft.Education
         #endregion
 
         #region sections
+        /// <summary>
+        /// Get sections within a school.
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-sections-within-a-school.
+        /// </summary>
+        /// <param name="schoolId">The ID of the school in the School Information System (SIS).</param>
+        /// <returns></returns>
         public Task<Section[]> GetAllSectionsAsync(string schoolId)
         {
             var relativeUrl = $"/groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
@@ -53,7 +70,10 @@ namespace Microsoft.Education
 
         public async Task<Section[]> GetMySectionsAsync(string schoolId)
         {
+            //You can get the membership of the student using the query below.
+            //Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-section-of-a-student.
             var me = await HttpGetObjectAsync<SectionUser>("/me?api-version=1.5");
+
             var sections = await GetAllSectionsAsync(schoolId);
 
             return sections
@@ -61,11 +81,14 @@ namespace Microsoft.Education
                 .ToArray();
         }
 
-        public Task<SectionUser[]> GetSectionUsersAsync(string sectionId)
-        {
-            return HttpGetArrayAsync<SectionUser>($"groups/{sectionId}/members?api-version=beta");
-        }
 
+
+        /// <summary>
+        /// Get a section by using the object_id.
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/section-rest-operations#get-a-section.
+        /// </summary>
+        /// <param name="sectionId">The Object ID of the section group in Azure Active Directory.</param>
+        /// <returns></returns>
         public async Task<Section> GetSectionAsync(string sectionId)
         {
             return await HttpGetObjectAsync<Section>($"groups/{sectionId}?api-version=beta&$expand=members");
@@ -74,11 +97,21 @@ namespace Microsoft.Education
         #endregion
 
         #region student and teacher
+        /// <summary>
+        /// You can get the current logged in user and check if that user is a student.
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-current-user.
+        /// </summary>
+        /// <returns></returns>
         public Task<Student> GetStudentAsync()
         {
             return HttpGetObjectAsync<Student>("me?api-version=1.5");
         }
 
+        /// <summary>
+        /// You can get the current logged in user and check if that user is a student.
+        /// Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-current-user.
+        /// </summary>
+        /// <returns></returns>
         public Task<Teacher> GetTeacherAsync()
         {
             return HttpGetObjectAsync<Teacher>("me?api-version=1.5");

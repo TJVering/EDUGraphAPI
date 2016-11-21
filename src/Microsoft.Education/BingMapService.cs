@@ -16,6 +16,14 @@ namespace Microsoft.Education
     {
         private string BingMapApiURL = 
             "http://dev.virtualearth.net/REST/v1/Locations/US/{0}?output=json&key="+ WebConfigurationManager.AppSettings["BingMapKey"];
+
+
+        /// <summary>
+        /// Get longitude and latitude based on address.
+        /// Reference URL: https://msdn.microsoft.com/en-us/library/ff701711.aspx.
+        /// </summary>
+        /// <param name="address">Address to get longitude and latitude.</param>
+        /// <returns></returns>
         public async Task<List<string>> GetLongitudeAndLatitudeByAddress(string address)
         {
             List<string> result =new List<string>(2) ;
