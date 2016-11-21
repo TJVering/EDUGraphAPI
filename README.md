@@ -20,10 +20,6 @@ EDUGraphAPI  is a sample that demonstrates:
 
 EDUGraphAPI is based on ASP.NET MVC. [ASP.NET Identity](https://www.asp.net/identity) is used in this project.
 
-## Documentation
-
-
-
 ## How To: Configure your Development Environment
 
 Download and install the following tools to run, build and/or develop this application locally.
@@ -70,7 +66,7 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/bing-maps-key.png)
 
-	>**Note:** The key is used in a subsequent step.
+   >**Note:** The key is used in a subsequent step.
 
 **Create an Application in you AAD**
 
@@ -115,10 +111,10 @@ Download and install the following tools to run, build and/or develop this appli
 
 11. Configure the following **permissions to other applications**.
 
-   |                                | Application Permissions       | Delegated Permissions                    |
-   | ------------------------------ | ----------------------------- | ---------------------------------------- |
-   | Windows Azure Active Directory | Read and write directory data | Sign in and read user profile<br>Read and write directory data |
-   | Microsoft Graph                | *None*                        | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
+|                                | Application Permissions       | Delegated Permissions                    |
+| ------------------------------ | ----------------------------- | ---------------------------------------- |
+| Windows Azure Active Directory | Read and write directory data | Sign in and read user profile<br>Read and write directory data |
+| Microsoft Graph                | *None*                        | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
 
 12. In the keys section, click the dropdown list and select a duration, then click **Save**.
 
@@ -146,37 +142,100 @@ Download and install the following tools to run, build and/or develop this appli
 
 5. Click **Purchase**.
 
+## Documentation
+
+### Introduction
+
+**EDUGraphAPI.Web**
+
+This web project is base on a ASP.NET MVC application with the **Individual User Accounts** selected. 
+
+![](Images/mvc-auth-individual-user-accounts.png)
+
+The following files were created by the MVC template, and we only change them a little bit.
+
+1. **/App_Start/Startup.Auth.Identity.cs** (The original name is Startup.Auth.cs)
+2. **/Controllers/AccountController.cs**
+
+This sample project uses [ASP.NET Identity](https://www.asp.net/identity) and [Owin](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/owin). The 2 technologies make different kinds of authentication coexist easily. Please get familiar them first.
+
+Below are the important class files used in this web project:
+
+| File                              | Description                              |
+| --------------------------------- | ---------------------------------------- |
+| /App_Start/Startup.Auth.AAD.cs    | Integrates with Azure Active Directory authentication |
+| /Controllers/AdminController.cs   | Contains the administrative actions      |
+| /Controllers/LinkController.cs    | Contains the actions to link user accounts |
+| /Conrrollers/SchoolsController.cs | Contains the actions to show school data |
+
+**EDUGraphAPI.SyncData**
+
+This is the WebJob used to sync user data.
+
+**EDUGraphAPI.Common**
+
+The class library project is used both the **EDUGraphAPI.Web** and **EDUGraphAPI.Common**. 
+
+The table below shows the folders in the project:
+
+| Folder             | Description                              |
+| ------------------ | ---------------------------------------- |
+| /Data              | Contains ApplicationDbContext and entity classes |
+| /DataSync          | Contains the UserSyncSerextensionsvice class which is used in the EDUGraphAPI.SyncData WebJob |
+| /DifferentialQuery | Contains the DifferentialQueryService class which is used to send differential query and parse the result. |
+| /Extensions        | Contains lots of extension methods which simplify coding the make code easy to read |
+| /Utils             | Contains the wide used class AuthenticationHelper.cs |
+
+**Microsoft.Education**
+
+This project encapsulates the [Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations). The most important class in this project is EducationServiceClient.
+
+### Database
+
+**ApplicationUsers**
+
+| Column | Description |
+| ------ | ----------- |
+|        |             |
+|        |             |
+|        |             |
+|        |             |
+
+**ApplicationRoles**
+
+
+
+**Organizations**
+
+
+
 ### Authentication flows
 
-This sample allows users to login in with either a local account or an Office 365 account, then connect to the other account.
+There are 4 authentication flows in this project.
 
-**User Login Local**
+The first 2 flows enable users to login in with either a local account or an Office 365 account, then link to the other account.
 
-To run this sample, you should register a new user first. After registering, the app will log you in automatically.
+**Local Login Authentication Flow**
 
-....
+![](Images/auth-flow-local-login.png)
 
-**Multi-tenant application**
+**O365 Login Authentication Flow**
 
-admin consent
+![](Images/auth-flow-o365-login.png)
 
-**Authentication Helper**
+**Admin Login Authentication Flow**
 
+![](Images/auth-flow-admin-login.png)
 
+**Application Authentication Flow**
 
-**Microsoft Azure Active Directory Graph API**
+![](Images/auth-flow-app-login.png)
 
-Get current user
+### Two Kinds of Graph API
 
-Get current tenant
+![](Images/class-diagram-graphs.png)
 
-**Microsoft Graph API**
-
-Get current user
-
-Get current tenant
-
-
+...
 
 ### Office 365 Education Data
 
@@ -193,16 +252,13 @@ Get current tenant
 2. Get sections
 
 
-
-**Differential query**
-
-
-
-## How To: Configure your Development Environment
+### Differential query
 
 
 
+### Other
 
+Multi-tenant application ...
 
 
 
