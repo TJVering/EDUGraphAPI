@@ -1,16 +1,19 @@
 ﻿.body-content{background-image:url('/Images/longin-bg.jpg') ; background-size:cover; margin:0;width:100%;}
 .container>div.row{background-color:transparent;}
-.loginbody{margin:auto;padding:110px 15px 0 15px;}
+.loginbody{margin:auto;padding:110px 15px 0 15px;max-width:1200px;}
 .loginbody > .row{padding:0 20px 0 115px;}
 .btn-ms-login{border:none;background-color:transparent;background-image:url('/Images/SignInWithOffice365-Button.png');width:234px;height:40px;}
 .margin-btm-20{margin-bottom:20px;}
 .margin-left-20{margin-left:20px;}
 .rememberme{margin-left:20px;}
-.btn-local-login{margin: 20px 0 5px 0;text-transform:uppercase;background-color:#237e17;color:white;}
+.btn-local-login{margin: 20px 0 5px 0;text-transform:uppercase;background-color:#237e17;color:white;width:95px;height:33px;text-align:center;}
 .form-group{margin-bottom:20px;}
-.form-control{width:380px;height:36px;border-radius:5px;border:1px solid #acacac;font-size:16px;}
-.registerlink,.registerlink:hover{color:#4b67f8;font-size:16px;font-family:Arial, Helvetica, sans-serif;}
-h4{color:#000000;font-size:16px;font-family:Arial, Helvetica, sans-serif;}
+.form-control{border-radius:5px;border:1px solid #acacac;font-size:16px;}
+::-moz-placeholder { color: #f3f3f3 !important; font-style:italic; }
+::-webkit-input-placeholder { color:#f3f3f3 !important;font-style:italic; }
+:-ms-input-placeholder { color:#f3f3f3 !important; font-style:italic;}
+.registerlink,.registerlink:hover{color:#4b67f8;font-size:16px;font-family:Helvetica Neue LT Std,Arial, Helvetica, sans-serif;}
+h4{color:#000000;font-size:16px;font-family:Helvetica Neue LT Std, Arial, Helvetica, sans-serif;}
 input::-webkit-input-placeholder {
     font-style:italic;
    font-size:16px;
@@ -22,3 +25,5 @@ input::-moz-placeholder {
    color:#f3f3f3;
 }
 .navbar-right, .navbar-nav{display:none;}
+#loginForm a{color:#4B67F8;font-size:16px;}
+.logincontrol{width:380px !important;height:36px;max-width:380px;}

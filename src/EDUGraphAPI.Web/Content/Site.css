@@ -168,7 +168,11 @@ textarea {
 .userinfo{height:50px;line-height:50px;}
 .popupcontainer{position:relative;display:none;}
 .popuserinfo{position:absolute;top:-10px;z-index:999;background-color:white;padding:15px 0;
-             width:200px;border:1px solid #dedede;box-sizing: border-box;left:-70px;}
+             width:200px;border:1px solid #dedede;box-sizing: border-box;left:-65px;}
+@-moz-document url-prefix() 
+{   
+.popuserinfo{left:-85px;}
+}
 .subitem{float:left;width:100%;}
 .subitem a{color:black;text-decoration:none;width:100%;height:100%;display:block;padding:10px 0 10px 20px;}
 .subitem:hover{background-color:#237e17;color:white;}

@@ -15,6 +15,8 @@ namespace EDUGraphAPI.Web.Controllers
             this.applicationService = applicationService;
         }
 
+        //
+        // GET: /Home/Index
         public async Task<ActionResult> Index()
         {
             var context = await applicationService.GetUserContextAsync();
@@ -27,6 +29,8 @@ namespace EDUGraphAPI.Web.Controllers
             return View(context);
         }
 
+        //
+        // GET: /Home/About
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -34,6 +38,8 @@ namespace EDUGraphAPI.Web.Controllers
             return View();
         }
 
+        //
+        // GET: /Home/Contact
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

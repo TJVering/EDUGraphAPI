@@ -17,6 +17,8 @@ namespace EDUGraphAPI
 
         public static readonly string O365GroupConversationsUrl = "https://outlook.office.com/owa/?path=/group/{0}";
 
+        public static readonly string AADCompanyAdminRoleName = "Company Administrator";
+
         public static class Resources
         {
             public static readonly string AADGraph = "https://graph.windows.net";

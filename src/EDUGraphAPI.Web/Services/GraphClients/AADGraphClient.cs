@@ -18,14 +18,13 @@ namespace EDUGraphAPI.Web.Services.GraphClients
         public async Task<UserInfo> GetCurrentUserAsync()
         {
             var me = await activeDirectoryClient.Me.ExecuteAsync();
-
             return new UserInfo
             {
                 Id = me.ObjectId,
                 GivenName = me.GivenName,
                 Surname = me.Surname,
                 UserPrincipalName = me.UserPrincipalName,
-                Roles = GetRoles(me).ToArray()
+                Roles = await GetRolesAsync(me)
             };
         }
 
@@ -34,7 +33,6 @@ namespace EDUGraphAPI.Web.Services.GraphClients
             var tenant = await activeDirectoryClient.TenantDetails
                 .Where(i => i.ObjectId == tenantId)
                 .ExecuteSingleAsync();
-
             return new TenantInfo
             {
                 Id = tenant.ObjectId,
@@ -42,14 +40,27 @@ namespace EDUGraphAPI.Web.Services.GraphClients
             };
         }
 
-        private IEnumerable<string> GetRoles(IUser user)
+        private async Task<string[]> GetRolesAsync(IUser user)
         {
-            if (user.GivenName.ToLower().Contains("admin")) // TODO: Check if current user is admin
-                yield return Constants.Roles.Admin;
+            var roles = new List<string>();
+            var directoryAdminRole = await GetDirectoryAdminRoleAsync();
+            if (await directoryAdminRole.Members.AnyAsync(i => i.ObjectId == user.ObjectId))
+                roles.Add(Constants.Roles.Admin);
             if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Faculty))
-                yield return Constants.Roles.Faculty;
+                roles.Add(Constants.Roles.Faculty);
             if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Student))
-                yield return Constants.Roles.Student;
+                roles.Add(Constants.Roles.Student);
+            return roles.ToArray();
+        }
+
+        private async Task<IDirectoryRole> GetDirectoryAdminRoleAsync()
+        {
+            var roles = await activeDirectoryClient.DirectoryRoles
+               .Expand(i => i.Members)
+               .ExecuteAllAsync();
+            return roles
+                .Where(i => i.DisplayName == Constants.AADCompanyAdminRoleName)
+                .FirstOrDefault();
         }
     }
 }

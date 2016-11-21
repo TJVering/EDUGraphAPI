@@ -23,12 +23,16 @@ namespace EDUGraphAPI.Web.Controllers
             this.applicationService = applicationService;
         }
 
+        //
+        // GET: /Admin/Index
         public async Task<ActionResult> Index()
         {
             var adminContext = await applicationService.GetAdminContextAsync();
             return View(adminContext);
         }
 
+        //
+        // POST: /Admin/SignUp
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> SignUp()
         {
@@ -45,6 +49,8 @@ namespace EDUGraphAPI.Web.Controllers
             return new RedirectResult(authorizationUrl);
         }
 
+        //
+        // GET: /Admin/ProcessCode
         public async Task<ActionResult> ProcessCode(string code, string error, string error_description, string resource, string state)
         {
             if (TempData[StateKey] as string != state)
@@ -66,19 +72,24 @@ namespace EDUGraphAPI.Web.Controllers
             return RedirectToAction("Index");
         }
 
-
+        //
+        // GET: /Admin/LinkedAccounts
         public async Task<ActionResult> LinkedAccounts()
         {
             var users = await applicationService.GetLinkedUsers();
             return View(users);
         }
 
+        //
+        // GET: /Admin/UnlinkAccounts
         public async Task<ActionResult> UnlinkAccounts(string id)
         {
             var user = await applicationService.GetUserAsync(id);
             return View(user);
         }
 
+        //
+        // POST: /Admin/UnlinkAccounts
         [HttpPost, ValidateAntiForgeryToken, ActionName("UnlinkAccounts")]
         public async Task<ActionResult> UnlinkAccountsPost(string id)
         {
@@ -86,6 +97,8 @@ namespace EDUGraphAPI.Web.Controllers
             return RedirectToAction("LinkedAccounts");
         }
 
+        //
+        // POST: /Admin/InstallApp
         [HttpPost]
         public async Task<ActionResult> InstallApp()
         {
@@ -124,12 +137,9 @@ namespace EDUGraphAPI.Web.Controllers
                 {
                     await userFetcher.AppRoleAssignments.AddAppRoleAssignmentAsync(appRoleAssignment);
                 }
-                catch (DataServiceRequestException ex)
+                catch (DataServiceRequestException)
                 {
-                    var isIdNullException = ex.InnerException is InvalidOperationException &&
-                        ex.InnerException.Message.Contains("A null value was found for the property named 'id', which has the expected type 'Edm.Guid[Nullable=False]");
-                    if (isIdNullException) { /* Actually, the AppRoleAssignment was added. We just ignore the exception. */ }
-                    else throw;
+                    // Ignore this exception.
                 }
                 catch (ODataErrorException)
                 {

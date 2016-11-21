@@ -2,9 +2,8 @@
 using Microsoft.Azure.ActiveDirectory.GraphClient.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.Graph;
+using System.Threading.Tasks;
 
 namespace EDUGraphAPI
 {
@@ -30,6 +29,12 @@ namespace EDUGraphAPI
             return list.ToArray();
         }
 
+        public static async Task<T[]> ExecuteAllAsync<T>(this IReadOnlyQueryableSet<T> set)
+        {
+            var pagedCollection = await set.ExecuteAsync();
+            return await ExecuteAllAsync(pagedCollection);
+        }
+
         public static async Task<bool> AnyAsync<T>(this IPagedCollection<T> collection, Func<T, bool> predicate)
         {
             var c = collection;
@@ -46,34 +51,6 @@ namespace EDUGraphAPI
         {
             var items = await set.Take(1).ExecuteAsync();
             return items.CurrentPage.FirstOrDefault();
-        }
-
-        public static async Task<Conversation[]> GetAllAsync(this IGroupConversationsCollectionRequest request)
-        {
-            var collectionPage = await request.GetAsync();
-            return await GetAllAsync(collectionPage);
-        }
-
-        public static async Task<DriveItem[]> GetAllAsync(this IDriveItemChildrenCollectionRequest request)
-        {
-            var collectionPage = await request.GetAsync();
-            return await GetAllAsync(collectionPage);
-        }
-
-        private static async Task<TItem[]> GetAllAsync<TItem>(ICollectionPage<TItem> collectionPage)
-        {
-            var list = new List<TItem>();
-
-            dynamic page = collectionPage;
-            do
-            {
-                list.AddRange(page.CurrentPage);
-                if (page.NextPageRequest == null) break;
-                page = await page.NextPageRequest.GetAsync();
-            }
-            while (true);
-
-            return list.ToArray();
         }
     }
 }

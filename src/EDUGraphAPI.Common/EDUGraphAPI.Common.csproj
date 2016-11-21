@@ -117,8 +117,9 @@
     <Compile Include="DifferentialQuery\IDeltaEntity.cs" />
     <Compile Include="Extensions\AuthenticationResultExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
-    <Compile Include="Extensions\GraphExtensions.cs" />
+    <Compile Include="Extensions\AADGraphExtensions.cs" />
     <Compile Include="Extensions\IdentityExtension.cs" />
+    <Compile Include="Extensions\MSGraphExtension.cs" />
     <Compile Include="Infrastructure\BearerAuthenticationProvider.cs" />
     <Compile Include="Infrastructure\SimpleMapper.cs" />
     <Compile Include="Migrations\Configuration.cs" />

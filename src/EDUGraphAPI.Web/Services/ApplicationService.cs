@@ -132,8 +132,10 @@ namespace EDUGraphAPI.Web.Services
             user.O365UserId = null;
             await dbContext.SaveChangesAsync();
 
-            // remove roles ?
-            // userManager.RemoveFromRolesAsync(user.Id, )
+            var rolesToRemove = (await userManager.GetRolesAsync(user.Id))
+                .Union(new [] { Constants.Roles.Admin, Constants.Roles.Faculty, Constants.Roles.Student })
+                .ToArray();
+            await userManager.RemoveFromRolesAsync(user.Id, rolesToRemove);
         }
 
 

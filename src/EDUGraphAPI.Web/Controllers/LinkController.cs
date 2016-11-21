@@ -31,12 +31,16 @@ namespace EDUGraphAPI.Web.Controllers
             this.signInManager = signInManager;
         }
 
+        //
+        // GET: /Link/Index
         public async Task<ActionResult> Index()
         {
             var userContext = await applicationService.GetUserContextAsync();
             return View(userContext);
         }
 
+        //
+        // POST: /Link/LoginO365
         [HttpPost, ValidateAntiForgeryToken]
         public ActionResult LoginO365()
         {
@@ -48,6 +52,8 @@ namespace EDUGraphAPI.Web.Controllers
             return new RedirectResult(authorizationUrl);
         }
 
+        //
+        // GET: /Link/ProcessCode
         public async Task<ActionResult> ProcessCode(string code, string error, string error_description, string resource, string state)
         {
             if (TempData[StateKey] as string != state)
@@ -83,11 +89,15 @@ namespace EDUGraphAPI.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //
+        // GET: /Link/LoginLocal
         public ActionResult LoginLocal()
         {
             return View();
         }
 
+        //
+        // POST: /Link/LoginLocalPost
         [HttpPost, ActionName("LoginLocal"), ValidateAntiForgeryToken]
         public async Task<ActionResult> LoginLocalPost(LoginViewModel model)
         {
@@ -117,6 +127,8 @@ namespace EDUGraphAPI.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        //
+        // GET: /Link/CreateLocalAccount
         public async Task<ActionResult> CreateLocalAccount()
         {
             var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
@@ -131,6 +143,8 @@ namespace EDUGraphAPI.Web.Controllers
             return View(viewModel);
         }
 
+        //
+        // POST: /Link/CreateLocalAccount
         [HttpPost, ActionName("CreateLocalAccount"), ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateLocalAccountPost(EducationRegisterViewModel model)
         {
@@ -166,12 +180,16 @@ namespace EDUGraphAPI.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        //
+        // GET: /Link/LoginO365Required
         public ActionResult LoginO365Required(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
 
+        //
+        // GET: /Link/ReLoginO365
         public ActionResult ReLoginO365(string returnUrl)
         {
             HttpContext.GetOwinContext().Authentication.Challenge(

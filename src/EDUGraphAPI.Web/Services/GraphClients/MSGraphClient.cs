@@ -26,17 +26,13 @@ namespace EDUGraphAPI.Web.Services.GraphClients
                 GivenName = me.GivenName,
                 Surname = me.Surname,
                 UserPrincipalName = me.UserPrincipalName,
-                Roles = GetRoles(me).ToArray()
+                Roles = await GetRolesAsync(me)
             };
         }
 
         public async Task<TenantInfo> GetTenantAsync(string tenantId)
         {
-            var tenants = await graphServiceClient.Organization.Request()
-                .Filter($"id eq '{tenantId}'")
-                .Top(1)
-                .GetAsync();
-            var tenant = tenants.CurrentPage.FirstOrDefault();
+            var tenant = await graphServiceClient.Organization[tenantId].Request().GetAsync();
             return new TenantInfo
             {
                 Id = tenant.Id,
@@ -44,14 +40,27 @@ namespace EDUGraphAPI.Web.Services.GraphClients
             };
         }
 
-        public IEnumerable<string> GetRoles(User user)
+        public async Task<string[]> GetRolesAsync(User user)
         {
-            if (user.GivenName.ToLower().Contains("admin")) // TODO: Check if current user is admin
-                yield return Constants.Roles.Admin;
+            var roles = new List<string>();
+            var directoryAdminRole = await GetDirectoryAdminRoleAsync();
+            if (await directoryAdminRole.Members.AnyAsync(i => i.Id == user.Id))
+                roles.Add(Constants.Roles.Admin);
             if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Faculty))
-                yield return Constants.Roles.Faculty;
+                roles.Add(Constants.Roles.Faculty);
             if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Student))
-                yield return Constants.Roles.Student;
+                roles.Add(Constants.Roles.Student);
+            return roles.ToArray();
+        }
+
+        private async Task<DirectoryRole> GetDirectoryAdminRoleAsync()
+        {
+            var roles = await graphServiceClient.DirectoryRoles.Request()
+                .Expand(i => i.Members)
+                .GetAllAsync();
+            return roles
+                .Where(i => i.DisplayName == Constants.AADCompanyAdminRoleName)
+                .FirstOrDefault();
         }
     }
 }
