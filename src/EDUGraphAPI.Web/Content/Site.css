@@ -97,18 +97,19 @@ textarea {
 .table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
 .table-green .table-green-header{ background:#237e17;color:white; border-bottom: 1px solid #237e17}
 .table-green .table-green-header th{text-transform:uppercase;}
-.table-green .tdleft{border-left:12px solid #237e17;border-collapse:inherit;   }
+.table-green .tdleft{border-collapse:inherit;   }
 .table-green .table-green-header th{padding:20px 0 20px 6px ;border-top:0; border-bottom: 1px solid #237e17}
-.table-green .td-green{border-left:12px solid #1fe405;}
 .table-green .tr-content td{padding-top:20px;padding-bottom:20px;}
 .table-green > tbody > tr > td{border-top:none;}
 .table-schools th, .table-schools .tr-content td {
     width: 20%;
 }
-.table-schools th:nth-child(4),.table-schools .tr-content td:nth-child(4) {
+.table-green .td-green{ background-color: #1fe405;}
+.table-green .tr-content >td:nth-child(1), .table-green-header th:nth-child(1) {width:2px;padding:0 5px;}
+.table-schools th:nth-child(5),.table-schools .tr-content td:nth-child(5) {
     width: 40%;
 }
-.table-studnet tr td:nth-child(1),.table-studnet tr th:nth-child(1){width:30%;}
+.table-studnet tr td:nth-child(1),.table-studnet tr th:nth-child(1){width:30%;padding:20px 8px !important;}
 
 .ignore{display:none;}
 .container>div.row{height:100%;background-color:#fff;}
@@ -178,6 +179,9 @@ textarea {
 .subitem a{color:black;text-decoration:none;width:100%;height:100%;display:block;padding:10px 0 10px 20px;}
 .subitem:hover{background-color:#237e17;color:white;}
 .subitem a:hover{color:white;}
-.container {
-    width: 1170px;
-}
+.container {width: 1170px;}
+
+.mygroups b{float:left;}
+.mygroups div{float:left;margin-left:6px;}
+.margin-btm-12{margin-bottom:12px;}
+.margin-top-12{margin-top:12px;}

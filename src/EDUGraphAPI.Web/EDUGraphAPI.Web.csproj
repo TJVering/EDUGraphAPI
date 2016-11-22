@@ -244,6 +244,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\SchoolsController.cs" />
     <Compile Include="Infrastructure\LinkedOrO365UsersOnlyAttribute.cs" />
+    <Compile Include="Models\AboutMeViewModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\TenantInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -365,12 +366,13 @@
     <Content Include="Views\Admin\LinkedAccounts.cshtml" />
     <Content Include="Views\Admin\UnlinkAccounts.cshtml" />
     <Content Include="Views\Schools\Index.cshtml" />
-    <Content Include="Views\Schools\SectionDetails.cshtml" />
-    <Content Include="Views\Schools\Sections.cshtml" />
+    <Content Include="Views\Schools\ClassDetails.cshtml" />
+    <Content Include="Views\Schools\Classes.cshtml" />
     <Content Include="Views\Link\LoginO365Required.cshtml" />
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Shared\NoAccess.cshtml" />
     <Content Include="Services\GraphClients\GraphClients.cd" />
+    <Content Include="Views\Manage\Aboutme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

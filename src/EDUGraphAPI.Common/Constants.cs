@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 
 namespace EDUGraphAPI
 {
@@ -19,6 +21,7 @@ namespace EDUGraphAPI
 
         public static readonly string AADCompanyAdminRoleName = "Company Administrator";
 
+        public static readonly List<string> FavoriteColors = ConfigurationManager.AppSettings["FavoriteColors"].ToString().Split(',').ToList();
         public static class Resources
         {
             public static readonly string AADGraph = "https://graph.windows.net";

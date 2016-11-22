@@ -1,6 +1,6 @@
 ﻿@model SchoolsViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ALL SCHOOLS";
 }
 <div class="row schools">
     <div class="tophero">
@@ -47,6 +47,7 @@
 
     <table class="table  table-green table-schools">
         <tr class="table-green-header">
+            <th></th>
             <th class="tdleft">
                 School Name
             </th>
@@ -59,7 +60,7 @@
             <th>
                 Address
             </th>
-  
+            
         </tr>
         @foreach (var school in Model.Schools)
     {
@@ -69,7 +70,8 @@
             style = "td-green";
         }
         <tr class="tr-content">
-            <td class="@style">@Html.ActionLink(school.Name, "Sections", null, new { schoolId = school.ObjectId  }, null)</td>
+            <td class="@style"></td>
+            <td >@Html.ActionLink(school.Name, "Classes", null, new { schoolId = school.ObjectId  }, null)</td>
             <td>@school.PrincipalName</td>
             <td>@school.LowestGrade - @school.HighestGrade</td>
             <td>

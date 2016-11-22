@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EDUGraphAPI.Web.Models
 {
@@ -12,5 +13,6 @@ namespace EDUGraphAPI.Web.Models
 
         [Display(Name = "Favorite color")]
         public string FavoriteColor { get; set; }
+        public List<string> FavoriteColors { get; set; }
     }
 }

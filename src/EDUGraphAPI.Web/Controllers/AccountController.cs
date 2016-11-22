@@ -3,9 +3,11 @@ using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -112,7 +114,9 @@ namespace EDUGraphAPI.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            EducationRegisterViewModel model = new EducationRegisterViewModel();
+            model.FavoriteColors = Constants.FavoriteColors;
+            return View(model);
         }
 
         //

@@ -7,13 +7,20 @@ using System.Threading.Tasks;
 
 namespace EDUGraphAPI
 {
-    public static class GraphExtensions
+    public static class AADGraphExtensions
     {
         public static async Task<IUser[]> ExecuteAllAsync(this IUserCollection collection)
         {
             var pagedCollection = await collection.ExecuteAsync();
             return await ExecuteAllAsync(pagedCollection);
         }
+
+        public static async Task<IDirectoryObject[]> ExecuteAllAsync(this IDirectoryObjectCollection collection)
+        {
+            var pagedCollection = await collection.ExecuteAsync();
+            return await ExecuteAllAsync(pagedCollection);
+        }
+        
 
         public static async Task<T[]> ExecuteAllAsync<T>(this IPagedCollection<T> collection)
         {

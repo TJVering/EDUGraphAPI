@@ -10,21 +10,21 @@ namespace EDUGraphAPI.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
             routes.MapRoute(
-                name: "Sections",
-                url: "Schools/{schoolId}/Sections",
-                defaults: new { controller = "Schools", action = "Sections" }
+                name: "Classes",
+                url: "Schools/{schoolId}/Classes",
+                defaults: new { controller = "Schools", action = "Classes" }
             );
 
             routes.MapRoute(
-                name: "MySections",
-                url: "Schools/{schoolId}/Sections/My",
-                defaults: new { controller = "Schools", action = "MySections" }
+                name: "MyClasses",
+                url: "Schools/{schoolId}/Classes/My",
+                defaults: new { controller = "Schools", action = "MyClasses" }
             );
 
             routes.MapRoute(
-                name: "SectionDetails",
-                url: "Schools/{schoolId}/Sections/{sectionId}",
-                defaults: new { controller = "Schools", action = "SectionDetails" }
+                name: "ClassDetails",
+                url: "Schools/{schoolId}/Classes/{sectionId}",
+                defaults: new { controller = "Schools", action = "ClassDetails" }
             );
 
             routes.MapRoute(

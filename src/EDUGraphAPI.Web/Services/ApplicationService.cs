@@ -60,6 +60,16 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
+
+        public void UpdateUserFavoriteColor(string color)
+        {
+            var user = GetCurrentUser();
+            if (user != null)
+            {
+                user.FavoriteColor = color;
+                dbContext.SaveChanges();
+            }
+        }
         
         public UserContext GetUserContext()
         {
@@ -83,6 +93,8 @@ namespace EDUGraphAPI.Web.Services
         {
             return dbContext.Users.AnyAsync(i => i.O365UserId == o365UserId);
         }
+
+
 
         public async Task UpdateLocalUserAsync(ApplicationUser localUser, UserInfo o365User, TenantInfo tenant)
         {

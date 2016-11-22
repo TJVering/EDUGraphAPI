@@ -16,9 +16,7 @@ namespace EDUGraphAPI.Data
 
         [ForeignKey("OrganizationId")]
         public virtual Organization Organization { get; set; }
-
-        public string Token { get; set; }
-
+        
         public string O365UserId { get; set; }
 
         public string O365Email { get; set; }

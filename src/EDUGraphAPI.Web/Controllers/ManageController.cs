@@ -1,7 +1,13 @@
-﻿using EDUGraphAPI.Web.Infrastructure;
+﻿using EDUGraphAPI.Utils;
+using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
+using EDUGraphAPI.Web.Services;
 using Microsoft.AspNet.Identity;
+using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -14,11 +20,13 @@ namespace EDUGraphAPI.Web.Controllers
     {
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
+        private ApplicationService applicationService;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationService applicationService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.applicationService = applicationService;
         }
 
         //
@@ -293,6 +301,36 @@ namespace EDUGraphAPI.Web.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
+        public async Task<ActionResult> Aboutme()
+        {
+            AboutMeViewModel model = new AboutMeViewModel();
+            var userContext = await applicationService.GetUserContextAsync();
+            model.Username =string.IsNullOrEmpty( userContext.User.FullName.Trim())? userContext.User.UserName: userContext.User.FullName;
+            model.MyFavoriteColor = userContext.User.FavoriteColor;
+            model.Groups = new List<string>();
+            model.FavoriteColors = Constants.FavoriteColors;
+            if (userContext.IsO365Account || userContext.AreAccountsLinked)
+            {
+                var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
+                var userFetcher = client.Users.GetByObjectId(userContext.User.O365UserId);
+               var groups = await userFetcher.MemberOf.ExecuteAllAsync();
+                foreach (Group item in groups)
+                {
+                    model.Groups.Add(item.DisplayName);
+                }
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<ActionResult> Aboutme(string favoritecolor)
+        {
+            if (!string.IsNullOrEmpty(favoritecolor))
+            {
+                var userContext = await applicationService.GetUserContextAsync();
+                 applicationService.UpdateUserFavoriteColor(favoritecolor);
+            }
+            return RedirectToAction("Aboutme");
+        }
         #region Helpers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";

@@ -1,6 +1,6 @@
 ﻿@model SectionDetailsViewModel
 @{
-    ViewBag.Title = "SectionDetail";
+    ViewBag.Title = "CLASS DETAILS";
     var teachersList = Model.Section.Teachers.ToList();
 }
 <div class="row schools">
@@ -8,7 +8,7 @@
         <div class="container">
             <div class="col-md-6 secondnav">
                 <a href="/schools"> All Schools</a>
-                > @Html.ActionLink(Model.School.Name, "Sections", null, new { schoolId = Model.School.ObjectId }, null)
+                > @Html.ActionLink(Model.School.Name, "Classes", null, new { schoolId = Model.School.ObjectId }, null)
                 > @Model.Section.CourseName
             </div>
         </div>
@@ -140,7 +140,7 @@
                 </table>
             </div>
             <div id="documents" class="tab-pane fade">
-                <table class="table  table-green">
+                <table class="table  table-green table-studnet">
                     <tr class="table-green-header">
                         <th class="tdleft">
                             document name
@@ -156,7 +156,7 @@
                 <span class="see-more"><a href="@Model.SeeMoreFilesUrl">See More</a></span>
             </div>
             <div id="conversations" class="tab-pane fade">
-                <table class="table  table-green">
+                <table class="table  table-green table-studnet">
                     <tr class="table-green-header">
                         <th class="tdleft">
                            topic

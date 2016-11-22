@@ -28,7 +28,7 @@ namespace EDUGraphAPI.Web.Controllers
 
         //
         // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections
-        public async Task<ActionResult> Sections(string schoolId)
+        public async Task<ActionResult> Classes(string schoolId)
         {
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
@@ -38,18 +38,18 @@ namespace EDUGraphAPI.Web.Controllers
 
         //
         // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections/My
-        public async Task<ActionResult> MySections(string schoolId)
+        public async Task<ActionResult> MyClasses(string schoolId)
         {
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, true);
             ViewBag.IsMySections = true;
-            return View("Sections", model);
+            return View("Classes", model);
         }
 
         //
         // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections/6510F0FC-53B3-4D9B-9742-84C9C8FA2BE4
-        public async Task<ActionResult> SectionDetails(string schoolId, string sectionId)
+        public async Task<ActionResult> ClassDetails(string schoolId, string sectionId)
         {
             var graphServiceClient = await AuthenticationHelper.GetGraphServiceClientAsync();
             var group = graphServiceClient.Groups[sectionId];

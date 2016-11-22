@@ -6,9 +6,12 @@ using EDUGraphAPI.Web.Properties;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.Services.GraphClients;
 using Microsoft.AspNet.Identity;
+using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using System;
+using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -104,6 +107,11 @@ namespace EDUGraphAPI.Web.Controllers
             if (!ModelState.IsValid) return View(model);
 
             var localUser = userManager.FindByEmail(model.Email);
+            if (localUser == null)
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
             if (localUser.O365UserId.IsNotNullAndEmpty())
             {
                 ModelState.AddModelError("Email", "The local account has already been linked to another Office 365 account.");
@@ -138,8 +146,10 @@ namespace EDUGraphAPI.Web.Controllers
             {
                 FirstName = aadUser.GivenName,
                 LastName = aadUser.Surname,
-                Email = aadUser.UserPrincipalName
+                Email = aadUser.UserPrincipalName,
+                FavoriteColors = Constants.FavoriteColors
             };
+
             return View(viewModel);
         }
 

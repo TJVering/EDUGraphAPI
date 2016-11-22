@@ -1,7 +1,7 @@
 ﻿@using Microsoft.Education.Data
 @model SectionsViewModel
 @{
-    ViewBag.Title = "Section";
+    ViewBag.Title = "CLASSES";
     var isMySections = (bool?)ViewBag.IsMySections == true;
 }
 <div class="row schools">
@@ -52,8 +52,8 @@
 
             <div class="col-md-6 mysection section-link-container">
                 VIEW:
-                @Html.ActionLink("My Classes", "MySections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
-                @Html.ActionLink("All Classes", "Sections", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
+                @Html.ActionLink("My Classes", "MyClasses", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
+                @Html.ActionLink("All Classes", "Classes", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
             </div>
         </div>
         <div style="clear:both;" />
@@ -79,7 +79,7 @@
         {
             <tr class="tr-content">
                 <td>
-                    @Html.ActionLink(s.DisplayName, "SectionDetails", null, new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId }, null)
+                    @Html.ActionLink(s.DisplayName, "ClassDetails", null, new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId }, null)
                 </td>
                 <td>
                     @s.CourseNumber
@@ -105,7 +105,7 @@
             <div class="tile-container">
                 @if (Model.IsMy(s))
                 {
-                    <a class="mysectionlink" href="@Url.Action("SectionDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
+                    <a class="mysectionlink" href="@Url.Action("ClassDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
                         @Tile(s)
                     </a>
                 }
