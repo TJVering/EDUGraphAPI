@@ -4,6 +4,8 @@ using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Azure.ActiveDirectory.GraphClient;
+using Microsoft.Education;
+using Microsoft.Education.Data;
 using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
@@ -22,11 +24,13 @@ namespace EDUGraphAPI.Web.Controllers
         private ApplicationUserManager userManager;
         private ApplicationService applicationService;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ApplicationService applicationService)
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
+            ApplicationService applicationService )
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.applicationService = applicationService;
+
         }
 
         //
@@ -305,19 +309,25 @@ namespace EDUGraphAPI.Web.Controllers
         {
             AboutMeViewModel model = new AboutMeViewModel();
             var userContext = await applicationService.GetUserContextAsync();
-            model.Username =string.IsNullOrEmpty( userContext.User.FullName.Trim())? userContext.User.UserName: userContext.User.FullName;
-            model.MyFavoriteColor = userContext.User.FavoriteColor;
+            if (userContext.User==null)
+            {
+                model.Username = userContext.UserDisplayName;
+                model.MyFavoriteColor = "";
+            }
+            else
+            {
+                model.Username = string.IsNullOrEmpty(userContext.User.FullName.Trim()) ? userContext.User.UserName : userContext.User.FullName;
+                model.MyFavoriteColor = userContext.User.FavoriteColor;
+             }
             model.Groups = new List<string>();
             model.FavoriteColors = Constants.FavoriteColors;
             if (userContext.IsO365Account || userContext.AreAccountsLinked)
             {
                 var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
-                var userFetcher = client.Users.GetByObjectId(userContext.User.O365UserId);
-               var groups = await userFetcher.MemberOf.ExecuteAllAsync();
-                foreach (Group item in groups)
-                {
-                    model.Groups.Add(item.DisplayName);
-                }
+                var schoolsService = await GetSchoolsServiceAsync();
+                model.Groups= await schoolsService.GetMyClasses(userContext);
+ 
+
             }
             return View(model);
         }
@@ -381,7 +391,11 @@ namespace EDUGraphAPI.Web.Controllers
             RemovePhoneSuccess,
             Error
         }
-
+        private async Task<SchoolsService> GetSchoolsServiceAsync()
+        {
+            var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
+            return new SchoolsService(educationServiceClient);
+        }
         #endregion
     }
 }

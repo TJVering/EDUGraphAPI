@@ -3,6 +3,7 @@ using EDUGraphAPI.Web.ViewModels;
 using Microsoft.Education;
 using Microsoft.Education.Data;
 using Microsoft.Graph;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -71,6 +72,32 @@ namespace EDUGraphAPI.Web.Services
                 DriveItems = await group.Drive.Root.Children.Request().GetAllAsync(),
                 SeeMoreFilesUrl = driveRootFolder.WebUrl
             };
+        }
+
+        public async Task<List<string>> GetMyClasses(UserContext userContext)
+        {
+            List<string> results = new List<string>();
+            var currentUser = userContext.IsStudent
+            ? await educationServiceClient.GetStudentAsync() as SectionUser
+            : await educationServiceClient.GetTeacherAsync() as SectionUser;
+
+            var schools = (await educationServiceClient.GetSchoolsAsync())
+                .OrderBy(i => i.Name)
+                .ToArray();
+            var mySchools = schools
+                .Where(i => i.SchoolId == currentUser.SchoolId)
+                .ToArray();
+
+            var myFirstSchool = mySchools.FirstOrDefault();
+            if(myFirstSchool !=null)
+            {
+                var myClasses = (await educationServiceClient.GetMySectionsAsync(myFirstSchool.SchoolId));
+                foreach (var item in myClasses)
+                {
+                    results.Add(item.DisplayName);
+                }
+            }
+            return results;
         }
     }
 }

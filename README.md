@@ -190,28 +190,16 @@ The table below shows the folders in the project:
 
 This project encapsulates the [Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations). The most important class in this project is EducationServiceClient.
 
-### Data Model
+### Database
 
-Entity Framework code first is used in this sample and auto migrations is enable.
+**ApplicationUsers**
 
-**ApplicationDbContext**
-
-The DbContext is 
-
-
-
-
-
-**ApplicationUser**
-
-The model class Application User is inherited from IdentityUser
-
-| Property     | Description |
-| ------------ | ----------- |
-| FirstName    |             |
-| LastName     |             |
-| Organization |             |
-|              |             |
+| Column | Description |
+| ------ | ----------- |
+|        |             |
+|        |             |
+|        |             |
+|        |             |
 
 **ApplicationRoles**
 

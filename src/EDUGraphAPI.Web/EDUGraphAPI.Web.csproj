@@ -300,6 +300,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\HelveticaNeue Light.ttf" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
