@@ -31,7 +31,7 @@
     },
     "sourceCodeRepositoryURL": {
       "type": "string",
-      "defaultValue": "https://github.com/TylerLu/EDUGraphAPI",
+      "defaultValue": "https://github.com/<YOUR REPOSITORY>/EDUGraphAPI",
       "metadata": {
         "description": "Source code repository URL"
       }
@@ -52,21 +52,21 @@
     },
     "clientId": {
       "type": "string",
-      "defaultValue": "4e3fa16f-9909-4bf6-9a66-5560e97e7082",
+      "defaultValue": "",
       "metadata": {
         "description": ""
       }
     },
     "clientSecret": {
       "type": "string",
-      "defaultValue": "IO0DqycDalD832ANxFFnVn9zwIjr/I3XXY1rjhinq/s=",
+      "defaultValue": "",
       "metadata": {
         "description": ""
       }
     },
     "bingMapKey": {
       "type": "string",
-      "defaultValue": "AgWV4amBPg2dzbgGPB8Ya5GDfGqBnueTJUfu1oAAilDje_vXB0RpKGF4mDabOmwB",
+      "defaultValue": "",
       "metadata": {
         "description": ""
       }
@@ -75,11 +75,10 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "lowerSiteName": "[toLower(parameters('siteName'))]",
-    "nameSuffix": "[substring(uniqueString(resourceGroup().id), 0, 6)]",
-    "storageAccountName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]",
-    "sqlServerName": "[concat(variables('lowerSiteName'), variables('nameSuffix'), '-dbserver')]",
+    "storageAccountName": "[variables('lowerSiteName')]",
+    "sqlServerName": "[concat(variables('lowerSiteName'), '-dbserver')]",
     "sqlDatabaseName": "EDUGraphAPI",
-    "webSiteName": "[concat(variables('lowerSiteName'), variables('nameSuffix'))]"
+    "webSiteName": "[variables('lowerSiteName')]"
   },
   "resources": [
     {

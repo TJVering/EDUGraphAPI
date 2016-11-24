@@ -70,7 +70,7 @@ Download and install the following tools to run, build and/or develop this appli
 
 **Create an Application in you AAD**
 
-1. Sign into [https://manage.windowsazure.com](https://manage.windowsazure.com).
+1. Sign into the traditional azure portal: [https://manage.windowsazure.com](https://manage.windowsazure.com).
 
 2. Open the AAD where you plan to create the application.
 
@@ -120,11 +120,10 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/aad-configure-app-03.png)
 
-13. Copy the client id and save it.
+13. Copy aside the Client ID and the key value.
 
    ![](Images/aad-configure-app-04.png)
 
-	>**Note:** The client id is used in a subsequent step.
 
 **Deploy the Azure Components**
 
@@ -140,7 +139,53 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/azure-auto-deploy.png)
 
+   * **Resource group**: we suggest you to Create a new group.
+
+   * **Site Name**: please input a name. Like EDUGraphAPICanviz or EDUGraphAPI993.
+
+     > Note: If the name you input is taken, you will get some validation errors:
+     >
+     > ![](Images/azure-auto-deploy-validation-errors-01.png)
+     >
+     > Click it you will get more details, like storage account is already in other resource group/subscription.
+     >
+     > In this case, please use another name.
+
+   * **Sql Administrator Login Password**: please DO use a strong password.
+
+   * **Source Code Repository URL**: replace <YOUR REPOSITORY> with the repository name of your fork.
+
+   * **Source Code Manual Integration**: choose **false**, since you are deploying from your own fork.
+
+   * **Client Id**: use the Client Id of the AAD Application your created earlier.
+
+   * **Client Secret**: use the Key value of the AAD Application your created earlier.
+
+   * **Bing Map Key**: use the key of Bing Map you got earlier.
+
+   * Check **I agree to the terms and conditions stated above**.
+
 5. Click **Purchase**.
+
+**Add REPLY URL to the AAD Application**
+
+1. After the deployment, open the resource group:
+
+   ![](Images/azure-resource-group.png)
+
+2. Click the web app.
+
+   ![](Images/azure-web-app.png)
+
+   Copy the URL aside and change the schema to **https**. This is the replay URL and will be used in next step.
+
+3. Navigate to the AAD application in the traditional azure portal, then click the **Configure** tab.
+
+   Add the reply URL:
+
+   ![](Images/aad-add-reply-url.png)
+
+4. Click **SAVE**.
 
 ## Documentation
 
@@ -241,20 +286,34 @@ The first 2 flows enable users to login in with either a local account or an Off
 
 **EducationServiceClient**
 
-
+[Office 365 Education APIs](https://msdn.microsoft.com/office/office365/api/school-rest-operations) help extract data from your Office 365 tenant which has been synced to the cloud by Microsoft School Data Sync. These results provide information about schools, sections, teachers, students and rosters. The Schools REST API provides access to school entities in Office 365 for Education tenants.
 
 **Get data**
 
 1. Get schools
 
+   You can get all schools, get a single school by its object_id, or get a collection of schools that match a set of query filters.
+
    Get All schools
 
+   [Get all schools](https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-all-schools) that exist in the Azure Active Directory tenant.
+
 2. Get sections
+
+   You can [get sections](https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-sections-within-a-school) for a specific school by querying for groups based on their school id, using the extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType attribute and the extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId attribute together in the query.
+
+3. Get students within a section
+
+   Students are represented in Azure Active Directory as users. User Extension Attributes add student-specific information. For example, the extension_fe2174665583431c953114ff7268b7b3_Education_Grade attribute contains the student's grade level.
+
+   You can [get students in a specific section](https://msdn.microsoft.com/office/office365/api/section-rest-operations#get-students-within-a-section), by getting the members of the section’s unified group and filtering out non-student users from the resulting collection within your application.
 
 
 ### Differential query
 
+[A differential query](https://msdn.microsoft.com/en-us/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-differential-query) request returns all changes made to specified entities during the time between two consecutive requests. For example, if you make a differential query request an hour after the previous differential query request, only the changes made during that hour will be returned. This functionality is especially useful when synchronizing tenant directory data with an application’s data store.
 
+To make a differential query request to a tenant’s directory, your application must be authorized by the tenant. For more information, see [Integrating Applications with Azure Active Directory](https://azure.microsoft.com/en-us/documentation/articles/active-directory-integrating-applications/).
 
 ### Other
 
