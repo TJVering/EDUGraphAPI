@@ -72,7 +72,9 @@ textarea {
     -moz-border-radius : 5px; 
 }
 .infocontainer .infoheader{font-size:12px;font-weight:bold;text-align:center;height:25px;line-height:25px; text-transform:uppercase;}
-.infocontainer .infobody{font-size:18px;text-align:center;height:35px;}
+.infocontainer .infobody{font-size:18px;text-align:center;height:35px;overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}
 .myschool{     padding: 12px 0 12px 0;float:left;}
 .myschool .schoolenrolled{float:right; font-size:14px;padding-right:15px;}
 .myschool .greenicon{width:12px;height:12px;background-color:#1fe405;float:right;margin:5px 6px 0 0;}
