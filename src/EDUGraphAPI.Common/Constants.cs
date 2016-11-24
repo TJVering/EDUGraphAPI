@@ -21,7 +21,7 @@ namespace EDUGraphAPI
 
         public static readonly string AADCompanyAdminRoleName = "Company Administrator";
 
-        public static readonly List<string> FavoriteColors = ConfigurationManager.AppSettings["FavoriteColors"].ToString().Split(',').ToList();
+        public static readonly List<string> FavoriteColors = new List<string>() { "black", "brown", "green", "grey", "orange", "peru", "red", "white", "yellow" };
         public static class Resources
         {
             public static readonly string AADGraph = "https://graph.windows.net";
