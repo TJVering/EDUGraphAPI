@@ -86,7 +86,7 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/aad-create-app-02.png)
 
-6. Click **->**.
+6. Click **➔**.
 
 
 7. Enter the following values:
@@ -193,7 +193,7 @@ Download and install the following tools to run, build and/or develop this appli
 
 **EDUGraphAPI.Web**
 
-This web project is base on a ASP.NET MVC application with the **Individual User Accounts** selected. 
+This web project is based on a ASP.NET MVC application with the **Individual User Accounts** selected. 
 
 ![](Images/mvc-auth-individual-user-accounts.png)
 
@@ -291,9 +291,93 @@ The first 2 flows enable users to login in with either a local account or an Off
 
 ### Two Kinds of Graph API
 
+There are two kinds of Graph API:
+
+|              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API]([https://graph.microsoft.io/](https://graph.microsoft.io/)) |
+| ------------ | ---------------------------------------- | ---------------------------------------- |
+| Description  | The Azure Active Directory Graph API provides programmatic access to Azure Active Directory through REST API endpoints. Apps can use the Azure AD Graph API to perform create, read, update, and delete (CRUD) operations on directory data and directory objects, such as users, groups, and organizational contacts | A unified API that also includes APIs from other Microsoft services like Outlook, OneDrive, OneNote, Planner, and Office Graph, all accessed through a single endpoint with a single access token. |
+| Client       | Install-Package [Microsoft.Azure.ActiveDirectory.GraphClient](https://www.nuget.org/packages/Microsoft.Azure.ActiveDirectory.GraphClient/) | Install-Package [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) |
+| End Point    | https://graph.windows.net                | https://graph.microsoft.com              |
+| API Explorer | https://graphexplorer.cloudapp.net/      | https://graph.microsoft.io/graph-explorer |
+
+In this sample, we use the hierarchy below to demonstrate how to use them. 
+
 ![](Images/class-diagram-graphs.png)
 
-...
+The **IGraphClient** interface defines two method: GeCurrentUserAsync and GetTenantAsync.
+
+**AADGraphClient** and **MSGraphClient** implement the **IGraphClient** interface with Azure AD Graph and Microsoft Graph client libraries separately.
+
+The interface and the two classes resides in /Services/GraphClients folder of the web app. Some of code is list below to show how to get user and tenant with the 2 kinds of Graph APIs.
+
+**Azure AD Graph** - AADGraphClient.cs
+
+~~~c#
+public async Task<UserInfo> GetCurrentUserAsync()
+{
+    var me = await activeDirectoryClient.Me.ExecuteAsync();
+    return new UserInfo
+    {
+        Id = me.ObjectId,
+        GivenName = me.GivenName,
+        Surname = me.Surname,
+        UserPrincipalName = me.UserPrincipalName,
+        Roles = await GetRolesAsync(me)
+    };
+}
+~~~
+
+~~~c#
+public async Task<TenantInfo> GetTenantAsync(string tenantId)
+{
+    var tenant = await activeDirectoryClient.TenantDetails
+        .Where(i => i.ObjectId == tenantId)
+        .ExecuteSingleAsync();
+    return new TenantInfo
+    {
+        Id = tenant.ObjectId,
+        Name = tenant.DisplayName
+    };
+}
+
+~~~
+
+**Microsoft Graph** - MSGraphClient.cs
+
+~~~c#
+public async Task<UserInfo> GetCurrentUserAsync()
+{
+    var me = await graphServiceClient.Me.Request()
+        .Select("id,givenName,surname,userPrincipalName,assignedLicenses")
+        .GetAsync();
+    return new UserInfo
+    {
+        Id = me.Id,
+        GivenName = me.GivenName,
+        Surname = me.Surname,
+        UserPrincipalName = me.UserPrincipalName,
+        Roles = await GetRolesAsync(me)
+    };
+}
+
+~~~
+
+~~~c#
+public async Task<TenantInfo> GetTenantAsync(string tenantId)
+{
+    var tenant = await graphServiceClient.Organization[tenantId].Request().GetAsync();
+    return new TenantInfo
+    {
+        Id = tenant.Id,
+        Name = tenant.DisplayName
+    };
+}
+
+~~~
+
+In AAD Application, you should configure permissions for them separately:
+
+![](Images/aad-app-permissions.png) 
 
 ### Office 365 Education Data
 
