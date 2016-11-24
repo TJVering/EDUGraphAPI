@@ -211,7 +211,7 @@ Below are the important class files used in this web project:
 | /App_Start/Startup.Auth.AAD.cs    | Integrates with Azure Active Directory authentication |
 | /Controllers/AdminController.cs   | Contains the administrative actions      |
 | /Controllers/LinkController.cs    | Contains the actions to link user accounts |
-| /Conrrollers/SchoolsController.cs | Contains the actions to show school data |
+| /Controllers/SchoolsController.cs | Contains the actions to show school data |
 
 **EDUGraphAPI.SyncData**
 
@@ -235,24 +235,37 @@ The table below shows the folders in the project:
 
 This project encapsulates the [Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations). The most important class in this project is EducationServiceClient.
 
-### Database
+### Data Access and Data Models
+
+ASP.NET Identity uses Entity Framework Code First to implement all of its persistence mechanism. Package [Microsoft.AspNet.Identity.EntityFramework](https://www.nuget.org/packages/Microsoft.AspNet.Identity.EntityFramework/) is created for this. 
+
+In this sample **ApplicationDbContext** is created for access data from a SQL Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
+
+Below are the important Data Models (and their important properties) and used in this sample:
 
 **ApplicationUsers**
 
-| Column | Description |
-| ------ | ----------- |
-|        |             |
-|        |             |
-|        |             |
-|        |             |
+Inherited from **IdentityUser**. 
 
-**ApplicationRoles**
-
-
+| Property      | Description                              |
+| ------------- | ---------------------------------------- |
+| Organization  | The tenant of the user. For local unlinked user, its value is null |
+| O365UserId    | Used to connection with an Office 365 account |
+| O365Email     | The Email of the linked Office 365 account |
+| JobTitle      | Used for demonstrating differential query |
+| Department    | Used for demonstrating differential query |
+| Mobile        | Used for demonstrating differential query |
+| FavoriteColor | Used for demonstrating local data        |
 
 **Organizations**
 
+A row in this table represents a tenant in AAD.
 
+| Property         | Description                          |
+| ---------------- | ------------------------------------ |
+| TenantId         | Guid of the tenant                   |
+| Name             | Name of the tenant                   |
+| IsAdminConsented | Is the tenant consented by any admin |
 
 ### Authentication flows
 
