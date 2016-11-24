@@ -1,5 +1,7 @@
 # EDUGraphAPI - Office 365 Education Code Sample#
 
+[TOC]
+
 ## What is EDUGraphAPI?##
 
 EDUGraphAPI  is a sample that demonstrates:
@@ -193,7 +195,11 @@ Download and install the following tools to run, build and/or develop this appli
 
 **EDUGraphAPI.Web**
 
+<<<<<<< HEAD
 This web project is based on a ASP.NET MVC application with the **Individual User Accounts** selected. 
+=======
+This web project is based on an ASP.NET MVC application with the **Individual User Accounts** selected. 
+>>>>>>> origin/master
 
 ![](Images/mvc-auth-individual-user-accounts.png)
 
@@ -238,11 +244,19 @@ This project encapsulates the [Schools REST API](https://msdn.microsoft.com/en-u
 ### Data Access and Data Models
 
 ASP.NET Identity uses Entity Framework Code First to implement all of its persistence mechanism. Package [Microsoft.AspNet.Identity.EntityFramework](https://www.nuget.org/packages/Microsoft.AspNet.Identity.EntityFramework/) is created for this. 
+<<<<<<< HEAD
 
 In this sample **ApplicationDbContext** is created for access data from a SQL Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
 
 Below are the important Data Models (and their important properties) and used in this sample:
 
+=======
+
+In this sample **ApplicationDbContext** is created for access data from a SQL Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
+
+Below are the important Data Models (and their important properties) and used in this sample:
+
+>>>>>>> origin/master
 **ApplicationUsers**
 
 Inherited from **IdentityUser**. 
@@ -293,7 +307,11 @@ The first 2 flows enable users to login in with either a local account or an Off
 
 There are two kinds of Graph API:
 
+<<<<<<< HEAD
 |              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API]([https://graph.microsoft.io/](https://graph.microsoft.io/)) |
+=======
+|              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API]([https://graph.microsoft.io/) |
+>>>>>>> origin/master
 | ------------ | ---------------------------------------- | ---------------------------------------- |
 | Description  | The Azure Active Directory Graph API provides programmatic access to Azure Active Directory through REST API endpoints. Apps can use the Azure AD Graph API to perform create, read, update, and delete (CRUD) operations on directory data and directory objects, such as users, groups, and organizational contacts | A unified API that also includes APIs from other Microsoft services like Outlook, OneDrive, OneNote, Planner, and Office Graph, all accessed through a single endpoint with a single access token. |
 | Client       | Install-Package [Microsoft.Azure.ActiveDirectory.GraphClient](https://www.nuget.org/packages/Microsoft.Azure.ActiveDirectory.GraphClient/) | Install-Package [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) |
@@ -425,8 +443,7 @@ Multi-tenant application ...
 | ---------------------------------------- | ---------------------------------------- |
 | Project Lead / Architect / Documentation | Todd Baginski (Microsoft MVP, Canviz Consulting) @tbag |
 | PM                                       | John Trivedi (Canviz Consulting)         |
-| PM                                       | Arthur Zheng (Canviz Consulting)         |
-| Developer                                | Tyler Lu (Canviz Consulting) @TylerLu    |
+| Dev Leader                               | Tyler Lu (Canviz Consulting) @TylerLu    |
 | Developer                                | Benny Zhang (Canviz Consulting)          |
 | Testing                                  | Ring Li (Canviz Consulting)              |
 | Testing                                  | Melody She (Canviz Consulting)           |
