@@ -255,6 +255,9 @@ namespace EDUGraphAPI.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
+            // The line of code below is used to fix a bug that O365 accounts could not login in some cases.
+            Session["AnyName"] = "AnyValue";
+
             // Request a redirect to the external login provider
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
