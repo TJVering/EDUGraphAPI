@@ -202,7 +202,7 @@ The following files were created by the MVC template, and we only change them a 
 1. **/App_Start/Startup.Auth.Identity.cs** (The original name is Startup.Auth.cs)
 2. **/Controllers/AccountController.cs**
 
-This sample project uses [ASP.NET Identity](https://www.asp.net/identity) and [Owin](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/owin). The 2 technologies make different kinds of authentication coexist easily. Please get familiar them first.
+This sample project uses **[ASP.NET Identity](https://www.asp.net/identity)** and **[Owin](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/owin)**. The two technologies make different kinds of authentication coexist easily. Please get familiar them first.
 
 Below are the important class files used in this web project:
 
@@ -226,22 +226,22 @@ The table below shows the folders in the project:
 | Folder             | Description                              |
 | ------------------ | ---------------------------------------- |
 | /Data              | Contains ApplicationDbContext and entity classes |
-| /DataSync          | Contains the UserSyncSerextensionsvice class which is used in the EDUGraphAPI.SyncData WebJob |
+| /DataSync          | Contains the UserSyncSerextensionsvice class which is used by the EDUGraphAPI.SyncData WebJob |
 | /DifferentialQuery | Contains the DifferentialQueryService class which is used to send differential query and parse the result. |
 | /Extensions        | Contains lots of extension methods which simplify coding the make code easy to read |
 | /Utils             | Contains the wide used class AuthenticationHelper.cs |
 
 **Microsoft.Education**
 
-This project encapsulates the [Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations). The most important class in this project is EducationServiceClient.
+This project encapsulates the **[Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations)**. The core class in this project is **EducationServiceClient**.
 
 ### Multi-tenant App
 
-This sample is a Multi-tenant App. In the AAD, we enabled the option:
+This sample is a multi-tenant App. In the AAD, we enabled the option:
 
 ![](Images/app-is-multi-tenant.png)
 
-Users from any Azure Active Directory tenant can access this app. As this app uses some application permissions, admin of the tenant should Sign up (consent) first. Otherwise, users would be an error:
+Users from any Azure Active Directory tenant can access this app. As this app uses some application permissions, admin of the tenant should sign up (consent) first. Otherwise, users would be an error:
 
 ![](Images/app-requires-admin-to-consent.png)
 
@@ -253,7 +253,7 @@ ASP.NET Identity uses Entity Framework Code First to implement all of its persis
 
 In this sample **ApplicationDbContext** is created for access data from a SQL Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
 
-Below are the important Data Models (and their important properties) and used in this sample:
+Below are the important Data Models (and their important properties) that used in this sample:
 
 **ApplicationUsers**
 
@@ -262,7 +262,7 @@ Inherited from **IdentityUser**.
 | Property      | Description                              |
 | ------------- | ---------------------------------------- |
 | Organization  | The tenant of the user. For local unlinked user, its value is null |
-| O365UserId    | Used to connection with an Office 365 account |
+| O365UserId    | Used to link with an Office 365 account  |
 | O365Email     | The Email of the linked Office 365 account |
 | JobTitle      | Used for demonstrating differential query |
 | Department    | Used for demonstrating differential query |
@@ -326,11 +326,11 @@ In this sample, we use the hierarchy below to demonstrate how to use them.
 
 ![](Images/class-diagram-graphs.png)
 
-The **IGraphClient** interface defines two method: GeCurrentUserAsync and GetTenantAsync.
+The **IGraphClient** interface defines two method: **GeCurrentUserAsync** and **GetTenantAsync**.
 
 **AADGraphClient** and **MSGraphClient** implement the **IGraphClient** interface with Azure AD Graph and Microsoft Graph client libraries separately.
 
-The interface and the two classes resides in /Services/GraphClients folder of the web app. Some of code is list below to show how to get user and tenant with the 2 kinds of Graph APIs.
+The interface and the two classes resides in **/Services/GraphClients** folder of the web app. Some of code is list below to show how to get user and tenant with the two kinds of Graph APIs.
 
 **Azure AD Graph** - AADGraphClient.cs
 
@@ -401,45 +401,78 @@ In AAD Application, you should configure permissions for them separately:
 
 ![](Images/aad-app-permissions.png) 
 
-### Office 365 Education Data
-
-**EducationServiceClient**
+### Office 365 Education API
 
 [Office 365 Education APIs](https://msdn.microsoft.com/office/office365/api/school-rest-operations) help extract data from your Office 365 tenant which has been synced to the cloud by Microsoft School Data Sync. These results provide information about schools, sections, teachers, students and rosters. The Schools REST API provides access to school entities in Office 365 for Education tenants.
 
-**Get data**
+In the sample, the **Microsoft.Education** Class Library project was created to encapsulate Office 365 Education API. 
 
-1. Get schools
+**EducationServiceClient** is the core class of the library. With it we can get education data easily.
 
-   You can get all schools, get a single school by its object_id, or get a collection of schools that match a set of query filters.
+**Get schools**
 
-   Get All schools
+~~~c#
+// https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-all-schools
+public async Task<School[]> GetSchoolsAsync()
+{
+    return await HttpGetArrayAsync<School>("administrativeUnits?api-version=beta");
+}
+~~~
 
-   [Get all schools](https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-all-schools) that exist in the Azure Active Directory tenant.
+~~~c#
+// https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-a-school
+public Task<School> GetSchoolAsync(string objectId)
+{
+    return HttpGetObjectAsync<School>($"administrativeUnits/{objectId}?api-version=beta");
+}
+~~~
 
-2. Get sections
+**Get sections**
 
-   You can [get sections](https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-sections-within-a-school) for a specific school by querying for groups based on their school id, using the extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType attribute and the extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId attribute together in the query.
+~~~c#
+// https://msdn.microsoft.com/office/office365/api/school-rest-operations#get-sections-within-a-school
+public Task<Section[]> GetAllSectionsAsync(string schoolId)
+{
+    var relativeUrl = $"/groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
+    return HttpGetArrayAsync<Section>(relativeUrl);
+}
+~~~
 
-3. Get students within a section
+```c#
+public async Task<Section[]> GetMySectionsAsync(string schoolId)
+{
+    var me = await HttpGetObjectAsync<SectionUser>("/me?api-version=1.5");
+    var sections = await GetAllSectionsAsync(schoolId);
+    return sections
+        .Where(i => i.Members.Any(j => j.Email == me.Email))
+        .ToArray();
+}
+```
+```c#
+// https://msdn.microsoft.com/office/office365/api/section-rest-operations#get-a-section
+public async Task<Section> GetSectionAsync(string sectionId)
+{
+    return await HttpGetObjectAsync<Section>($"groups/{sectionId}?api-version=beta&$expand=members");
+}
+```
+Below are some screenshots of the sample app that show the education data.
 
-   Students are represented in Azure Active Directory as users. User Extension Attributes add student-specific information. For example, the extension_fe2174665583431c953114ff7268b7b3_Education_Grade attribute contains the student's grade level.
+![](Images/edu-schools.png)
 
-   You can [get students in a specific section](https://msdn.microsoft.com/office/office365/api/section-rest-operations#get-students-within-a-section), by getting the members of the section’s unified group and filtering out non-student users from the resulting collection within your application.
+![](Images/edu-classes.png)
 
+![](Images/edu-class.png)
 
 ### Differential query
 
 [A differential query](https://msdn.microsoft.com/en-us/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-differential-query) request returns all changes made to specified entities during the time between two consecutive requests. For example, if you make a differential query request an hour after the previous differential query request, only the changes made during that hour will be returned. This functionality is especially useful when synchronizing tenant directory data with an application’s data store.
 
-To make a differential query request to a tenant’s directory, your application must be authorized by the tenant. For more information, see [Integrating Applications with Azure Active Directory](https://azure.microsoft.com/en-us/documentation/articles/active-directory-integrating-applications/).
-
-The related code is in the following two folders of the EDUGraphAPI.Common project:
+The related code is in the following two folders of the **EDUGraphAPI.Common** project:
 
 * **/DifferentialQuery**: contains classes to send differential query and parse differential result.
-* **/DataSync**: demonstrates how to sync users.
+* **/DataSync**: contains classes that are used to demonstrate how to sync users.
 
-> Notice: that classes in DifferentialQuery uses some advanced .NET technologies. Please ingore the implementation and just focus on how to use them.
+> Notice: that classes in **DifferentialQuery** folder uses some advanced .NET technologies. Please ingore the implementation and just focus on how to use them.
 
 To sync users, we defined the User class:
 
@@ -453,9 +486,9 @@ public class User
 }
 ~~~
 
-Notice that the changeable properties JobTitle, Department, Mobile are virtual. Classes in DifferentialQuery folder will create a proxy type for User and override these virtual properties for change tracking.
+Notice that the changeable properties *JobTitle*, *Department*, *Mobile* are virtual. Classes in **DifferentialQuery** folder will create a proxy type for the User type and override these virtual properties for change tracking.
 
-In **UserSyncService**, we demonstrate how to use the  **DifferentialQueryService** to send different query and get different result.
+In **UserSyncService** class, we demonstrate how to use the **DifferentialQueryService** to send differential query and get differential result.
 
 ```c#
 var differentialQueryService = new DifferentialQueryService(/**/);
@@ -472,13 +505,13 @@ private async Task UpdateUserAsync(Delta<User> differentialUser) { /**/ }
 
 **DataSyncRecord** data model is used to persistent deltaLinks.
 
-Below is the log generated by the SyncData WebJob:
+Below is the logs generated by the SyncData WebJob:
 
 ![](Images/sync-data-web-job-log.png) 
 
 ### Filters
 
-In the /Infrastructure folder the web project. There are several FilterAttributes.
+In the **/Infrastructure** folder of the web project. There are several FilterAttributes.
 
 **EduAuthorizeAttribute**
 
@@ -486,7 +519,7 @@ This is an authorization filter, inherited from AuthorizeAttribute.
 
 It was created because that the web app is configured with multi-authentications and it could not redirect to the correct login page when unauthorized.
 
-We overrided the HandleUnauthorizedRequest method to redirect to /Account/Login:
+We overrided the **HandleUnauthorizedRequest** method to redirect the user to /Account/Login:
 
 ~~~c#
 protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
@@ -497,9 +530,9 @@ protected override void HandleUnauthorizedRequest(AuthorizationContext filterCon
 
 **HandleAdalExceptionAttribute**
 
-The **AuthenticationHelper** expose lots of methods of return access token or instance of a service client. Almost all of these methods invode **[AuthenticationContext.AcquireTokenSilentAsync](https://msdn.microsoft.com/en-us/library/mt473642.aspx)** internally. In most time, **AcquireTokenSilentAsyn** ccould get the access token successfully, as tokens are cached in the database by ADALTokenCache. 
+The **AuthenticationHelper** class exposes lots of methods of return access token or instance of a service client. Most of these methods invoke **[AuthenticationContext.AcquireTokenSilentAsync](https://msdn.microsoft.com/en-us/library/mt473642.aspx)** internally. In most time, **AcquireTokenSilentAsyn** could get the access token successfully, as tokens are cached in the database by **ADALTokenCache**. 
 
-In some case, like the cached token is expired or a new resource token is requested. **AcquireTokenSilentAsyn** will thrown **AdalException**. **HandleAdalExceptionAttribute** was create to handle **AdalException**, and navigate the user to the authentication endpoint to get new tokens.
+In some situations, like the cached token is expired or a new resource token is requested. **AcquireTokenSilentAsyn** will thrown **AdalException**. **HandleAdalExceptionAttribute** was create to handle **AdalException**, and navigate the user to the authentication endpoint to get a new token.
 
 In some case, we will redirect the user directly to the authentication endpoint by invoking:
 
@@ -509,22 +542,22 @@ filterContext.HttpContext.GetOwinContext().Authentication.Challenge(
    OpenIdConnectAuthenticationDefaults.AuthenticationType);
 ~~~
 
-And in other case, we want to show the user the page blow to tell the user the reason why he got redirected especially for a user logged in with an local account.
+And in other cases, we want to show the user the page blow to tell the user the reason why he got redirected especially for a user who logged in with an local account.
 
 ![](Images/web-app-login-o365-required.png)
 
-We use a switch to controller this. The got the switch value from:
+We use a switch to control this. The switch value is retrieved by:
 
 ~~~c#
 //public static readonly string ChallengeImmediatelyTempDataKey = "ChallengeImmediately";
 var challengeImmediately = filterContext.Controller.TempData[ChallengeImmediatelyTempDataKey];
 ~~~
 
-If the value is true, we will redirect the user to the authentication endpoint immediately. Otherwise, the page above will be shown first, and user click the button to proceed.
+If the value is true, we will redirect the user to the authentication endpoint immediately. Otherwise, the page above will be shown first, and user click the Login button to proceed.
 
 **LinkedOrO365UsersOnlyAttribute**
 
-The is another authorization filter. With it we can only allow linked users or Office 365 user to visit the protected resources.
+The is another authorization filter. With it we can only allow linked users or Office 365 user to visit the protected controllers/actions.
 
 ~~~c#
 protected override bool AuthorizeCore(HttpContextBase httpContext)
@@ -544,7 +577,7 @@ protected override void HandleUnauthorizedRequest(AuthorizationContext filterCon
 }
 ~~~
 
-So far, It is only used on the SchoolsController.
+So far, It is only used on the **SchoolsController**.
 
 ## Contributors
 | Roles                                    | Author(s)                                |
