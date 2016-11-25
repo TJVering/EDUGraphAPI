@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 
-namespace Microsoft.Education
+namespace EDUGraphAPI
 {
     public class BingMapService
     {
