@@ -10,6 +10,8 @@
     <div class="margin-top-12 margin-btm-12">
         <b>Username:</b><br /> @User.Identity.GetFullName()
     </div>
+    @if (Model.ShowFavoriteColor)
+    {
     <div class="margin-btm-12">
         <b>Favorite Color:</b> 
         @using (Html.BeginForm("Aboutme", "Manage"))
@@ -18,6 +20,7 @@
             <input type="submit"  value="Save"/>
         }
     </div>
+    }
     <div class="margin-btm-12 ">
         <b>Classes:</b> 
         <br />

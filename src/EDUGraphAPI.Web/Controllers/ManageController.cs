@@ -309,16 +309,22 @@ namespace EDUGraphAPI.Web.Controllers
         {
             AboutMeViewModel model = new AboutMeViewModel();
             var userContext = await applicationService.GetUserContextAsync();
+            
             if (userContext.User==null)
             {
                 model.Username = userContext.UserDisplayName;
                 model.MyFavoriteColor = "";
+                model.ShowFavoriteColor = false;
             }
             else
             {
                 model.Username = string.IsNullOrEmpty(userContext.User.FullName.Trim()) ? userContext.User.UserName : userContext.User.FullName;
                 model.MyFavoriteColor = userContext.User.FavoriteColor;
-             }
+                model.ShowFavoriteColor = true;
+                if (userContext.IsO365Account && string.IsNullOrEmpty(userContext.User.O365UserId))
+                    model.ShowFavoriteColor = false;
+
+            }
             model.Groups = new List<string>();
             model.FavoriteColors = Constants.FavoriteColors;
             if (userContext.IsO365Account || userContext.AreAccountsLinked)
