@@ -4,15 +4,16 @@
 
 EDUGraphAPI  is a sample that demonstrates:
 
-* Linking local user accounts and Office 365 user accounts. 
 * Calling Graph APIs, including:
 
   * [Microsoft Azure Active Directory Graph API](https://www.nuget.org/packages/Microsoft.Azure.ActiveDirectory.GraphClient/)
   * [Microsoft Graph API](https://www.nuget.org/packages/Microsoft.Graph/)
 
+* Linking locally-managed user accounts and Office 365 (Azure Active Directory) user accounts. 
+
   After linking accounts, users can use either local or Office 365 accounts to log into the sample web site and use it.
 
-* Get and show schools/sections/teachers/students from Office 365 Education:
+* Geting schools, sections, teachers, and students from Office 365 Education:
 
   * [Office 365 Schools REST API reference](https://msdn.microsoft.com/office/office365/api/school-rest-operations)
 
@@ -191,35 +192,57 @@ Download and install the following tools to run, build and/or develop this appli
 
 ### Introduction
 
+**Solution Component Diagram**
+
+![](Images/solution-component-diagram.png)
+
+The top layer of the solution contains a web application and a WebJob console application.
+
+The middle layer contains two class library projects. 
+
+The bottom layers contains the three data sources.
+
 **EDUGraphAPI.Web**
 
-This web project is based on an ASP.NET MVC application with the **Individual User Accounts** selected. 
+This web application is based on an ASP.NET MVC project template with the **Individual User Accounts** option selected. 
 
 ![](Images/mvc-auth-individual-user-accounts.png)
 
-The following files were created by the MVC template, and we only change them a little bit.
+The following files were created by the MVC template, and only minor changes were made:
 
 1. **/App_Start/Startup.Auth.Identity.cs** (The original name is Startup.Auth.cs)
 2. **/Controllers/AccountController.cs**
 
-This sample project uses **[ASP.NET Identity](https://www.asp.net/identity)** and **[Owin](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/owin)**. The two technologies make different kinds of authentication coexist easily. Please get familiar them first.
+This sample project uses **[ASP.NET Identity](https://www.asp.net/identity)** and **[Owin](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/owin)**. These two technologies make different methods of authentication coexist easily. Familiarity with these components, in addition to ASP.NET MVC, is essential to understanding this sample.
 
-Below are the important class files used in this web project:
+Below are important class files used in this web project:
 
 | File                              | Description                              |
 | --------------------------------- | ---------------------------------------- |
 | /App_Start/Startup.Auth.AAD.cs    | Integrates with Azure Active Directory authentication |
-| /Controllers/AdminController.cs   | Contains the administrative actions      |
-| /Controllers/LinkController.cs    | Contains the actions to link user accounts |
-| /Controllers/SchoolsController.cs | Contains the actions to show school data |
+| /Controllers/AdminController.cs   | Contains the administrative actions: <br>admin consent, manage linked accounts and install the app. |
+| /Controllers/LinkController.cs    | Contains the actions to link AD and local user accounts |
+| /Controllers/SchoolsController.cs | Contains the actions to present education data |
+
+This web application is a **multi-tenant app**. In the AAD, we enabled the option:
+
+![](Images/app-is-multi-tenant.png)
+
+Users from any Azure Active Directory tenant can access this app. As this app uses some application permissions, an administrator of the tenant should sign up (consent) first. Otherwise, users would be an error:
+
+![](Images/app-requires-admin-to-consent.png)
+
+For more information, see [Build a multi-tenant SaaS web application using Azure AD & OpenID Connect](https://azure.microsoft.com/en-us/resources/samples/active-directory-dotnet-webapp-multitenant-openidconnect/).
 
 **EDUGraphAPI.SyncData**
 
-This is the WebJob used to sync user data.
+This is the WebJob used to sync user data. In the **Functions.SyncUsersAsync** method, **UserSyncService** from EDUGraphAPI.Common project is used.
+
+The project was created to demonstrate differential query. Please check [Different query](#differential-query) section for more details.
 
 **EDUGraphAPI.Common**
 
-The class library project is used both the **EDUGraphAPI.Web** and **EDUGraphAPI.Common**. 
+The class library project is used both the **EDUGraphAPI.Web** and **EDUGraphAPI.SyncData**. 
 
 The table below shows the folders in the project:
 
@@ -233,25 +256,13 @@ The table below shows the folders in the project:
 
 **Microsoft.Education**
 
-This project encapsulates the **[Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations)**. The core class in this project is **EducationServiceClient**.
-
-### Multi-tenant App
-
-This sample is a multi-tenant App. In the AAD, we enabled the option:
-
-![](Images/app-is-multi-tenant.png)
-
-Users from any Azure Active Directory tenant can access this app. As this app uses some application permissions, admin of the tenant should sign up (consent) first. Otherwise, users would be an error:
-
-![](Images/app-requires-admin-to-consent.png)
-
-For more information, see [Build a multi-tenant SaaS web application using Azure AD & OpenID Connect](https://azure.microsoft.com/en-us/resources/samples/active-directory-dotnet-webapp-multitenant-openidconnect/).
+This project encapsulates the **[Schools REST API](https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations)** client. The core class in this project is **EducationServiceClient**.
 
 ### Data Access and Data Models
 
-ASP.NET Identity uses Entity Framework Code First to implement all of its persistence mechanism. Package [Microsoft.AspNet.Identity.EntityFramework](https://www.nuget.org/packages/Microsoft.AspNet.Identity.EntityFramework/) is created for this. 
+ASP.NET Identity uses [Entity Framework Code First](https://msdn.microsoft.com/en-us/library/jj193542(v=vs.113).aspx) to implement all of its persistence mechanisms. Package [Microsoft.AspNet.Identity.EntityFramework](https://www.nuget.org/packages/Microsoft.AspNet.Identity.EntityFramework/) is consumed for this. 
 
-In this sample **ApplicationDbContext** is created for access data from a SQL Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
+In this sample, **ApplicationDbContext** is created for access to a SQL Server Database. It inherited from **IdentityDbContext** which is defined in the NuGet package mentioned above.
 
 Below are the important Data Models (and their important properties) that used in this sample:
 
@@ -283,7 +294,7 @@ A row in this table represents a tenant in AAD.
 
 There are 4 authentication flows in this project.
 
-The first 2 flows (Local/O365 Login) enable users to login in with either a local account or an Office 365 account, then link to the other account. They are implemented in the LinkController.
+The first 2 flows (Local Login/O365 Login) enable users to login in with either a local account or an Office 365 account, then link to the other type account. This procedure is implemented in the LinkController.
 
 **Local Login Authentication Flow**
 
@@ -295,7 +306,13 @@ The first 2 flows (Local/O365 Login) enable users to login in with either a loca
 
 **Admin Login Authentication Flow**
 
-The flow is implemented in AdminController.
+This flow shows how an administrator logs into the system and performs administrative operations.
+
+After logging into the app with an office 365 account,the administrator will be asked to link to local account. This step is not required and can be skipped. 
+
+As we mentioned ealier, the web app is a mutli-tenant app which uses some application permissions, so an administrator of the tenant should consent the tenant first.  
+
+This flow is implemented in AdminController. 
 
 ![](Images/auth-flow-admin-login.png)
 
@@ -305,7 +322,7 @@ This flow in implemented in the SyncData WebJob.
 
 ![](Images/auth-flow-app-login.png)
 
-An X509 certification is used. For more details, please check the following links:
+An X509 certificate is used. For more details, please check the following links:
 
 * [Daemon or Server Application to Web API](https://docs.microsoft.com/en-us/azure/active-directory/active-directory-authentication-scenarios#daemon-or-server-application-to-web-api)
 * [Authenticating to Azure AD in daemon apps with certificates](https://azure.microsoft.com/en-us/resources/samples/active-directory-dotnet-daemon-certificate-credential/)
@@ -313,7 +330,7 @@ An X509 certification is used. For more details, please check the following link
 
 ### Two Kinds of Graph API
 
-There are two kinds of Graph API:
+There are two distinct Graph APIs used in this sample:
 
 |              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API]([https://graph.microsoft.io/) |
 | ------------ | ---------------------------------------- | ---------------------------------------- |
@@ -322,7 +339,7 @@ There are two kinds of Graph API:
 | End Point    | https://graph.windows.net                | https://graph.microsoft.com              |
 | API Explorer | https://graphexplorer.cloudapp.net/      | https://graph.microsoft.io/graph-explorer |
 
-In this sample, we use the hierarchy below to demonstrate how to use them. 
+In this sample we use the classes below, which are based on a common interface, to demonstrate how the APIs are related:  
 
 ![](Images/class-diagram-graphs.png)
 
@@ -330,7 +347,7 @@ The **IGraphClient** interface defines two method: **GeCurrentUserAsync** and **
 
 **AADGraphClient** and **MSGraphClient** implement the **IGraphClient** interface with Azure AD Graph and Microsoft Graph client libraries separately.
 
-The interface and the two classes resides in **/Services/GraphClients** folder of the web app. Some of code is list below to show how to get user and tenant with the two kinds of Graph APIs.
+The interface and the two classes resides in **/Services/GraphClients** folder of the web app. Some code is highlighted below to show how to get user and tenant with the two kinds of Graph APIs.
 
 **Azure AD Graph** - AADGraphClient.cs
 
@@ -397,7 +414,7 @@ public async Task<TenantInfo> GetTenantAsync(string tenantId)
 
 ~~~
 
-In AAD Application, you should configure permissions for them separately:
+Note that in AAD Application settings, permissions for each Graph API are configured separately:
 
 ![](Images/aad-app-permissions.png) 
 
@@ -463,6 +480,12 @@ Below are some screenshots of the sample app that show the education data.
 
 ![](Images/edu-class.png)
 
+In **EducationServiceClient**, three private methods prefixed with HttpGet were created to simplify the invoking of REST APIs.
+
+* **HttpGetAsync**: sends a http GET request to the target endpoint,  and returns the JSON response string.  An access token is included in the bearer authentication header.
+* **HttpGetObjectAsync<T>**:  deserializes the JSON string returned by HttpGetAsync to the target type T, and return the result object.
+* **HttpGetArrayAsync<T>**: deserializes the JSON string returned by HttpGetAsync to the target array type T[], and return the array.
+
 ### Differential query
 
 [A differential query](https://msdn.microsoft.com/en-us/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-differential-query) request returns all changes made to specified entities during the time between two consecutive requests. For example, if you make a differential query request an hour after the previous differential query request, only the changes made during that hour will be returned. This functionality is especially useful when synchronizing tenant directory data with an application’s data store.
@@ -472,7 +495,7 @@ The related code is in the following two folders of the **EDUGraphAPI.Common** p
 * **/DifferentialQuery**: contains classes to send differential query and parse differential result.
 * **/DataSync**: contains classes that are used to demonstrate how to sync users.
 
-> Notice: that classes in **DifferentialQuery** folder uses some advanced .NET technologies. Please ingore the implementation and just focus on how to use them.
+> Note that classes in **DifferentialQuery** folder use some advanced .NET technologies. Please focus on the usage of these classes rather than their implementation details.
 
 To sync users, we defined the User class:
 
@@ -505,19 +528,19 @@ private async Task UpdateUserAsync(Delta<User> differentialUser) { /**/ }
 
 **DataSyncRecord** data model is used to persistent deltaLinks.
 
-Below is the logs generated by the SyncData WebJob:
+Below is the log generated by the SyncData WebJob:
 
 ![](Images/sync-data-web-job-log.png) 
 
 ### Filters
 
-In the **/Infrastructure** folder of the web project. There are several FilterAttributes.
+In the **/Infrastructure** folder of the web project, there are several FilterAttributes.
 
 **EduAuthorizeAttribute**
 
 This is an authorization filter, inherited from AuthorizeAttribute.
 
-It was created because that the web app is configured with multi-authentications and it could not redirect to the correct login page when unauthorized.
+It was created to allow the web app to redirect users to the proper login page in our multi-authentication-method scenario.
 
 We overrided the **HandleUnauthorizedRequest** method to redirect the user to /Account/Login:
 
@@ -530,11 +553,11 @@ protected override void HandleUnauthorizedRequest(AuthorizationContext filterCon
 
 **HandleAdalExceptionAttribute**
 
-The **AuthenticationHelper** class exposes lots of methods of return access token or instance of a service client. Most of these methods invoke **[AuthenticationContext.AcquireTokenSilentAsync](https://msdn.microsoft.com/en-us/library/mt473642.aspx)** internally. In most time, **AcquireTokenSilentAsyn** could get the access token successfully, as tokens are cached in the database by **ADALTokenCache**. 
+The **AuthenticationHelper** class exposes lots of methods that return access tokens or instance of an API client. Most of these methods invoke **[AuthenticationContext.AcquireTokenSilentAsync](https://msdn.microsoft.com/en-us/library/mt473642.aspx)** internally. Usually, **AcquireTokenSilentAsync** gets the access token successfully, as tokens are cached in the database by **ADALTokenCache**. 
 
-In some situations, like the cached token is expired or a new resource token is requested. **AcquireTokenSilentAsyn** will thrown **AdalException**. **HandleAdalExceptionAttribute** was create to handle **AdalException**, and navigate the user to the authentication endpoint to get a new token.
+In some situations, like the cached token being expired or a new resource token is requested, **AcquireTokenSilentAsync** will throw **AdalException**. **HandleAdalExceptionAttribute** is required to handle **AdalException**, and navigate the user to the authentication endpoint to get a new token.
 
-In some case, we will redirect the user directly to the authentication endpoint by invoking:
+In some cases, we will redirect the user directly to the authentication endpoint by invoking:
 
 ~~~c#
 filterContext.HttpContext.GetOwinContext().Authentication.Challenge(
@@ -542,7 +565,7 @@ filterContext.HttpContext.GetOwinContext().Authentication.Challenge(
    OpenIdConnectAuthenticationDefaults.AuthenticationType);
 ~~~
 
-And in other cases, we want to show the user the page blow to tell the user the reason why he got redirected especially for a user who logged in with an local account.
+And in other cases, we want to show the user the page below to tell the user the reason why he got redirected, especially for a user who logged in with an local account.
 
 ![](Images/web-app-login-o365-required.png)
 
@@ -553,11 +576,11 @@ We use a switch to control this. The switch value is retrieved by:
 var challengeImmediately = filterContext.Controller.TempData[ChallengeImmediatelyTempDataKey];
 ~~~
 
-If the value is true, we will redirect the user to the authentication endpoint immediately. Otherwise, the page above will be shown first, and user click the Login button to proceed.
+If the value is true, we will redirect the user to the authentication endpoint immediately. Otherwise, the page above will be shown first, and user clicks the Login button to proceed.
 
 **LinkedOrO365UsersOnlyAttribute**
 
-The is another authorization filter. With it we can only allow linked users or Office 365 user to visit the protected controllers/actions.
+The is another authorization filter. With it we can only allow linked users or Office 365 users to visit the protected controllers/actions.
 
 ~~~c#
 protected override bool AuthorizeCore(HttpContextBase httpContext)

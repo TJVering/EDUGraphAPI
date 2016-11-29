@@ -11,5 +11,7 @@ namespace EDUGraphAPI.Web.Models
         public string MyFavoriteColor { get; set; }
         public List<string> FavoriteColors { get; set; }
         public List<string> Groups { get; set; }
+
+        public bool ShowFavoriteColor { get; set; }
     }
 }

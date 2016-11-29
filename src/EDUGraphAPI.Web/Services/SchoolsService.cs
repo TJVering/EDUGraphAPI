@@ -6,6 +6,7 @@ using Microsoft.Graph;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace EDUGraphAPI.Web.Services
 {
@@ -27,6 +28,18 @@ namespace EDUGraphAPI.Web.Services
             var schools = (await educationServiceClient.GetSchoolsAsync())
                 .OrderBy(i => i.Name)
                 .ToArray();
+            BingMapService mapServices = new BingMapService();
+            for (var i = 0; i < schools.Count(); i++)
+            {
+                var address = string.Format("{0}/{1}/{2}", schools[i].State, HttpUtility.HtmlEncode(schools[i].City), HttpUtility.HtmlEncode(schools[i].Address));
+                var longitudeAndLatitude = await mapServices.GetLongitudeAndLatitudeByAddress(address);
+                if (longitudeAndLatitude.Count() == 2)
+                {
+                    schools[i].Latitude = longitudeAndLatitude[0].ToString();
+                    schools[i].Longitude = longitudeAndLatitude[1].ToString();
+                }
+            }
+
             var mySchools = schools
                 .Where(i => i.SchoolId == currentUser.SchoolId)
                 .ToArray();

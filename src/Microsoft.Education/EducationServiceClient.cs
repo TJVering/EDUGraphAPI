@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Microsoft.Education
 {
@@ -28,17 +27,6 @@ namespace Microsoft.Education
         public async Task<School[]> GetSchoolsAsync()
         {
             var schools = await HttpGetArrayAsync<School>("administrativeUnits?api-version=beta");
-            BingMapService mapServices = new BingMapService();
-            for (var i = 0; i < schools.Count(); i++)
-            {
-                var address = string.Format("{0}/{1}/{2}", schools[i].State, HttpUtility.HtmlEncode(schools[i].City), HttpUtility.HtmlEncode(schools[i].Address));
-                var longitudeAndLatitude = await mapServices.GetLongitudeAndLatitudeByAddress(address);
-                if (longitudeAndLatitude.Count() == 2)
-                {
-                    schools[i].Latitude = longitudeAndLatitude[0].ToString();
-                    schools[i].Longitude = longitudeAndLatitude[1].ToString();
-                }
-            }
             return schools;
         }
 
