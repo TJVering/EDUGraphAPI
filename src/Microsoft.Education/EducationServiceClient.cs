@@ -27,7 +27,7 @@ namespace Microsoft.Education
         public async Task<School[]> GetSchoolsAsync()
         {
             var schools = await HttpGetArrayAsync<School>("administrativeUnits?api-version=beta");
-            return schools;
+            return schools.Where(c => c.EducationObjectType == "School").ToArray();
         }
 
         /// <summary>
