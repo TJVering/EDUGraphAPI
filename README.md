@@ -612,7 +612,7 @@ So far, It is only used on the **SchoolsController**.
 | Testing                                  | Ring Li (Canviz Consulting)              |
 | Testing                                  | Melody She (Canviz Consulting)           |
 | UX Design                                | Justin So (Canviz Consulting)            |
-| Sponsor / Support                        |                                          |
+| Sponsor / Support                        | TJ Vering (Microsoft)                    |
 | Sponsor / Support                        |                                          |
 | Sponsor / Support                        |                                          |
 | Sponsor / Support                        |                                          |
