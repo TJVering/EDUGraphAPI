@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace EDUGraphAPI.Data
 {
+    /// <summary>
+    /// An instance of the class represents a user
+    /// </summary>
     public class ApplicationUser : IdentityUser
     {
         public string FirstName { get; set; }

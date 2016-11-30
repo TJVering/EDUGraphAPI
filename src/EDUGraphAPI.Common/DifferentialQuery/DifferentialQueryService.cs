@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace EDUGraphAPI.DifferentialQuery
 {
+    /// <summary>
+    /// An instance of the class handles building request, sending it to the service endpoint, and processing the responses.
+    /// </summary>
     public class DifferentialQueryService
     {
         private Func<Task<string>> accessTokenGetter;

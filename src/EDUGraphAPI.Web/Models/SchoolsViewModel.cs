@@ -27,5 +27,7 @@ namespace EDUGraphAPI.Web.ViewModels
         public string MySchoolId { get; set; }
 
         public string BingMapKey { get; set; }
+
+        public bool AreAccountsLinked { get; set; }
     }
 }

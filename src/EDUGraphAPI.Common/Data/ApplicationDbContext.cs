@@ -16,6 +16,8 @@ namespace EDUGraphAPI.Data
 
         public DbSet<DataSyncRecord> DataSyncRecords { get; set; }
 
+        public DbSet<ClassroomSeatingArrangements> ClassroomSeatingArrangements { get; set; }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

@@ -16,5 +16,7 @@ namespace EDUGraphAPI.Web.ViewModels
         public DriveItem[] DriveItems { get; set; }
 
         public string SeeMoreFilesUrl { get; set; }
+        public bool IsStudent { get; set; }
+        public string O365UserId { get; set; }
     }
 }

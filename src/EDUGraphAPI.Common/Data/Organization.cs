@@ -2,6 +2,9 @@
 
 namespace EDUGraphAPI.Data
 {
+    /// <summary>
+    /// An instance of the class represents a tenant in Azure AD
+    /// </summary>
     public class Organization
     {
         public int Id { get; set; }

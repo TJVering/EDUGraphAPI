@@ -61,5 +61,8 @@ namespace Microsoft.Education.Data
         public string Longitude { get; set; }
 
         public string EducationGrade => $"{LowestGrade} - {HighestGrade}";
+
+        [JsonProperty("extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType")]
+        public string EducationObjectType { get; set; }
     }
 }

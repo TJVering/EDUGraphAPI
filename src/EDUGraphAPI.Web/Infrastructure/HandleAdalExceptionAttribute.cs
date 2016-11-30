@@ -7,6 +7,9 @@ using System.Web.Mvc;
 
 namespace EDUGraphAPI.Web.Infrastructure
 {
+    /// <summary>
+    /// Handle AdalException and navigate user to the authorize endpoint or /Link/LoginO365Required
+    /// </summary>
     public class HandleAdalExceptionAttribute : ActionFilterAttribute, IExceptionFilter
     {
         public static readonly string ChallengeImmediatelyTempDataKey = "ChallengeImmediately";

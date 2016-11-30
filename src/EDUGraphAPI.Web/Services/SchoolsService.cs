@@ -1,4 +1,5 @@
-﻿using EDUGraphAPI.Web.Models;
+﻿using EDUGraphAPI.Data;
+using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.ViewModels;
 using Microsoft.Education;
 using Microsoft.Education.Data;
@@ -10,15 +11,23 @@ using System.Web;
 
 namespace EDUGraphAPI.Web.Services
 {
+    /// <summary>
+    /// A service class used to get education data by controllers
+    /// </summary>
     public class SchoolsService
     {
         private EducationServiceClient educationServiceClient;
+        private ApplicationDbContext dbContext;
 
-        public SchoolsService(EducationServiceClient educationServiceClient)
+        public SchoolsService(EducationServiceClient educationServiceClient,ApplicationDbContext dbContext)
         {
             this.educationServiceClient = educationServiceClient;
+            this.dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Get SchoolsViewModel
+        /// </summary>
         public async Task<SchoolsViewModel> GetSchoolsViewModelAsync(UserContext userContext)
         {
             var currentUser = userContext.IsStudent
@@ -60,6 +69,9 @@ namespace EDUGraphAPI.Web.Services
             };
         }
 
+        /// <summary>
+        /// Get SectionsViewModel of the specified school
+        /// </summary>
         public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool mySections)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
@@ -70,12 +82,19 @@ namespace EDUGraphAPI.Web.Services
             return new SectionsViewModel(userContext.UserO365Email, school, sections.OrderBy(c => c.CombinedCourseNumber));
         }
 
+        /// <summary>
+        /// Get SectionDetailsViewModel of the specified section
+        /// </summary>
         public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string sectionId, IGroupRequestBuilder group)
         {
             var school = await educationServiceClient.GetSchoolAsync(schoolId);
             var section = await educationServiceClient.GetSectionAsync(sectionId);
             var driveRootFolder = await group.Drive.Root.Request().GetAsync();
-
+            foreach (var user in section.Students)
+            {
+                var seat= dbContext.ClassroomSeatingArrangements.Where(c => c.O365UserId == user.O365UserId).FirstOrDefault();
+                user.Position = (seat == null ? 0 : seat.Position);
+            }
             return new SectionDetailsViewModel
             {
                 School = school,
@@ -86,7 +105,10 @@ namespace EDUGraphAPI.Web.Services
                 SeeMoreFilesUrl = driveRootFolder.WebUrl
             };
         }
-
+        
+        /// <summary>
+        /// Get my classes
+        /// </summary>
         public async Task<List<string>> GetMyClasses(UserContext userContext)
         {
             List<string> results = new List<string>();

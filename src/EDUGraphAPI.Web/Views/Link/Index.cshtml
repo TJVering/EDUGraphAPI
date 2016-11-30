@@ -4,35 +4,33 @@
     var message = TempData["Message"] as string;
 }
 
-<h2>Link</h2>
+<h2>Link Accounts Page</h2>
 
 @if (!Model.AreAccountsLinked)
 {
     if (Model.IsLocalAccount)
     {
-        <div class="form-horizontal">
-            <h4>Link to your Office 365 account</h4>
+        <div class="form-horizontal" id="linkAccountPrompt">
             <hr />
             @using (Html.BeginForm("LoginO365", null, FormMethod.Post, null))
             {
-                <p>If you have an Office 365 account, please click the button below to login and link it.</p>
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                <p><input type="submit" value="Login" class="btn btn-primary" /></p>
-                <p>Otherwise, please ask your tenant admin to create one for you.</p>
+                <p><input type="submit" value="Use Existing O365 account" class="btn btn-primary" /> 
+            &nbsp; &nbsp;
+            <input id="skipLinkAccount" class="btn btn-primary" value="Cancel"/></p>
+                
             }
         </div>
     }
     else
     {
+       <hr />
         <div class="form-horizontal">
-            <h4>Link to your local account</h4>
-            <hr />
-            <p>If you have a local account, please log in with it:</p>
-            <p>@Html.ActionLink("Login with local account", "LoginLocal", null, new { @class = "btn btn-primary" })</p>
-            <br />
-            <p>Other, please create one by clicking the button below:</p>
-            <p>@Html.ActionLink("Create local account", "CreateLocalAccount", null, new { @class = "btn btn-primary" })</p>
+             <p>@Html.ActionLink("Use Existing Local Account", "LoginLocal", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
+             @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
+            @Html.ActionLink("Cancel","index", "Schools",null, new { @class = "btn btn-primary" })</p>
+
         </div>
     }
 }
@@ -52,4 +50,13 @@ else
 
 @helper LocalLoginForm()
 {
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#skipLinkAccount').on('click', function () {
+                $('#linkAccountPrompt').hide();
+            });
+        });
+    </script>
 }

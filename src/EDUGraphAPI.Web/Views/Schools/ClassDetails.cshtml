@@ -115,12 +115,13 @@
         </div>
 
         <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#students">Students</a></li>
+            <li ><a data-toggle="tab" href="#students">Students</a></li>
             <li><a data-toggle="tab" href="#documents">Class Documents</a></li>
             <li><a data-toggle="tab" href="#conversations">Conversations</a></li>
+            <li class="active greentab"><a data-toggle="tab" href="#seatingchart"><span>SEATING CHART</span></a></li>
         </ul>
         <div class="tab-content">
-            <div id="students" class="tab-pane fade in active">
+            <div id="students" class="tab-pane fade ">
                 <table class="table  table-green table-studnet">
                     <tr class="table-green-header">
                         <th class="tdleft">
@@ -133,7 +134,7 @@
                     @foreach (var stu in Model.Section.Students)
                     {
                         <tr class="tr-content">
-                            <td>@stu.DisplayName</td>
+                            <td>@stu.DisplayName </td>
                             <td>@stu.EducationGrade</td>
                         </tr>
                     }
@@ -171,9 +172,86 @@
                 </table>
                 <span class="see-more"><a target="_blank"  href="@Model.SeeMoreConversationsUrl">See More</a></span>
             </div>
-        </div>
-    </div>
+
+            <div id="seatingchart"  class="tab-pane fade in active">
+
+                <div class="left" id="dvleft">
+                   
+                        @if (!Model.IsStudent)
+                        {
+                            <div> To assign seats for each student, drag and drop student profile icons below onto the seating map to the right.</div>
+                        }
+                        else
+                        {
+                            <div class="assignseat"><div class="greenicon"></div>Your assigned seat </div>
+                        }
+                   
+                    <ul id="lstproducts">
+                        @foreach (var stu in Model.Section.Students)
+                        {
+                            <li draggable='true' position="@stu.Position"><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> @stu.DisplayName</li>
+                        }
+                    </ul>
+                </div>
+                <div class="right" id="dvright">
+             
+                        <div class="teacherdesk">
+                            Teacher's desk
+                        </div>
+                  
+                    <div>
+                        <div id="graybg">
+                            @for (var i = 1; i <= 36; i++)
+                            {
+                                var stuWithSeat = Model.Section.Students.Where(c => c.Position == i).FirstOrDefault();
+                                var img = "";
+                                var studentName = "";
+                                var containerClass = "";
+                                if (stuWithSeat != null)
+                                {
+                                    img =string.Format("<img src = '/Photo/UserPhoto/{0}' />", stuWithSeat.O365UserId);
+                                    studentName = stuWithSeat.DisplayName;
+                                    containerClass = "white";
+                                    if (Model.O365UserId == stuWithSeat.O365UserId)
+                                    {
+                                        containerClass = "green";
+                                    }
+                                }
+                                <div class="stucontainer @containerClass">
+                                    <div class="deskcontainer" >
+                                        @if (!Model.IsStudent)
+                                        {
+                                            <div class="deskclose"><img src="~/Images/close.png" /></div>
+                                        }
+                                        <div class="deskicon">
+                                            @Html.Raw(img)
+                                        </div>
+                                        <div class="stuname">@studentName</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div id="dvedit" class="dvedit">
+                   @if (!Model.IsStudent)
+                   {
+                       <div> edit cancel</div>
+                   }
+                   
+                </div >
+                <br style = "clear:both" />
+             </div >
+         </div >
+
+
+     </div >
 
 
 
-</div>
+
+
+ </ div >
+
+@*if a teacher login*@
+@Scripts.Render("~/bundles/classdetail")

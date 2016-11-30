@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace EDUGraphAPI
 {
+    /// <summary>
+    /// A static class contains values of app settings and other constant values
+    /// </summary>
     public static class Constants
     {
         public static readonly string AADClientId = ConfigurationManager.AppSettings["ida:ClientId"];

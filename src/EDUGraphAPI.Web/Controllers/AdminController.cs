@@ -11,7 +11,7 @@ using AAD = Microsoft.Azure.ActiveDirectory.GraphClient;
 
 namespace EDUGraphAPI.Web.Controllers
 {
-    [EduAuthorize, HandleAdalException]
+    [EduAuthorize(Roles = "Admin"), HandleAdalException]
     public class AdminController : Controller
     {
         static readonly string StateKey = typeof(AdminController).Name + "State";

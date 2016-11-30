@@ -1,6 +1,8 @@
-﻿using EDUGraphAPI.Utils;
+﻿using EDUGraphAPI.Data;
+using EDUGraphAPI.Utils;
 using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Services;
+using EDUGraphAPI.Web.ViewModels;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -10,10 +12,11 @@ namespace EDUGraphAPI.Web.Controllers
     public class SchoolsController : Controller
     {
         private ApplicationService applicationService;
-
-        public SchoolsController(ApplicationService applicationService)
+        private ApplicationDbContext dbContext;
+        public SchoolsController(ApplicationService applicationService, ApplicationDbContext dbContext)
         {
             this.applicationService = applicationService;
+            this.dbContext = dbContext;
         }
 
         //
@@ -21,8 +24,13 @@ namespace EDUGraphAPI.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var userContext = await applicationService.GetUserContextAsync();
+            if (!userContext.AreAccountsLinked)
+            {
+                return View(new SchoolsViewModel() { AreAccountsLinked = false });
+            }
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolsViewModelAsync(userContext);
+            model.AreAccountsLinked = userContext.AreAccountsLinked;
             return View(model);
         }
 
@@ -51,18 +59,22 @@ namespace EDUGraphAPI.Web.Controllers
         // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections/6510F0FC-53B3-4D9B-9742-84C9C8FA2BE4
         public async Task<ActionResult> ClassDetails(string schoolId, string sectionId)
         {
+            var userContext = await applicationService.GetUserContextAsync();
+
             var graphServiceClient = await AuthenticationHelper.GetGraphServiceClientAsync();
             var group = graphServiceClient.Groups[sectionId];
 
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSectionDetailsViewModelAsync(schoolId, sectionId, group);
+            model.IsStudent = userContext.IsStudent;
+            model.O365UserId = userContext.User.O365UserId;
             return View(model);
         }
 
         private async Task<SchoolsService> GetSchoolsServiceAsync()
         {
             var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
-            return new SchoolsService(educationServiceClient);
+            return new SchoolsService(educationServiceClient, dbContext);
         }
     }
 }

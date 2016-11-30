@@ -11,6 +11,9 @@ namespace EDUGraphAPI.DataSync
 {
     public delegate Task<string> GetTenantAccessTokenAsyncDelegate(string tenantId);
 
+    /// <summary>
+    /// An instance of the class handles syncing users in local database with differential query.
+    /// </summary>
     public class UserSyncService
     {
         private static readonly string UsersQuery = "users";
@@ -68,7 +71,7 @@ namespace EDUGraphAPI.DataSync
                     await UpdateUserAsync(differentialUser);
 
                 dataSyncRecord.DeltaLink = result.DeltaLink;
-                dataSyncRecord.Updated = DateTime.Now;
+                dataSyncRecord.Updated = DateTime.UtcNow;
             }
 
             dbContext.SaveChanges();
@@ -127,7 +130,7 @@ namespace EDUGraphAPI.DataSync
 
         private async Task WriteLogAsync(string message)
         {
-            await log.WriteAsync($"[{DateTime.Now}][SyncData] ");
+            await log.WriteAsync($"[{DateTime.UtcNow}][SyncData] ");
             await log.WriteLineAsync(message);
         }
 

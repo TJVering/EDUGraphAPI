@@ -1,5 +1,11 @@
 ﻿namespace EDUGraphAPI.DataSync
 {
+    /// <summary>
+    /// An instance of the class represents a user in Azure AD.
+    /// </summary>
+    /// <remarks>
+    /// Notice that the properties used to track changes are virtual.
+    /// </remarks>
     public class User
     {
         public string ObjectId { get; set; }

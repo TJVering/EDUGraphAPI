@@ -2,6 +2,9 @@
 
 namespace EDUGraphAPI.Utils
 {
+    /// <summary>
+    /// A static class used to build authorize URL
+    /// </summary>
     public static class AuthorizationHelper
     {
         public static class Prompt

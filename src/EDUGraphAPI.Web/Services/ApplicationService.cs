@@ -11,6 +11,9 @@ using System.Web;
 
 namespace EDUGraphAPI.Web.Services
 {
+    /// <summary>
+    /// An instance of the class handles getting/updating user/organization
+    /// </summary>
     public class ApplicationService
     {
         static readonly string UserContextKey = typeof(UserContext).Name + "Context";
@@ -31,6 +34,9 @@ namespace EDUGraphAPI.Web.Services
             this(dbContext, userManager, new HttpContextWrapper(HttpContext.Current))
         { }
 
+        /// <summary>
+        /// Get current user
+        /// </summary>
         public ApplicationUser GetCurrentUser()
         {
             var userId = GetUserId();
@@ -42,6 +48,9 @@ namespace EDUGraphAPI.Web.Services
                 .FirstOrDefault();
         }
 
+        /// <summary>
+        /// Get current user
+        /// </summary>
         public async Task<ApplicationUser> GetCurrentUserAsync()
         {
             var userId = GetUserId();
@@ -53,6 +62,9 @@ namespace EDUGraphAPI.Web.Services
                 .FirstOrDefaultAsync();
         }
 
+        /// <summary>
+        /// Get user by id
+        /// </summary>
         public async Task<ApplicationUser> GetUserAsync(string id)
         {
             return await dbContext.Users
@@ -60,7 +72,10 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
-
+        
+        /// <summary>
+        /// Update current user's favorite color
+        /// </summary>
         public void UpdateUserFavoriteColor(string color)
         {
             var user = GetCurrentUser();
@@ -71,31 +86,46 @@ namespace EDUGraphAPI.Web.Services
             }
         }
         
+        /// <summary>
+        /// Get current user's context
+        /// </summary>
         public UserContext GetUserContext()
         {
             var currentUser = GetCurrentUser();
             return new UserContext(HttpContext.Current, currentUser);
         }
-
+        
+        /// <summary>
+        /// Get current user's context
+        /// </summary>
         public async Task<UserContext> GetUserContextAsync()
         {
             var currentUser = await GetCurrentUserAsync();
             return new UserContext(HttpContext.Current, currentUser);
         }
 
+        /// <summary>
+        /// Get current admin's context
+        /// </summary>
         public async Task<AdminContext> GetAdminContextAsync()
         {
             var currentOrganization = await GetCurrentTenantAsync();
             return new AdminContext(currentOrganization);
         }
 
+        /// <summary>
+        /// Is the specified O365 account linked with an local account
+        /// </summary>
+        /// <param name="o365UserId"></param>
+        /// <returns></returns>
         public Task<bool> IsO365AccountLinkedAsync(string o365UserId)
         {
             return dbContext.Users.AnyAsync(i => i.O365UserId == o365UserId);
         }
 
-
-
+        /// <summary>
+        /// Update the local user with O365 user and tenant info
+        /// </summary>
         public async Task UpdateLocalUserAsync(ApplicationUser localUser, UserInfo o365User, TenantInfo tenant)
         {
             await UpdateUserNoSaveAsync(localUser, o365User, tenant);
@@ -104,6 +134,9 @@ namespace EDUGraphAPI.Web.Services
             await UpdateUserRoles(localUser, o365User);
         }
 
+        /// <summary>
+        /// Create or update the organization
+        /// </summary>
         public async Task CreateOrUpdateOrganizationAsync(TenantInfo tenant, bool adminConsented)
         {
             var organization = await dbContext.Organizations
@@ -121,6 +154,9 @@ namespace EDUGraphAPI.Web.Services
             await dbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Get linked users with the specified filter
+        /// </summary>
         public async Task<ApplicationUser[]> GetLinkedUsers(Expression<Func<ApplicationUser, bool>> predicate = null)
         {
             return await dbContext.Users
@@ -129,6 +165,10 @@ namespace EDUGraphAPI.Web.Services
                 .ToArrayAsync();
         }
 
+        /// <summary>
+        /// Unlink the specified the account
+        /// </summary>
+        /// <param name="id">User id</param>
         public async Task UnlinkAccountsAsync(string id)
         {
             var user = await GetUserAsync(id);

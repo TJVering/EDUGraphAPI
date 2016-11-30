@@ -158,7 +158,7 @@ textarea {
 }
 
 .students{margin-top:20px;}
-.students > ul > li{width:31%;margin-right:20px;text-align: center;}
+.students > ul > li{width:22%;margin-right:20px;text-align: center;}
 .students > ul > li:first-child{margin-left:20px;}
 .students > ul > li>a{color:#ABABAB;height:56px;font-size:18px;text-transform:uppercase;background-color:#fff;border-radius:0 0 0 0;font-weight:400;padding-top:15px;}
 .students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {background-color:#ABABAB;color:#fff;font-weight:700;}
@@ -192,3 +192,39 @@ textarea {
 .mygroups div{float:left;margin-left:6px;}
 .margin-btm-12{margin-bottom:12px;}
 .margin-top-12{margin-top:12px;}
+
+#skipLinkAccount{width:90px;}
+.students > ul > li.greentab > a,.students > ul > li.greentab > a:hover,.students > ul > li.greentab > a:focus {background-color:#237e17;color:white;font-weight:700; }
+.students > ul > li.greentab > a span{border-bottom:3px solid white;    padding-bottom: 6px;}
+#seatingchart{border:2px solid #237e17;background-color:white;padding:24px 12px;}
+#seatingchart .left{width:30%;float:left;}
+#seatingchart .right{width:65%;float:left;border-left:2px solid #666565;}
+#seatingchart .dvedit{width:5%;float:right;}
+#seatingchart ul li{list-style-type:none; margin-bottom:6px;}
+#seatingchart .greenicon{width:14px;height:14px;background:#237e17;float:left;margin:3px 6px 0 0;}
+.assignseat{margin:12px 0;}
+#lstproducts{padding-left:0;}
+#lstproducts img, .deskicon img{
+border-radius: 30px;
+-webkit-border-radius: 30px;
+-moz-border-radius: 30px;
+border: 1px solid #e4e4e4;
+max-width: 50px;
+height: auto;
+}
+
+
+.deskcontainer{width:90px;height:90px;position:relative;   padding-top: 6px;}
+.deskicon{padding-top:6px;text-align:center;}
+.stuname{padding: 6px ;text-align:center;}
+.deskicon img{max-height:40px;width:auto;}
+.deskclose{ width:20px;height:20px;float:right;position:absolute;right: -18px;
+top: -10px;}
+.hideitem{display:none;}
+#graybg{width:660px;margin:auto;}
+.stucontainer{border: 1px solid #e4e4e4;color:white; width:100px;height:100px;float:left;margin-right:10px;margin-bottom:10px; background-color:#CECECE;}
+.stucontainer.white{background-color:white;color:black;}
+.stucontainer.green{background-color:#5DCB50;color:white;border-color:#2B4E26;}
+
+.teacherdesk{color:white;width:200px;margin:auto;border:1px solid gray;
+             background-color:#ABABAB;text-transform:uppercase;margin-bottom:20px;height:60px;line-height:60px;text-align:center;}

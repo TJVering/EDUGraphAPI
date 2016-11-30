@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Education
 {
+    /// <summary>
+    /// An instance of the EducationServiceClient class handles building requests, sending them to Office 365 Education API, and processing the responses.
+    /// </summary>
     public class EducationServiceClient
     {
         private string serviceRoot;
@@ -27,7 +30,7 @@ namespace Microsoft.Education
         public async Task<School[]> GetSchoolsAsync()
         {
             var schools = await HttpGetArrayAsync<School>("administrativeUnits?api-version=beta");
-            return schools;
+            return schools.Where(c => c.EducationObjectType == "School").ToArray();
         }
 
         /// <summary>
@@ -56,6 +59,11 @@ namespace Microsoft.Education
             return HttpGetArrayAsync<Section>(relativeUrl);
         }
 
+        /// <summary>
+        /// Get my sections within a school
+        /// </summary>
+        /// <param name="schoolId">The ID of the school in the School Information System (SIS).</param>
+        /// <returns></returns>
         public async Task<Section[]> GetMySectionsAsync(string schoolId)
         {
             //You can get the membership of the student using the query below.

@@ -115,7 +115,7 @@ Download and install the following tools to run, build and/or develop this appli
 |                                | Application Permissions       | Delegated Permissions                    |
 | ------------------------------ | ----------------------------- | ---------------------------------------- |
 | Windows Azure Active Directory | Read and write directory data | Sign in and read user profile<br>Read and write directory data |
-| Microsoft Graph                | *None*                        | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
+| Microsoft Graph                | Read all users' full profiles | Read all groups<br>Read directory data<br>Access directory as the signed in user<br>Sign user in |
 
 12. In the keys section, click the dropdown list and select a duration, then click **Save**.
 
@@ -290,7 +290,7 @@ A row in this table represents a tenant in AAD.
 | Name             | Name of the tenant                   |
 | IsAdminConsented | Is the tenant consented by any admin |
 
-### Authentication flows
+### Authentication Flows
 
 There are 4 authentication flows in this project.
 
@@ -486,7 +486,7 @@ In **EducationServiceClient**, three private methods prefixed with HttpGet were 
 * **HttpGetObjectAsync<T>**:  deserializes the JSON string returned by HttpGetAsync to the target type T, and return the result object.
 * **HttpGetArrayAsync<T>**: deserializes the JSON string returned by HttpGetAsync to the target array type T[], and return the array.
 
-### Differential query
+### Differential Query
 
 [A differential query](https://msdn.microsoft.com/en-us/Library/Azure/Ad/Graph/howto/azure-ad-graph-api-differential-query) request returns all changes made to specified entities during the time between two consecutive requests. For example, if you make a differential query request an hour after the previous differential query request, only the changes made during that hour will be returned. This functionality is especially useful when synchronizing tenant directory data with an application’s data store.
 
@@ -555,7 +555,7 @@ protected override void HandleUnauthorizedRequest(AuthorizationContext filterCon
 
 The **AuthenticationHelper** class exposes lots of methods that return access tokens or instance of an API client. Most of these methods invoke **[AuthenticationContext.AcquireTokenSilentAsync](https://msdn.microsoft.com/en-us/library/mt473642.aspx)** internally. Usually, **AcquireTokenSilentAsync** gets the access token successfully, as tokens are cached in the database by **ADALTokenCache**. 
 
-In some situations, like the cached token being expired or a new resource token is requested, **AcquireTokenSilentAsync** will throw **AdalException**. **HandleAdalExceptionAttribute** is required to handle **AdalException**, and navigate the user to the authentication endpoint to get a new token.
+In some situations, like the cached token being expired or a new resource token is requested, **AcquireTokenSilentAsync** will throw **AdalException**.**HandleAdalExceptionAttribute** is required to handle **AdalException**, and navigate the user to the authentication endpoint to get a new token.
 
 In some cases, we will redirect the user directly to the authentication endpoint by invoking:
 
@@ -602,20 +602,130 @@ protected override void HandleUnauthorizedRequest(AuthorizationContext filterCon
 
 So far, It is only used on the **SchoolsController**.
 
+### Major Classes
+
+**Microsoft.Education**
+
+* `EducationServiceClient`: an instance of the class handles building requests, sending them to Office 365 Education API, and processing the responses.
+
+  | Method              | Description                              |
+  | ------------------- | ---------------------------------------- |
+  | GetSchoolsAsync     | Get all schools that exist in the Azure Active Directory tenant |
+  | GetSchoolAsync      | Get a school by using the object id      |
+  | GetAllSectionsAsync | Get sections within a school             |
+  | GetMySectionsAsync  | Get my sections within a school          |
+  | GetSectionAsync     | Get a section by using the object id     |
+  | GetStudentAsync     | Get the current logged in user as a Student |
+  | GetTeacherAsync     | Get the current logged in user as a Teacher |
+
+**EDUGraphAPI.Common**
+
+* **`Data.ApplicationUser`**: an instance of the class represents a user.
+
+* **`Data.Organization`**: an instance of the class represents a tenant in Azure AD. 
+
+* **`Data.ApplicationDbContext`**: DbContext class used by Entity Framework, inherited from `IdentityDbContext<ApplicationUser>`.
+
+* **`DataSync.User`**: an instance of the class represents a user in Azure AD. Notice that the properties used to track changes are virtual.
+
+* **`DataSync.UserSyncService`**: an instance of the class handles syncing users in local database with differential query. Invoke the `SyncAsync` method to start sync users.
+
+* **`DifferentialQuery.DifferentialQueryService`**: An instance of the class handles building request, sending it to the service endpoint, and processing the responses. Invoke the `QueryAsync` method with a deltaLink to start a differential query. The differential result will be converted to `DeltaResult<Delta<TEntity>>` by `DeltaResultParser` class.
+
+* **`Utils.AuthenticationHelper`**: a static helper class used to get access token, authentication result, authentication context and instances of service client.
+
+  | Method                                 | Description                              |
+  | -------------------------------------- | ---------------------------------------- |
+  | GetActiveDirectoryClientAsync          | Get an instance of ActiveDirectoryClient |
+  | GetGraphServiceClientAsync             | Get an instance of GraphServiceClient    |
+  | GetEducationServiceClientAsync         | Get an instance of EducationServiceClient |
+  | GetActiveDirectoryClient               | Get an instance of ActiveDirectoryClient from the specified AuthenticationResult |
+  | GetGraphServiceClient                  | Get an instance of GraphServiceClient from the specified AuthenticationResult |
+  | GetAccessTokenAsync                    | Get an access token of the specified resource |
+  | GetAuthenticationResult                | Get an AuthenticationResult of the specified resource |
+  | GetAuthenticationContext               | Get an instance of AuthenticationContext |
+  | GetAuthenticationResultAsync           | Get an AuthenticationResult from the specified authorization code |
+  | GetAppOnlyAccessTokenForDaemonAppAsync | Get an App-only access token for a daemon app |
+
+  Most of the methods above have a argument called permission. Its type is a `Permissions` with two defined values:
+
+  * `Delegated`: the client accesses the web API as the signed-in user.
+  * `Application`: the client accesses the web API directly as itself (no user context). This type of permission requires administrator consent.
+
+* **`Utils.AuthenticationHelper`**: a static class used to build authorize URL. `GetUrl` is the only method defined in the class.
+
+* **`Constants`**: a static class contains values of app settings and other constant values.
+
+**EDUGraphAPI.Web**
+
+* **`Controllers.AccountController`**: contains actions for user to register, login, change password.
+
+* **`Controllers.AdminController`**: implements the **Admin Login Authentication Flow**. Please check [Authentication Flows](#authentication-flows) section for more details.
+
+* **`Controllers.LinkController`**:  implements the **Local/O365 Login Authentication Flow**. Please check [Authentication Flows](#authentication-flows) section for more details.
+
+* **`Controllers.SchoolsController`**: contains actions to show schools and classes. `SchoolsService` class is mainly used by this controller. Pleae check [Office 365 Education API](#office-365-education-api) section for more details.
+
+* **`Infrastructure.EduAuthorizeAttribute`**: allow the web app to redirect the current user to the proper login page in our multi-authentication-method scenario. Please check [Filters](#filters) section for more details.
+
+* **`Infrastructure.HandleAdalExceptionAttribute`**: handle AdalException and navigate user to the authorize endpoint or /Link/LoginO365Required. Please check [Filters](#filters) section for more details.
+
+* **`Infrastructure.LinkedOrO365UsersOnlyAttribute`**: only allow linked users or Office 365 users to visit the protected controllers/actions. Please check [Filters](#filters) section for more details.
+
+* **`Models.UserContext`**: context for the logged-in user.
+
+* **`Services.GraphClients.AADGraphClient`**: implements `IGraphClient` interface with Azure AD Graph API. Please check [Two Kinds of Graph API](#two-kinds-of-graph-api) section for more details.
+
+* **`Services.GraphClients.MSGraphClient`**: implements `IGraphClient` interface with Microsoft Graph API. Please check [Two Kinds of Graph API](#two-kinds-of-graph-api) section for more details.
+
+* **`Services.ApplicationService.`**: an instance of the class handles getting/updating user/organization.
+
+  | Method                          | Description                              |
+  | ------------------------------- | ---------------------------------------- |
+  | CreateOrUpdateOrganizationAsync | Create or update the organization        |
+  | GetAdminContextAsync            | Get current admin's context              |
+  | GetCurrentUser                  | Get current user                         |
+  | GetCurrentUserAsync             | Get current user                         |
+  | GetUserAsync                    | Get user by id                           |
+  | GetUserContext                  | Get current user's context               |
+  | GetUserContextAsync             | Get current user's context               |
+  | GetLinkedUsers                  | Get linked users with the specified filter |
+  | IsO365AccountLinkedAsync        | Is the specified O365 account linked with an local account |
+  | UnlinkAccountsAsync             | Unlink the specified the account         |
+  | UpdateUserFavoriteColor         | Update current user's favorite color     |
+  | UpdateLocalUserAsync            | Update the local user with O365 user and tenant info |
+
+* **`Services.SchoolsService`**: a service class used to get education data.
+
+  | Method                          | Description                              |
+  | ------------------------------- | ---------------------------------------- |
+  | GetSchoolsViewModelAsync        | Get SchoolsViewModel                     |
+  | GetSectionsViewModelAsync       | Get SectionsViewModel of the specified school |
+  | GetSectionDetailsViewModelAsync | Get SectionDetailsViewModel of the specified section |
+  | GetMyClasses                    | Get my classes                           |
+
+**EDUGraphAPI.SyncData**
+
+* **`Functions`**: contains the `SyncUsersAsync` method which is executed regularly to sync users data.
+* **`Program`**: contains the `Main` method which configure and start the WebJob host.
+
 ## Contributors
+
 | Roles                                    | Author(s)                                |
 | ---------------------------------------- | ---------------------------------------- |
 | Project Lead / Architect / Documentation | Todd Baginski (Microsoft MVP, Canviz Consulting) @tbag |
 | PM                                       | John Trivedi (Canviz Consulting)         |
-| Dev Leader                               | Tyler Lu (Canviz Consulting) @TylerLu    |
+| Development Leader / Documentation       | Tyler Lu (Canviz Consulting) @TylerLu    |
 | Developer                                | Benny Zhang (Canviz Consulting)          |
 | Testing                                  | Ring Li (Canviz Consulting)              |
 | Testing                                  | Melody She (Canviz Consulting)           |
 | UX Design                                | Justin So (Canviz Consulting)            |
-| Sponsor / Support                        | TJ Vering (Microsoft)                    |
-| Sponsor / Support                        |                                          |
-| Sponsor / Support                        |                                          |
-| Sponsor / Support                        |                                          |
+| Code Reviews / Documentation             | Michael Sherman (Canviz Consulting) @canvizsherm |
+| Sponsor / Support                        | TJ Vering (Microsoft) @TJVering          |
+| Sponsor / Support                        | Alok Kumar Bansal (Microsoft)            |
+| Sponsor / Support                        | Kaushik Barat (Microsoft) @kaubar        |
+| Sponsor / Support                        | Kundana Palagiri (Microsoft)             |
+| Sponsor / Support                        | Zion Brewer (Microsoft) @zckb            |
 
 ## Version history
 
