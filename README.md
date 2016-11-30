@@ -332,7 +332,7 @@ An X509 certificate is used. For more details, please check the following links:
 
 There are two distinct Graph APIs used in this sample:
 
-|              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API]([https://graph.microsoft.io/) |
+|              | [Azure AD Graph API](https://msdn.microsoft.com/en-us/library/azure/ad/graphInstall-Package) | [Microsoft Graph API](https://graph.microsoft.io/) |
 | ------------ | ---------------------------------------- | ---------------------------------------- |
 | Description  | The Azure Active Directory Graph API provides programmatic access to Azure Active Directory through REST API endpoints. Apps can use the Azure AD Graph API to perform create, read, update, and delete (CRUD) operations on directory data and directory objects, such as users, groups, and organizational contacts | A unified API that also includes APIs from other Microsoft services like Outlook, OneDrive, OneNote, Planner, and Office Graph, all accessed through a single endpoint with a single access token. |
 | Client       | Install-Package [Microsoft.Azure.ActiveDirectory.GraphClient](https://www.nuget.org/packages/Microsoft.Azure.ActiveDirectory.GraphClient/) | Install-Package [Microsoft.Graph](https://www.nuget.org/packages/Microsoft.Graph/) |
@@ -647,7 +647,7 @@ So far, It is only used on the **SchoolsController**.
   | GetAuthenticationResultAsync           | Get an AuthenticationResult from the specified authorization code |
   | GetAppOnlyAccessTokenForDaemonAppAsync | Get an App-only access token for a daemon app |
 
-  Most of the methods above have a argument called permission. Its type is a `Permissions` with two defined values:
+  Most of the methods above have a argument called permission. Its type is `Permissions`, an Enum type with two defined values:
 
   * `Delegated`: the client accesses the web API as the signed-in user.
   * `Application`: the client accesses the web API directly as itself (no user context). This type of permission requires administrator consent.
@@ -658,7 +658,7 @@ So far, It is only used on the **SchoolsController**.
 
 **EDUGraphAPI.Web**
 
-* **`Controllers.AccountController`**: contains actions for user to register, login, change password.
+* **`Controllers.AccountController`**: contains actions for user to register, login and change password.
 
 * **`Controllers.AdminController`**: implements the **Admin Login Authentication Flow**. Please check [Authentication Flows](#authentication-flows) section for more details.
 
