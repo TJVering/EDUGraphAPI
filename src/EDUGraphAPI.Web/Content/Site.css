@@ -197,10 +197,16 @@ textarea {
 .students > ul > li.greentab > a,.students > ul > li.greentab > a:hover,.students > ul > li.greentab > a:focus {background-color:#237e17;color:white;font-weight:700; }
 .students > ul > li.greentab > a span{border-bottom:3px solid white;    padding-bottom: 6px;}
 #seatingchart{border:2px solid #237e17;background-color:white;padding:24px 12px;}
+<<<<<<< HEAD
 #seatingchart .left{width:25%;float:left;}
 #seatingchart .right{width:65%;float:left;border-left:2px solid #666565;}
 #seatingchart .dvedit{width:10%;float:right;}
 #seatingchart .dvedit img{margin-top:12px;}
+=======
+#seatingchart .left{width:30%;float:left;}
+#seatingchart .right{width:65%;float:left;border-left:2px solid #666565;}
+#seatingchart .dvedit{width:5%;float:right;}
+>>>>>>> origin/master
 #seatingchart ul li{list-style-type:none; margin-bottom:6px;}
 #seatingchart .greenicon{width:14px;height:14px;background:#237e17;float:left;margin:3px 6px 0 0;}
 .assignseat{margin:12px 0;}
@@ -213,6 +219,7 @@ border: 1px solid #e4e4e4;
 max-width: 50px;
 height: auto;
 }
+<<<<<<< HEAD
 #dvleft .tip{font-weight:600;margin-bottom:20px;}
 
 .deskcontainer{width:98px;height:98px;position:relative;   padding-top: 6px;}
@@ -251,3 +258,21 @@ top: -10px;cursor:pointer;}
     line-height:200px;
     font-size:24px;
 }
+=======
+
+
+.deskcontainer{width:90px;height:90px;position:relative;   padding-top: 6px;}
+.deskicon{padding-top:6px;text-align:center;}
+.stuname{padding: 6px ;text-align:center;}
+.deskicon img{max-height:40px;width:auto;}
+.deskclose{ width:20px;height:20px;float:right;position:absolute;right: -18px;
+top: -10px;}
+.hideitem{display:none;}
+#graybg{width:660px;margin:auto;}
+.stucontainer{border: 1px solid #e4e4e4;color:white; width:100px;height:100px;float:left;margin-right:10px;margin-bottom:10px; background-color:#CECECE;}
+.stucontainer.white{background-color:white;color:black;}
+.stucontainer.green{background-color:#5DCB50;color:white;border-color:#2B4E26;}
+
+.teacherdesk{color:white;width:200px;margin:auto;border:1px solid gray;
+             background-color:#ABABAB;text-transform:uppercase;margin-bottom:20px;height:60px;line-height:60px;text-align:center;}
+>>>>>>> origin/master

@@ -4,7 +4,11 @@
     var message = TempData["Message"] as string;
 }
 
+<<<<<<< HEAD
 <h2>Link Office 365 & Local Account</h2>
+=======
+<h2>Link Accounts Page</h2>
+>>>>>>> origin/master
 
 @if (!Model.AreAccountsLinked)
 {
@@ -17,12 +21,19 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
+<<<<<<< HEAD
                 <p>
                     <input type="submit" value="Use Existing O365 account" class="btn btn-primary" />
                     &nbsp; &nbsp;
                     @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
                 </p>
 
+=======
+                <p><input type="submit" value="Use Existing O365 account" class="btn btn-primary" /> 
+            &nbsp; &nbsp;
+            <input id="skipLinkAccount" class="btn btn-primary" value="Cancel"/></p>
+                
+>>>>>>> origin/master
             }
         </div>
     }

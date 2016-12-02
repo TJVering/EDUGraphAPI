@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+<<<<<<< HEAD
     iniTiles();
     iniControl();
 
@@ -77,10 +78,38 @@ function enableDragAndDrop() {
         greenTileTooltip.appendTo($(this));
     });
     
+=======
+    //setEvents();
+});
+
+function setEvents() {
+    var lstProducts = $('#lstproducts li');
+    //Set Drag on Each 'li' in the list 
+    $.each(lstProducts, function (idx, val) {
+        $('li').on('dragstart', function (evt) {
+            evt.target.draggable = false;
+        });
+    });
+
+    $(".stucontainer").on('drop', function (evt) {
+        evt.preventDefault();
+        var data = evt.originalEvent.dataTransfer.getData("Text");
+        var id = evt.originalEvent.dataTransfer.getData("id").replace("list", "");
+        $(this).append();
+    });
+    $(".deskclose").click(function (evt) {
+        var parent = $(this).parent();
+        var id = parent.attr("id").replace("desk", "");
+        $("#list" + id).attr("draggable", true).removeClass("selectedLI");
+        $("#hidedesk").append(parent);
+    });
+
+>>>>>>> origin/master
     //The dragover
     $("#dvright").on('dragover', function (evt) {
         evt.preventDefault();
     });
+<<<<<<< HEAD
 
     $(".deskclose").click(function (evt) {
         var parent = $(this).closest(".deskcontainer");
@@ -129,4 +158,6 @@ function SaveEditDesk() {
 
 function getSeatingArrangements(O365UserId, Position) {
     return { O365UserId: O365UserId, Position: Position };
+=======
+>>>>>>> origin/master
 }

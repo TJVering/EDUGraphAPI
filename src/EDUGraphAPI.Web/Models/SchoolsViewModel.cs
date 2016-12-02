@@ -29,7 +29,10 @@ namespace EDUGraphAPI.Web.ViewModels
         public string BingMapKey { get; set; }
 
         public bool AreAccountsLinked { get; set; }
+<<<<<<< HEAD
 
         public bool IsLocalAccount { get; set; }
+=======
+>>>>>>> origin/master
     }
 }

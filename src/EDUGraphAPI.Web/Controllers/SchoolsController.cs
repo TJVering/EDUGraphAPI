@@ -4,7 +4,10 @@ using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.ViewModels;
+<<<<<<< HEAD
 using System.Collections.Generic;
+=======
+>>>>>>> origin/master
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -28,12 +31,19 @@ namespace EDUGraphAPI.Web.Controllers
             var userContext = await applicationService.GetUserContextAsync();
             if (!userContext.AreAccountsLinked)
             {
+<<<<<<< HEAD
                 return View(new SchoolsViewModel() { AreAccountsLinked = false,IsLocalAccount = userContext.IsLocalAccount });
+=======
+                return View(new SchoolsViewModel() { AreAccountsLinked = false });
+>>>>>>> origin/master
             }
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolsViewModelAsync(userContext);
             model.AreAccountsLinked = userContext.AreAccountsLinked;
+<<<<<<< HEAD
             
+=======
+>>>>>>> origin/master
             return View(model);
         }
 
@@ -71,7 +81,10 @@ namespace EDUGraphAPI.Web.Controllers
             var model = await schoolsService.GetSectionDetailsViewModelAsync(schoolId, sectionId, group);
             model.IsStudent = userContext.IsStudent;
             model.O365UserId = userContext.User.O365UserId;
+<<<<<<< HEAD
             model.MyFavoriteColor = userContext.User.FavoriteColor;
+=======
+>>>>>>> origin/master
             return View(model);
         }
 
@@ -79,6 +92,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
             return new SchoolsService(educationServiceClient, dbContext);
+<<<<<<< HEAD
         }
 
         [HttpPost]
@@ -86,6 +100,8 @@ namespace EDUGraphAPI.Web.Controllers
         {
             await applicationService.SaveEditSeats(seats);
             return Json("");
+=======
+>>>>>>> origin/master
         }
     }
 }

@@ -25,6 +25,7 @@ else
 {
     <div>
         <p>Admin Consent has been applied.</p><hr />
+<<<<<<< HEAD
         @using (Html.BeginForm("Consent", null, FormMethod.Post, null))
         {
             <p>In some cases, you need to re-apply Admin Consent. For example, after the permissions of the AAD application change.</p>
@@ -42,6 +43,16 @@ else
             @Html.ValidationSummary(true)
             <p class="form-group">
                 <input type="submit" value="Admin Unconsent" class="btn btn-default" />
+=======
+        @using (Html.BeginForm("SignUp", null, FormMethod.Post, null))
+        {
+            <p>In some cases, you need to re-apply Admin Consent. For example, after the permissions of the AAD application change.</p>
+            <p>Please click the button below to re-sign up.</p>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            <p class="form-group">
+                <input type="submit" value="Admin Consent" class="btn btn-default" />
+>>>>>>> origin/master
             </p>
             <br />
             <p>Note: It will take a few minutes to effect.</p>
