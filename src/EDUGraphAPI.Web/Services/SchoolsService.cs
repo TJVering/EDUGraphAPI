@@ -85,22 +85,14 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get SectionDetailsViewModel of the specified section
         /// </summary>
-<<<<<<< HEAD
         public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string classId, IGroupRequestBuilder group)
-=======
-        public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string sectionId, IGroupRequestBuilder group)
->>>>>>> origin/master
         {
             var school = await educationServiceClient.GetSchoolAsync(schoolId);
             var section = await educationServiceClient.GetSectionAsync(classId);
             var driveRootFolder = await group.Drive.Root.Request().GetAsync();
             foreach (var user in section.Students)
             {
-<<<<<<< HEAD
                 var seat= dbContext.ClassroomSeatingArrangements.Where(c => c.O365UserId == user.O365UserId && c.ClassId==classId).FirstOrDefault();
-=======
-                var seat= dbContext.ClassroomSeatingArrangements.Where(c => c.O365UserId == user.O365UserId).FirstOrDefault();
->>>>>>> origin/master
                 user.Position = (seat == null ? 0 : seat.Position);
             }
             return new SectionDetailsViewModel
