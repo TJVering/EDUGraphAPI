@@ -11,7 +11,7 @@ using AAD = Microsoft.Azure.ActiveDirectory.GraphClient;
 
 namespace EDUGraphAPI.Web.Controllers
 {
-    [EduAuthorize, HandleAdalException]
+    [EduAuthorize(Roles = "Admin"), HandleAdalException]
     public class AdminController : Controller
     {
         static readonly string StateKey = typeof(AdminController).Name + "State";
@@ -32,9 +32,9 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // POST: /Admin/SignUp
+        // POST: /Admin/Consent
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> SignUp()
+        public ActionResult Consent()
         {
             // generate a random value to identify the request
             var stateMarker = Guid.NewGuid().ToString();
@@ -68,7 +68,31 @@ namespace EDUGraphAPI.Web.Controllers
             // Create (or update) an organization, and make it as AdminConsented
             await applicationService.CreateOrUpdateOrganizationAsync(tenant, true);
 
-            TempData["Message"] = "You signed up successfully!";
+            TempData["Message"] = "Admin consented successfully!";
+            return RedirectToAction("Index");
+        }
+
+        //
+        // POST: /Admin/Unconsent
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Unconsent()
+        {
+            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync(Permissions.Delegated);
+            var servicePrincipal = await client.ServicePrincipals
+               .Where(i => i.AppId == Constants.AADClientId)
+               .ExecuteSingleAsync();
+            if(servicePrincipal != null)
+                await servicePrincipal.DeleteAsync();
+            
+            var adminContext = await applicationService.GetAdminContextAsync();
+            if (adminContext.Organization != null)
+            {
+                var tenantId = adminContext.Organization.TenantId;
+                await applicationService.UpdateOrganizationAsync(tenantId, false);
+                await applicationService.UnlinkAllAccounts(tenantId);
+            }
+
+            TempData["Message"] = "Admin unconsented successfully!";
             return RedirectToAction("Index");
         }
 
@@ -76,7 +100,8 @@ namespace EDUGraphAPI.Web.Controllers
         // GET: /Admin/LinkedAccounts
         public async Task<ActionResult> LinkedAccounts()
         {
-            var users = await applicationService.GetLinkedUsers();
+            var adminContext = await applicationService.GetAdminContextAsync();
+            var users = await applicationService.GetLinkedUsers(i => i.OrganizationId == adminContext.Organization.Id);
             return View(users);
         }
 

@@ -45,12 +45,12 @@
     @Scripts.Render("~/bundles/jqueryval")
     @Styles.Render("~/Content/register")
 }
-@helper ColorsDropdown(List<string> favoriteColors)
+@helper ColorsDropdown(List<ColorEntity> favoriteColors)
 {
     <select name="FavoriteColor" id="FavoriteColor" class="form-control">
-        @foreach (string color in favoriteColors)
+        @foreach (ColorEntity entity in favoriteColors)
         {
-            <option value="@color">@color</option>
+            <option value="@entity.Value">@entity.DisplayName</option>
         }
     </select>
 }

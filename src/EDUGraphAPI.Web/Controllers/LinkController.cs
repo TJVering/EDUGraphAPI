@@ -6,12 +6,9 @@ using EDUGraphAPI.Web.Properties;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.Services.GraphClients;
 using Microsoft.AspNet.Identity;
-using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using System;
-using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -132,7 +129,7 @@ namespace EDUGraphAPI.Web.Controllers
 
             await applicationService.UpdateLocalUserAsync(localUser, user, tenant);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Schools");
         }
 
         //
@@ -141,12 +138,12 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
             var aadUser = await client.Me.ExecuteAsync();
-
+           
             var viewModel = new EducationRegisterViewModel
             {
                 FirstName = aadUser.GivenName,
                 LastName = aadUser.Surname,
-                Email = aadUser.UserPrincipalName,
+                Email = "",
                 FavoriteColors = Constants.FavoriteColors
             };
 
@@ -158,8 +155,15 @@ namespace EDUGraphAPI.Web.Controllers
         [HttpPost, ActionName("CreateLocalAccount"), ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateLocalAccountPost(EducationRegisterViewModel model)
         {
+            model.FavoriteColors = Constants.FavoriteColors;
             if (!ModelState.IsValid) return View(model);
-
+            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
+            var aadUser = await client.Me.ExecuteAsync();
+            if (aadUser.UserPrincipalName == model.Email)
+            {
+                ModelState.AddModelError("Email", "Please use an email address different than your O365 email address.");
+                return View(model);
+            }
             // Create a new local user
             var localUser = new ApplicationUser
             {
@@ -187,7 +191,7 @@ namespace EDUGraphAPI.Web.Controllers
             await applicationService.UpdateLocalUserAsync(localUser, user, tenant);
 
             //
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Schools");
         }
 
         //

@@ -26,7 +26,10 @@ namespace EDUGraphAPI.Web.Controllers
                     return RedirectToAction("Index", "Admin");
                 return RedirectToAction("Index", "Schools");
             }
-            return View(context);
+            else {
+                return RedirectToAction("Index", "Link");
+            }
+            //return View(context);
         }
 
         //

@@ -32,13 +32,13 @@
         </div>
     </div>
 </div>
-@helper ColorsDropdown(string myFavoriteColor, List<string> favoriteColors)
+@helper ColorsDropdown(string myFavoriteColor, List<ColorEntity> favoriteColors)
 {
     <select name="favoritecolor">
-        @foreach (string color in favoriteColors)
+        @foreach (ColorEntity color in favoriteColors)
         {
-            string selected = myFavoriteColor == color ? "selected" : "";
-            <option value="@color" @selected>@color</option>
+            string selected = myFavoriteColor == color.Value ? "selected" : "";
+            <option value="@color.Value" @selected>@color.DisplayName</option>
         }
     </select>
 }

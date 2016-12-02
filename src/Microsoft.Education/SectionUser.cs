@@ -20,5 +20,10 @@ namespace Microsoft.Education.Data
         public string SchoolId { get; set; }
 
         public virtual string UserId { get; }
+
+        public int Position { get; set; }
+
+        [JsonProperty("objectId")]
+        public string O365UserId { get; set; }
     }
 }

@@ -4,6 +4,9 @@ using System.Web.Mvc;
 
 namespace EDUGraphAPI.Web.Infrastructure
 {
+    /// <summary>
+    /// Only allow linked users or Office 365 users to visit the protected controllers/actions
+    /// </summary>
     public class LinkedOrO365UsersOnlyAttribute : AuthorizeAttribute
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)

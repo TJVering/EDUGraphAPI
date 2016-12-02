@@ -1,4 +1,5 @@
-﻿using EDUGraphAPI.Utils;
+﻿using EDUGraphAPI.Data;
+using EDUGraphAPI.Utils;
 using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
@@ -23,14 +24,14 @@ namespace EDUGraphAPI.Web.Controllers
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
         private ApplicationService applicationService;
-
+        private ApplicationDbContext dbContext;
         public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
-            ApplicationService applicationService )
+            ApplicationService applicationService, ApplicationDbContext dbContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.applicationService = applicationService;
-
+            this.dbContext = dbContext;
         }
 
         //
@@ -400,7 +401,7 @@ namespace EDUGraphAPI.Web.Controllers
         private async Task<SchoolsService> GetSchoolsServiceAsync()
         {
             var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
-            return new SchoolsService(educationServiceClient);
+            return new SchoolsService(educationServiceClient, dbContext);
         }
         #endregion
     }

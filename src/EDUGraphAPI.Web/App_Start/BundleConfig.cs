@@ -37,6 +37,8 @@ namespace EDUGraphAPI.Web
 
             bundles.Add(new ScriptBundle("~/bundles/section").Include(
           "~/Scripts/Sections.js"));
+            bundles.Add(new ScriptBundle("~/bundles/classdetail").Include(
+"~/Scripts/classdetail.js"));
         }
     }
 }
