@@ -103,6 +103,11 @@ namespace Microsoft.Education
             return HttpGetObjectAsync<Student>("me?api-version=1.5");
         }
 
+        public async Task<SectionUser[]> GetUsersAsync(string objectId)
+        {
+            return await HttpGetArrayAsync<SectionUser>($"administrativeUnits/{objectId}/members?api-version=beta");
+        }
+
         /// <summary>
         /// You can get the current logged in user and check if that user is a student.
         /// Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-current-user.

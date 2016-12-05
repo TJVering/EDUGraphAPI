@@ -29,8 +29,7 @@
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     @if (User.Identity.IsAuthenticated)
-                    {
-                        
+                    {                        
                         if (User.IsInRole(Constants.Roles.Admin))
                         {
                             <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
@@ -62,6 +61,7 @@
 
         <footer></footer>
     </div>
+    @Html.Action("Control", "DemoHelper")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/site")

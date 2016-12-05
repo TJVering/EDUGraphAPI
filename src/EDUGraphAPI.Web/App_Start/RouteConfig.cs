@@ -16,6 +16,12 @@ namespace EDUGraphAPI.Web
             );
 
             routes.MapRoute(
+                name: "Users",
+                url: "Schools/{schoolId}/Users",
+                defaults: new { controller = "Schools", action = "Users" }
+            );
+
+            routes.MapRoute(
                 name: "MyClasses",
                 url: "Schools/{schoolId}/Classes/My",
                 defaults: new { controller = "Schools", action = "MyClasses" }

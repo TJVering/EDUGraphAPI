@@ -19,7 +19,7 @@ function iniControl() {
         enableDragAndDrop();
     });
     $("#imgcancel").click(function () {
-        window.location.href = window.location.href;
+        window.location.href = addParam(window.location.href,"tab","3");
     });
     $("#imgsave").click(function () {
         $(this).hide();
@@ -31,6 +31,11 @@ function iniControl() {
         $(".deskclose").hide();
         SaveEditDesk();
     });
+
+    var tabToActivate = $.urlParam("tab");
+    if (tabToActivate) {
+        $('.nav-tabs li:eq(' + tabToActivate + ') a').tab('show');
+    }
 }
 
 function enableDragAndDrop() {
@@ -49,14 +54,14 @@ function enableDragAndDrop() {
         $(this).on('dragstart', function (evt) {
             evt.target.draggable = false;
             var id = $(this).attr("id");
-            evt.originalEvent.dataTransfer.setData("id", id);
+            evt.originalEvent.dataTransfer.setData("text", id);
             $(this).addClass("greenlist");
         });
 
     });
     $(".deskcontainer").on('dragstart', function (evt) {
         var id = $(this).attr("userid");
-        evt.originalEvent.dataTransfer.setData("id", id);
+        evt.originalEvent.dataTransfer.setData("text", id);
     });
 
     $(".desktile").on('drop', function (evt) {
@@ -65,7 +70,7 @@ function enableDragAndDrop() {
         if (container.length>0)
             return;
         $(".greenTileTooltip").remove();
-        var id = evt.originalEvent.dataTransfer.getData("id");
+        var id = evt.originalEvent.dataTransfer.getData("text");
         $("#" + id).removeClass("greenlist").attr("draggable", "").find(".seated").show();
         $(".deskcontainer[userid='" + id + "']").addClass("white").appendTo($(this));
         var position = $(this).attr("position");
@@ -129,4 +134,23 @@ function SaveEditDesk() {
 
 function getSeatingArrangements(O365UserId, Position) {
     return { O365UserId: O365UserId, Position: Position };
+}
+
+$.urlParam = function (name) {
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results == null) {
+        return null;
+    }
+    else {
+        return results[1] || 0;
+    }
+}
+function addParam(url, param, value) {
+    var a = document.createElement('a'), regex = /(?:\?|&amp;|&)+([^=]+)(?:=([^&]*))*/g;
+    var match, str = []; a.href = url; param = encodeURIComponent(param);
+    while (match = regex.exec(a.search))
+        if (param != match[1]) str.push(match[1] + (match[2] ? "=" + match[2] : ""));
+    str.push(param + (value ? "=" + encodeURIComponent(value) : ""));
+    a.search = str.join("&");
+    return a.href;
 }

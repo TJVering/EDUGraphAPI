@@ -241,12 +241,15 @@
     <Compile Include="App_Start\Startup.IoC.cs" />
     <Compile Include="App_Start\Startup.Auth.Identity.cs" />
     <Compile Include="App_Start\Startup.Auth.AAD.cs" />
+    <Compile Include="Controllers\DemoHelperController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\PhotoController.cs" />
     <Compile Include="Controllers\SchoolsController.cs" />
     <Compile Include="Infrastructure\LinkedOrO365UsersOnlyAttribute.cs" />
     <Compile Include="Models\AboutMeViewModel.cs" />
+    <Compile Include="Models\DemoPage.cs" />
     <Compile Include="Models\SaveEditSeatsViewModel.cs" />
+    <Compile Include="Models\SchoolUsersViewModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\TenantInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -270,6 +273,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\DemoHelperService.cs" />
     <Compile Include="Services\GraphClients\AADGraphClient.cs" />
     <Compile Include="Services\GraphClients\IGraphClient.cs" />
     <Compile Include="Services\GraphClients\MSGraphClient.cs" />
@@ -281,9 +285,13 @@
     <Compile Include="Models\SectionsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Data\demo-pages.json" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\black-square.png" />
     <Content Include="Content\Images\DefaultUserPhoto.jpg" />
+    <Content Include="Content\Images\demo-helper-header-collapsed.png" />
+    <Content Include="Content\Images\demo-helper-header-expanded.png" />
     <Content Include="Content\register.css" />
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
@@ -322,6 +330,8 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.ba-hashchange.js" />
+    <Content Include="Scripts\jquery.paging.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -331,6 +341,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Sections.js" />
     <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\teac-stu.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -385,9 +396,9 @@
     <Content Include="Services\GraphClients\GraphClients.cd" />
     <Content Include="Views\Manage\Aboutme.cshtml" />
     <Content Include="Views\Schools\Users.cshtml" />
+    <Content Include="Views\DemoHelper\Control.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Photo\" />
   </ItemGroup>
   <ItemGroup>

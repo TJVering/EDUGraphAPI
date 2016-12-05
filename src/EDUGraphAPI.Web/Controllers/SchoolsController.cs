@@ -49,7 +49,9 @@ namespace EDUGraphAPI.Web.Controllers
 
         public async Task<ActionResult> Users(string schoolId)
         {
-            return View();
+            var schoolsService = await GetSchoolsServiceAsync();
+            var model = await schoolsService.GetSchoolUsersAsync(schoolId);
+            return View(model);
         }
 
         //

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 
 namespace EDUGraphAPI
 {
@@ -19,6 +18,8 @@ namespace EDUGraphAPI
         public const string GraphResourceRootUrl = "https://graph.windows.net";
 
         public static readonly string BingMapKey = ConfigurationManager.AppSettings["BingMapKey"];
+
+        public static readonly string SourceCodeRepositoryUrl = ConfigurationManager.AppSettings["SourceCodeRepositoryUrl"];
 
         public static readonly string O365GroupConversationsUrl = "https://outlook.office.com/owa/?path=/group/{0}";
 

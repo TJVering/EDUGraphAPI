@@ -1,0 +1,16 @@
+﻿[
+  {
+    "controller": "schools",
+    "action":  "index",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AdminController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Index.cshtml"
+      }
+    ]
+  }
+]

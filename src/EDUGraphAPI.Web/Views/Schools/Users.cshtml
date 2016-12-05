@@ -1,7 +1,80 @@
-﻿
+﻿@using Microsoft.Education.Data
+@model SchoolUsersViewModel
 @{
-    ViewBag.Title = "Users";
+    ViewBag.Title = "Teachers & Students";
+    var isMySections = (bool?)ViewBag.IsMySections == true;
 }
+<div class="row schools teacher-student">
+    <div class="tophero">
 
-<h2>Users</h2>
+        <div class="col-md-8">
+            <div class="secondnav">
+                <a href="/schools"> All Schools</a> > @Model.School.Name
+            </div>
+            <div class="a-heading">
+                Teachers & Students
+            </div>
+        </div>
+        <div class=" toptiles">
+            <div class="section-school-name">
+                @Model.School.Name
+            </div>
 
+
+            <div class="infocontainer">
+
+                <div class="infoheader">
+                    PRINCIPAL
+                </div>
+                <div class="infobody" title="@Model.School.PrincipalName">
+                    @Model.School.PrincipalName
+                </div>
+            </div>
+
+            <div class="infocontainer">
+                <div class="infoheader">
+                    Grade level
+                </div>
+                <div class="infobody" title="@Model.School.LowestGrade - @Model.School.HighestGrade">
+                    @Model.School.LowestGrade - @Model.School.HighestGrade
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-md-6 usericon">
+               <div class="stuicon"></div><div>Student</div>
+                <div class="teacicon"></div><div>Teacher</div>
+            </div>
+            <div class="col-md-6 mysection section-link-container">
+                <b>FILTER:</b> <a id="filterteacher" class="filterlink"> Teachers</a> | <a id="filterstudnet" class="filterlink">Student</a> | <a id="filterall" class="filterlink selected">All</a>
+</div>
+        </div>
+        <br style="clear:both;"/>
+    </div>
+    <div class="user-container">
+        <div id="content">
+            @foreach (var user in Model.Users)
+            {
+                var bg = "stubg";
+                if (user.ObjectType == "Teacher")
+                {
+                    bg = "teacbg";
+                }
+                <div class="element @bg">
+                    <div class="userimg">
+                        <img src="@Url.Action("UserPhoto", "Photo", new { id = user.O365UserId })" />
+                    </div>
+                    <div class="username">@user.DisplayName</div>
+                </div>
+            }
+        </div>
+        <div class="pagination"></div>
+        <div id="hiditem" class="hidden">
+            
+        </div>
+    </div>
+</div>
+
+
+
+@Scripts.Render("~/bundles/paging")

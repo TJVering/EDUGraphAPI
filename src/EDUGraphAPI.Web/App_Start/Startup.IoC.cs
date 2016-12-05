@@ -30,6 +30,7 @@ namespace EDUGraphAPI.Web
             builder.RegisterControllers(typeof(HomeController).Assembly);
             builder.RegisterType<ApplicationService>().AsSelf().InstancePerRequest();
             builder.RegisterType<SchoolsService>().AsSelf().InstancePerRequest();
+            builder.RegisterType<DemoHelperService>().AsSelf().InstancePerRequest();
 
             // The following types are registered in Startup.Auth.Identity.cs
             // app.CreatePerOwinContext(ApplicationDbContext.Create);

@@ -88,7 +88,12 @@ namespace EDUGraphAPI.Web.Services
 
             return new SectionsViewModel(userContext.UserO365Email, school, sections.OrderBy(c => c.CombinedCourseNumber));
         }
-
+        public async Task<SchoolUsersViewModel> GetSchoolUsersAsync(string objectId)
+        {
+            var school = await educationServiceClient.GetSchoolAsync(objectId);
+            var users = await educationServiceClient.GetUsersAsync(objectId);
+            return new SchoolUsersViewModel(school,users);
+        }
         /// <summary>
         /// Get SectionDetailsViewModel of the specified section
         /// </summary>
