@@ -110,7 +110,11 @@ Download and install the following tools to run, build and/or develop this appli
 
    ![](Images/aad-configure-app-02.png)
 
-11. Configure the following **permissions to other applications**.
+11. Enable **USER ASSIGNMENT REQUIRED TO ACCESS APP**.
+
+   ![](Images/aad-configure-app-05.png)
+
+12. Configure the following **permissions to other applications**.
 
 |                                | Application Permissions       | Delegated Permissions                    |
 | ------------------------------ | ----------------------------- | ---------------------------------------- |

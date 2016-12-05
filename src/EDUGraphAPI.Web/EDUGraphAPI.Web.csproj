@@ -246,6 +246,7 @@
     <Compile Include="Controllers\SchoolsController.cs" />
     <Compile Include="Infrastructure\LinkedOrO365UsersOnlyAttribute.cs" />
     <Compile Include="Models\AboutMeViewModel.cs" />
+    <Compile Include="Models\SaveEditSeatsViewModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\TenantInfo.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -290,11 +291,16 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\bing.png" />
+    <Content Include="Images\btngreenbg.png" />
+    <Content Include="Images\cancel.png" />
     <Content Include="Images\ClassDetailsTiles-bg.jpg" />
     <Content Include="Images\close.png" />
     <Content Include="Images\contaerbg.gif" />
+    <Content Include="Images\edit.png" />
     <Content Include="Images\longin-bg.jpg" />
     <Content Include="Images\microsoft-icon.png" />
+    <Content Include="Images\save.png" />
+    <Content Include="Images\seat.png" />
     <Content Include="Images\SignInWithOffice365-Button.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -378,6 +384,7 @@
     <Content Include="Views\Shared\NoAccess.cshtml" />
     <Content Include="Services\GraphClients\GraphClients.cd" />
     <Content Include="Views\Manage\Aboutme.cshtml" />
+    <Content Include="Views\Schools\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

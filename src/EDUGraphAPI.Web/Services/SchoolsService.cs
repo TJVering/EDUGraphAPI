@@ -41,11 +41,18 @@ namespace EDUGraphAPI.Web.Services
             for (var i = 0; i < schools.Count(); i++)
             {
                 var address = string.Format("{0}/{1}/{2}", schools[i].State, HttpUtility.HtmlEncode(schools[i].City), HttpUtility.HtmlEncode(schools[i].Address));
-                var longitudeAndLatitude = await mapServices.GetLongitudeAndLatitudeByAddress(address);
-                if (longitudeAndLatitude.Count() == 2)
+                if (!string.IsNullOrEmpty(schools[i].Address))
                 {
-                    schools[i].Latitude = longitudeAndLatitude[0].ToString();
-                    schools[i].Longitude = longitudeAndLatitude[1].ToString();
+                    var longitudeAndLatitude = await mapServices.GetLongitudeAndLatitudeByAddress(address);
+                    if (longitudeAndLatitude.Count() == 2)
+                    {
+                        schools[i].Latitude = longitudeAndLatitude[0].ToString();
+                        schools[i].Longitude = longitudeAndLatitude[1].ToString();
+                    }
+                }
+                else
+                {
+                    schools[i].Address = "-";
                 }
             }
 
@@ -85,14 +92,14 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get SectionDetailsViewModel of the specified section
         /// </summary>
-        public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string sectionId, IGroupRequestBuilder group)
+        public async Task<SectionDetailsViewModel> GetSectionDetailsViewModelAsync(string schoolId, string classId, IGroupRequestBuilder group)
         {
             var school = await educationServiceClient.GetSchoolAsync(schoolId);
-            var section = await educationServiceClient.GetSectionAsync(sectionId);
+            var section = await educationServiceClient.GetSectionAsync(classId);
             var driveRootFolder = await group.Drive.Root.Request().GetAsync();
             foreach (var user in section.Students)
             {
-                var seat= dbContext.ClassroomSeatingArrangements.Where(c => c.O365UserId == user.O365UserId).FirstOrDefault();
+                var seat= dbContext.ClassroomSeatingArrangements.Where(c => c.O365UserId == user.O365UserId && c.ClassId==classId).FirstOrDefault();
                 user.Position = (seat == null ? 0 : seat.Position);
             }
             return new SectionDetailsViewModel

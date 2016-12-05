@@ -3,6 +3,7 @@ using EDUGraphAPI.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
@@ -153,6 +154,17 @@ namespace EDUGraphAPI.Web.Services
             organization.IsAdminConsented = adminConsented;
             await dbContext.SaveChangesAsync();
         }
+        
+        public async Task UpdateOrganizationAsync(string tenantId, bool adminConsented)
+        {
+            var organization = await dbContext.Organizations
+                  .Where(i => i.TenantId == tenantId)
+                  .FirstOrDefaultAsync();
+            if (organization == null) return;
+
+            organization.IsAdminConsented = adminConsented;
+            dbContext.SaveChanges();
+        }
 
         /// <summary>
         /// Get linked users with the specified filter
@@ -190,6 +202,21 @@ namespace EDUGraphAPI.Web.Services
             await userManager.RemoveFromRolesAsync(user.Id, rolesToRemove);
         }
 
+        public async Task UnlinkAllAccounts(string tenantId)
+        {
+            var users = await dbContext.Users
+                 .Where(i => i.Organization.TenantId == tenantId)
+                 .ToArrayAsync();
+            if (users.IsNullOrEmpty()) return;
+
+            foreach (var user in users)
+            {
+                user.Organization = null;
+                user.O365UserId = null;
+                user.O365Email = null;
+            }
+            dbContext.SaveChanges();
+        }
 
         private string GetUserId()
         {
@@ -255,5 +282,31 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.TenantId == tenantId)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<int> SaveEditSeats(List<SaveEditSeatsViewModel> seats)
+        {
+            foreach (var item in seats)
+            {
+                var seat = dbContext.ClassroomSeatingArrangements
+                    .Where(c => c.O365UserId == item.O365UserId && c.ClassId== item.ClassId).FirstOrDefault();
+                //update
+                if (seat != null && item.Position!=0) 
+                {
+                    seat.Position = item.Position;
+                }
+                //delete
+                if (seat != null && item.Position == 0) 
+                {
+                    dbContext.ClassroomSeatingArrangements.Remove(seat);
+                }
+                //insert
+                if (seat == null && item.Position != 0)
+                {
+                    dbContext.ClassroomSeatingArrangements.Add(new ClassroomSeatingArrangements() { O365UserId=item.O365UserId,Position=item.Position,ClassId=item.ClassId});
+                }
+            }
+            return dbContext.SaveChanges();
+        }
+
     }
 }

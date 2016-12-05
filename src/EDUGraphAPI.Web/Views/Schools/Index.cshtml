@@ -50,7 +50,6 @@
 
         <table class="table  table-green table-schools">
             <tr class="table-green-header">
-                <th></th>
                 <th class="tdleft">
                     School Name
                 </th>
@@ -63,6 +62,7 @@
                 <th>
                     Address
                 </th>
+                <th></th>
             
             </tr>
             @foreach (var school in Model.Schools)
@@ -72,9 +72,8 @@
             {
                 style = "td-green";
             }
-            <tr class="tr-content">
-                <td class="@style"></td>
-                <td >@Html.ActionLink(school.Name, "Classes", null, new { schoolId = school.ObjectId  }, null)</td>
+            <tr class="tr-content @style">
+                <td >@school.Name</td>
                 <td>@school.PrincipalName</td>
                 <td>@school.LowestGrade - @school.HighestGrade</td>
                 <td>
@@ -90,6 +89,10 @@
                         }
                     </div>
                 </td>   
+                <td>
+                    @Html.ActionLink("Classes", "Classes", null, new { schoolId = school.ObjectId }, new { @class="btnlink"})
+                    @Html.ActionLink("Teachers/students", "Users", null, new { schoolId = school.ObjectId }, new { @class = "btnlink" })
+                </td>
             </tr>
         }
         </table>
@@ -102,7 +105,17 @@
 else
 {
     <br/>
-<p>
-    You will need to link your O365 and local accounts in order to use the functionality of this demo application. Please click on the browser 'Back' button to go back and link your existing local account or create a local account.
-</p>
+    if (!Model.IsLocalAccount)
+    {
+        <p>
+            You will need to link your O365 and local accounts in order to use the functionality of this demo application. Please click on the browser 'Back' button to go back and link your existing local account or create a local account.
+        </p>
+    }
+    else
+    {
+        <p>
+            You will need to link your O365 and local account together in order to use the functionality of this demo application. Please click on the browser 'Back' button to go back and link your existing O365 account.        
+        </p>
+    }
+
 }

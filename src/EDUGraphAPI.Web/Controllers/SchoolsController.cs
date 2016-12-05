@@ -1,14 +1,16 @@
 ﻿using EDUGraphAPI.Data;
 using EDUGraphAPI.Utils;
 using EDUGraphAPI.Web.Infrastructure;
+using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.ViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace EDUGraphAPI.Web.Controllers
 {
-    [HandleAdalException, EduAuthorize, LinkedOrO365UsersOnly]
+    [HandleAdalException, EduAuthorize]
     public class SchoolsController : Controller
     {
         private ApplicationService applicationService;
@@ -26,11 +28,12 @@ namespace EDUGraphAPI.Web.Controllers
             var userContext = await applicationService.GetUserContextAsync();
             if (!userContext.AreAccountsLinked)
             {
-                return View(new SchoolsViewModel() { AreAccountsLinked = false });
+                return View(new SchoolsViewModel() { AreAccountsLinked = false,IsLocalAccount = userContext.IsLocalAccount });
             }
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolsViewModelAsync(userContext);
             model.AreAccountsLinked = userContext.AreAccountsLinked;
+            
             return View(model);
         }
 
@@ -42,6 +45,11 @@ namespace EDUGraphAPI.Web.Controllers
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, false);
             return View(model);
+        }
+
+        public async Task<ActionResult> Users(string schoolId)
+        {
+            return View();
         }
 
         //
@@ -68,6 +76,7 @@ namespace EDUGraphAPI.Web.Controllers
             var model = await schoolsService.GetSectionDetailsViewModelAsync(schoolId, sectionId, group);
             model.IsStudent = userContext.IsStudent;
             model.O365UserId = userContext.User.O365UserId;
+            model.MyFavoriteColor = userContext.User.FavoriteColor;
             return View(model);
         }
 
@@ -75,6 +84,13 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
             return new SchoolsService(educationServiceClient, dbContext);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SaveEditSeats(List<SaveEditSeatsViewModel> seats)
+        {
+            await applicationService.SaveEditSeats(seats);
+            return Json("");
         }
     }
 }

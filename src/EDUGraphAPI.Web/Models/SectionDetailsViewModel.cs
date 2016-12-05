@@ -18,5 +18,6 @@ namespace EDUGraphAPI.Web.ViewModels
         public string SeeMoreFilesUrl { get; set; }
         public bool IsStudent { get; set; }
         public string O365UserId { get; set; }
+        public string MyFavoriteColor { get; set; }
     }
 }

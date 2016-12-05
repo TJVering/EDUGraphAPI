@@ -35,6 +35,11 @@ textarea {
     max-width: 280px;
 }
 
+.empty-result {
+    color: gray;
+    font-style: italic;
+}
+
 /*Top navigation*/
 .navbar-inverse{background-color:#237e17;border-color:#237e17;}
 .navbar-inverse .navbar-brand, 
@@ -77,14 +82,14 @@ textarea {
     white-space: nowrap;}
 .myschool{     padding: 12px 0 12px 0;float:left;}
 .myschool .schoolenrolled{float:right; font-size:14px;padding-right:15px;}
-.myschool .greenicon{width:12px;height:12px;background-color:#1fe405;float:right;margin:5px 6px 0 0;}
+.myschool .greenicon{width:12px;height:12px;float:right;margin:5px 6px 0 0;background-color:#277F79;}
 .sectionschoolname{font-size:24px;color:#666565;padding-left: 0;}
 .mysection{text-align:right;padding-top: 10px;width:100%;}
 .tophero{background-color:#f8f8f8;padding-left:0px;}
 #myMap{position:absolute;}
 .bingMapLink{margin-left:12px;}
 .schooladdress{width:auto;float:left;}
-.schoolmap{width:50%;float:left;}
+.schoolmap{float:left;}
 .toptiles{
     padding: 10px 0 15px 0;
     border: 1px solid #237e17;
@@ -102,28 +107,32 @@ textarea {
 .table-green tr:nth-child(2n+1){background-color:#f8f8f8}
 .table-green tr:nth-child(1){background:#237e17;color:white;}
 .table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
-.table-green .table-green-header{ background:#237e17;color:white; border-bottom: 1px solid #237e17}
-.table-green .table-green-header th{text-transform:uppercase;}
+.table-green .table-green-header{ background:#237e17;color:white; }
 .table-green .tdleft{border-collapse:inherit;   }
-.table-green .table-green-header th{padding:20px 0 20px 6px ;border-top:0; border-bottom: 1px solid #237e17}
-.table-green .tr-content td{padding-top:20px;padding-bottom:20px;}
-.table-green > tbody > tr > td{border-top:none;}
-.table-schools th, .table-schools .tr-content td {
-    width: 20%;
+.table-green .table-green-header th{text-transform:uppercase;padding:20px 0 20px 6px ;border-top:0; border-bottom: 1px solid white;}
+.table-green .tr-content td{padding-top:10px;padding-bottom:10px;    vertical-align: inherit;    border-bottom: 1px solid white;}
+.table-green > tbody > tr > td{border-top:1px solid white;}
+
+.table-green .td-green, .table-green .td-green a{ background-color: #277F79; color:white;}
+.table-green  a.btnlink{
+    color:black;text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+    background-image: url(/Images/btngreenbg.png);
+    padding: 3px 12px;
+    border: 1px solid #127604;
+    text-decoration:none;
 }
-.table-green .td-green{ background-color: #1fe405;}
-.table-green .tr-content >td:nth-child(1), .table-green-header th:nth-child(1) {width:2px;padding:0 5px;}
-.table-schools th:nth-child(5),.table-schools .tr-content td:nth-child(5) {
-    width: 40%;
-}
-.table-studnet tr td:nth-child(1),.table-studnet tr th:nth-child(1){width:30%;padding:20px 8px !important;}
+
+.table-green .td-green a.btnlink{background-color:white !important; background-image:none;color:black;text-transform:uppercase;font-weight:bold;}
+
 
 .ignore{display:none;}
 .container>div.row{height:100%;background-color:#fff;}
 .container.body-content{height:100%; background-color:#fff;}
 .schools{height:100%;background-color:#fff;padding:0;}
 .schools .toptiles{float:right;padding-left: 15px;}
-.hr-green{border: 0;height: 10px;background: #127604;margin-top: 10px;}
+.hr-green{border: 0;height: 10px;margin-top: 10px;}
 /*sections*/
 .section-tiles{padding-left:15px;}
 .section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
@@ -196,10 +205,11 @@ textarea {
 #skipLinkAccount{width:90px;}
 .students > ul > li.greentab > a,.students > ul > li.greentab > a:hover,.students > ul > li.greentab > a:focus {background-color:#237e17;color:white;font-weight:700; }
 .students > ul > li.greentab > a span{border-bottom:3px solid white;    padding-bottom: 6px;}
-#seatingchart{border:2px solid #237e17;background-color:white;padding:24px 12px;}
-#seatingchart .left{width:30%;float:left;}
+#seatingchart{border:2px solid #237e17;background-color:white;padding:24px 12px;position:relative;}
+#seatingchart .left{width:25%;float:left;}
 #seatingchart .right{width:65%;float:left;border-left:2px solid #666565;}
-#seatingchart .dvedit{width:5%;float:right;}
+#seatingchart .dvedit{width:10%;float:right;}
+#seatingchart .dvedit img{margin-top:12px;}
 #seatingchart ul li{list-style-type:none; margin-bottom:6px;}
 #seatingchart .greenicon{width:14px;height:14px;background:#237e17;float:left;margin:3px 6px 0 0;}
 .assignseat{margin:12px 0;}
@@ -212,19 +222,44 @@ border: 1px solid #e4e4e4;
 max-width: 50px;
 height: auto;
 }
+#dvleft .tip{font-weight:600;margin-bottom:20px;}
 
-
-.deskcontainer{width:90px;height:90px;position:relative;   padding-top: 6px;}
+.deskcontainer{width:98px;height:98px;position:relative;   padding-top: 6px;}
 .deskicon{padding-top:6px;text-align:center;}
 .stuname{padding: 6px ;text-align:center;}
 .deskicon img{max-height:40px;width:auto;}
-.deskclose{ width:20px;height:20px;float:right;position:absolute;right: -18px;
-top: -10px;}
+.deskclose{ width:20px;height:20px;float:right;position:absolute;right: -9px;
+top: -10px;cursor:pointer;}
 .hideitem{display:none;}
+.showitem{display:block;}
 #graybg{width:660px;margin:auto;}
-.stucontainer{border: 1px solid #e4e4e4;color:white; width:100px;height:100px;float:left;margin-right:10px;margin-bottom:10px; background-color:#CECECE;}
-.stucontainer.white{background-color:white;color:black;}
-.stucontainer.green{background-color:#5DCB50;color:white;border-color:#2B4E26;}
+.desktile{border: 1px solid #e4e4e4;color:white; width:100px;height:100px;float:left;margin-right:10px;margin-bottom:10px; 
+          background:url('/Images/seat.png') no-repeat center center; background-color:#CECECE;
+}
+.deskcontainer.white{background-color:white;color:black;}
+.deskcontainer.green{background-color:#5DCB50;color:white;border-color:#2B4E26;}
+.seated{color:#237e17;text-transform:uppercase;font-weight:bold;}
 
 .teacherdesk{color:white;width:200px;margin:auto;border:1px solid gray;
              background-color:#ABABAB;text-transform:uppercase;margin-bottom:20px;height:60px;line-height:60px;text-align:center;}
+.deskclose, #imgsave, #imgcancel{display:none;}
+.greenlist{background-color: #237e17;}
+.greenlist *{color:white;}
+.greenTileTooltip{background-color: #237e17;color:white;text-align:center;height:98px;width:98px;text-transform:uppercase;padding-top:20px;}
+#saveResult{position: absolute;
+    width: 220px;
+    margin: auto;
+    z-index: 999;
+    height: 65px;
+    line-height:60px;
+    text-align:center;
+    left: 990px;
+    top: 45px;
+    right: 0;
+    text-align:center;
+    font-size:15px;
+    box-shadow: 0 0 5px #000;
+    background-color: #4B67F7;
+    color: white;
+    border: 1px solid white;
+}

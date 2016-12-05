@@ -22,5 +22,11 @@
             </td>
         </tr>
     }
+    @if (Model.IsNullOrEmpty())
+    {
+        <tr>
+            <td class="empty-result" colspan="3">No linked accounts</td>
+        </tr>
+    }
 </table>
 <p>@Html.ActionLink("Return", "Index", null, null, new { @class = "btn btn-default" })</p>

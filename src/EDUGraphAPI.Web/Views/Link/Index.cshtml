@@ -4,10 +4,11 @@
     var message = TempData["Message"] as string;
 }
 
-<h2>Link Accounts Page</h2>
+<h2>Link Office 365 & Local Account</h2>
 
 @if (!Model.AreAccountsLinked)
 {
+    <p>This page will enable you to link your Office 365 & Local Account together to successfully use the demo application.</p>
     if (Model.IsLocalAccount)
     {
         <div class="form-horizontal" id="linkAccountPrompt">
@@ -16,10 +17,12 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                <p><input type="submit" value="Use Existing O365 account" class="btn btn-primary" /> 
-            &nbsp; &nbsp;
-            <input id="skipLinkAccount" class="btn btn-primary" value="Cancel"/></p>
-                
+                <p>
+                    <input type="submit" value="Use Existing O365 account" class="btn btn-primary" />
+                    &nbsp; &nbsp;
+                    @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
+                </p>
+
             }
         </div>
     }

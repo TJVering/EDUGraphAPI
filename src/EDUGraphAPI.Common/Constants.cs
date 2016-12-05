@@ -24,7 +24,8 @@ namespace EDUGraphAPI
 
         public static readonly string AADCompanyAdminRoleName = "Company Administrator";
 
-        public static readonly List<string> FavoriteColors = new List<string>() { "black", "brown", "green", "grey", "orange", "peru", "red", "white", "yellow" };
+        public static readonly List<ColorEntity> FavoriteColors = new List<ColorEntity>() { new ColorEntity() { DisplayName= "Blue",Value= "#2F19FF" }, new ColorEntity() { DisplayName = "Green", Value = "#127605" }, new ColorEntity() { DisplayName = "Grey", Value = "#535353" } };
+
         public static class Resources
         {
             public static readonly string AADGraph = "https://graph.windows.net";
@@ -54,5 +55,10 @@ namespace EDUGraphAPI
             public static readonly Guid Student = new Guid("314c4481-f395-4525-be8b-2ec4bb1e9d91");
         }
 
+    }
+    public class ColorEntity
+    {
+        public string DisplayName { get; set; }
+        public string Value { get; set; }
     }
 }
