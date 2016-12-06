@@ -1,7 +1,9 @@
 ﻿@model LoginViewModel
+@{
+    ViewBag.Title = "Log in with your local account";
+}
 
-
-<h4>Link to your local account - Log in with your local account:</h4>
+<h4>Link to your local account - @ViewBag.Title:</h4>
 <section id="loginForm">
     @using (Html.BeginForm(null, null, new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {

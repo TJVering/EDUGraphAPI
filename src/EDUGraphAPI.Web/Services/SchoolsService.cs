@@ -52,7 +52,8 @@ namespace EDUGraphAPI.Web.Services
                 }
                 else
                 {
-                    schools[i].Address = "-";
+                    if(string.IsNullOrEmpty(schools[i].Zip))
+                        schools[i].Address = "-";
                 }
             }
 

@@ -5,18 +5,33 @@
 
     $("#filterteacher").click(function () {
         ResetFilterClass($(this));
+        $('.nodata').remove();
         $(".stubg").appendTo($("#hiditem"));
-        $(".teacbg").appendTo($("#content")).hide();
-        ResetPagedContent();
+        if ($(".teacbg").length == 0) {
+            ShowNoData();
+        }
+        else {
+            $(".teacbg").appendTo($("#content")).hide();
+            ResetPagedContent();
+        }
     });
     $("#filterstudnet").click(function () {
         ResetFilterClass($(this));
-        $(".stubg").appendTo($("#content")).hide();
+        $('.nodata').remove();
         $(".teacbg").appendTo($("#hiditem"));
-        ResetPagedContent();
+        if ($(".stubg").length == 0) {
+            ShowNoData();
+        }
+        else {
+            $(".stubg").appendTo($("#content")).hide();
+            ResetPagedContent();
+        }
     });
     $("#filterall").click(function () {
         ResetFilterClass($(this));
+        if ($(".stubg").length != 0 && $(".teacbg").length != 0) {
+            $('.nodata').remove();
+        }
         $(".teacbg").appendTo($("#content")).hide();
         $(".stubg").appendTo($("#content")).hide();
         ResetPagedContent();
@@ -74,5 +89,12 @@
             }
 
         });
+    }
+
+    function ShowNoData()    {
+        $(".pagination").html("");
+        $("#content").html('');
+        $('<div class="nodata"> There is no data available for this page at this time.</div>').appendTo($(".user-container"));
+
     }
 });

@@ -52,6 +52,14 @@
             <dvi class="coursename b-title">
                 Student Conversation(s)
             </dvi>
+            @if (Model.Section == null || Model.Section.Students == null || Model.Section.Students.Count() == 0)
+            {
+                <div class="nodata"> There is no data available for this page at this time.</div>
+            }
+            else
+            {
+
+
             <table class="table  table-green ">
                 <tr class="table-green-header">
                     <th class="tdleft">
@@ -78,7 +86,7 @@
 
             </table>
 
-
+            }
         </div>
 
         <div class="col-md-6 ignore">
@@ -115,10 +123,10 @@
         </div>
 
         <ul class="nav nav-tabs">
-            <li  class="active"><a data-toggle="tab" href="#students">Students</a></li>
-            <li><a data-toggle="tab" href="#documents">Class Documents</a></li>
-            <li><a data-toggle="tab" href="#conversations">Conversations</a></li>
-            <li class="greentab"><a data-toggle="tab" href="#seatingchart"><span>SEATING CHART</span></a></li>
+            <li  class="active"><a data-toggle="tab" href="#students"><span>Students</span></a></li>
+            <li><a data-toggle="tab" href="#documents"><span>Class Documents</span></a></li>
+            <li><a data-toggle="tab" href="#conversations"><span>Conversations</span></a></li>
+            <li ><a data-toggle="tab" href="#seatingchart"><span>SEATING CHART</span></a></li>
         </ul>
         <div class="tab-content">
             <div id="students" class="tab-pane fade in active">
@@ -141,6 +149,14 @@
                 </table>
             </div>
             <div id="documents" class="tab-pane fade">
+                @if (Model.DriveItems == null || Model.DriveItems.Count() == 0)
+                {
+                    <div class="nodata"> There is no data available for this page at this time.</div>
+                }
+                else
+                {
+
+
                 <table class="table  table-green table-studnet">
                     <tr class="table-green-header">
                         <th class="tdleft">
@@ -154,9 +170,18 @@
                         </tr>
                     }
                 </table>
+                }
                 <span class="see-more"><a href="@Model.SeeMoreFilesUrl">See More</a></span>
+               
             </div>
             <div id="conversations" class="tab-pane fade">
+            @if (Model.Conversations == null || Model.Conversations.Count() == 0)
+            {
+                <div class="nodata"> There is no data available for this page at this time.</div>
+            }
+            else
+            {
+
                 <table class="table  table-green table-studnet">
                     <tr class="table-green-header">
                         <th class="tdleft">
@@ -166,10 +191,11 @@
                 @foreach (var con in Model.Conversations)
                 {
                     <tr class="tr-content">
-                        <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}",Model.SeeMoreConversationsUrl,Uri.EscapeDataString(con.Id).Replace("_","%2B")) ">@con.Topic</a></td>
+                        <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}", Model.SeeMoreConversationsUrl, Uri.EscapeDataString(con.Id).Replace("_", "%2B")) ">@con.Topic</a></td>
                     </tr>
                 }
                 </table>
+            }
                 <span class="see-more"><a target="_blank"  href="@Model.SeeMoreConversationsUrl">See More</a></span>
             </div>
 
@@ -182,14 +208,15 @@
                         }
                         else
                         {
-                            var style =string.Format( "background-color:{0}",Model.MyFavoriteColor);
+                            var style = string.Format("background-color:{0}", Model.MyFavoriteColor);
                             <div class="assignseat tip"><div class="greenicon" style="@style"></div>Your assigned seat </div>
                         }
                    
                     <ul id="lstproducts">
                         @foreach (var stu in Model.Section.Students)
                         {
-                            <li id="@stu.O365UserId" ><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> <span class="disname"> @stu.DisplayName </span> <span class="seated hideitem">seated ✓</span> </li>
+                            var hide = stu.Position == 0 ? "hideitem" : "";
+                            <li id="@stu.O365UserId" ><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> <span class="disname"> @stu.DisplayName </span> <span class="seated @hide">seated ✓</span> </li>
                         }
                     </ul>
                         <div id="hidtiles" class="hideitem">
@@ -197,7 +224,7 @@
                         {
                             var containerClass = "";
                             var style = "";
-                            if (stu.Position !=0)
+                            if (stu.Position != 0)
                             {
                                 containerClass = "white";
                                 if (Model.O365UserId == stu.O365UserId)
@@ -220,7 +247,15 @@
                 </div>
                 <div class="right" id="dvright">
              
-                        <div class="teacherdesk">
+                    @{ 
+                        string color = "";
+                    }
+                    
+                    @if (!Model.IsStudent)
+                    {
+                        color = "background-color:" + Model.MyFavoriteColor;
+                    }
+                        <div class="teacherdesk" style="@color">
                             Teacher's desk
                         </div>
                   

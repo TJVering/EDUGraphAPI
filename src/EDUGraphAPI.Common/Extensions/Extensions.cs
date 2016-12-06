@@ -19,7 +19,12 @@ namespace EDUGraphAPI
 
         public static bool In<T>(this T t, params T[] c)
         {
-            return c.Any(i => i.Equals(t));
+            return c.Any(i => EqualityComparer<T>.Default.Equals(t, i));
+        }
+
+        public static bool IgnoreCaseIn(this string s, params string[] items)
+        {
+            return items.Any(i => StringComparer.InvariantCultureIgnoreCase.Equals(s, i));
         }
 
         public static bool IgnoreCaseEquals(this string s, string other)

@@ -142,6 +142,7 @@ namespace EDUGraphAPI.Web.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                model.FavoriteColors = Constants.FavoriteColors;
                 AddErrors(result);
             }
 

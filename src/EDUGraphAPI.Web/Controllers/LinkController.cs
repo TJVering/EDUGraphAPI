@@ -138,12 +138,12 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
             var aadUser = await client.Me.ExecuteAsync();
-           
+
             var viewModel = new EducationRegisterViewModel
             {
                 FirstName = aadUser.GivenName,
                 LastName = aadUser.Surname,
-                Email = "",
+                Email = aadUser.Mail,
                 FavoriteColors = Constants.FavoriteColors
             };
 
@@ -155,15 +155,17 @@ namespace EDUGraphAPI.Web.Controllers
         [HttpPost, ActionName("CreateLocalAccount"), ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateLocalAccountPost(EducationRegisterViewModel model)
         {
+            var tenantId = User.GetTenantId();
+            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync();
+
+            IGraphClient graphClient = new AADGraphClient(activeDirectoryClient);
+            var user = await graphClient.GetCurrentUserAsync();
+            var tenant = await graphClient.GetTenantAsync(tenantId);
+
+            model.Email = user.UserPrincipalName;
             model.FavoriteColors = Constants.FavoriteColors;
             if (!ModelState.IsValid) return View(model);
-            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
-            var aadUser = await client.Me.ExecuteAsync();
-            if (aadUser.UserPrincipalName == model.Email)
-            {
-                ModelState.AddModelError("Email", "Please use an email address different than your O365 email address.");
-                return View(model);
-            }
+
             // Create a new local user
             var localUser = new ApplicationUser
             {
@@ -179,19 +181,9 @@ namespace EDUGraphAPI.Web.Controllers
             }
 
             // Update the local user
-            var tenantId = User.GetTenantId();
-            var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync();
-
-            IGraphClient graphClient = new AADGraphClient(activeDirectoryClient);
-            var user = await graphClient.GetCurrentUserAsync();
-            var tenant = await graphClient.GetTenantAsync(tenantId);
-
-            user.GivenName = model.FirstName;
-            user.Surname = model.LastName;
             await applicationService.UpdateLocalUserAsync(localUser, user, tenant);
 
-            //
-            return RedirectToAction("Index","Schools");
+            return RedirectToAction("Index", "Schools");
         }
 
         //

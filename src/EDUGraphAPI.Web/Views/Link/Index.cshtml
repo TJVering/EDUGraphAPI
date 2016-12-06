@@ -1,10 +1,9 @@
 ﻿@model UserContext
 @{
-    ViewBag.Title = "User";
-    var message = TempData["Message"] as string;
+    ViewBag.Title = "Link Office 365 & Local Account";
 }
 
-<h2>Link Office 365 & Local Account</h2>
+<h2>@ViewBag.Title</h2>
 
 @if (!Model.AreAccountsLinked)
 {
@@ -22,19 +21,20 @@
                     &nbsp; &nbsp;
                     @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
                 </p>
-
             }
         </div>
     }
     else
     {
-       <hr />
+        <hr />
         <div class="form-horizontal">
-             <p>@Html.ActionLink("Use Existing Local Account", "LoginLocal", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
-             @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
-            @Html.ActionLink("Cancel","index", "Schools",null, new { @class = "btn btn-primary" })</p>
+            <p>
+                @Html.ActionLink("Use Existing Local Account", "LoginLocal", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
+            @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
+            @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
+        </p>
 
-        </div>
+    </div>
     }
 }
 else
@@ -51,9 +51,6 @@ else
     </div>
 }
 
-@helper LocalLoginForm()
-{
-}
 @section scripts{
     <script type="text/javascript">
         $(function () {

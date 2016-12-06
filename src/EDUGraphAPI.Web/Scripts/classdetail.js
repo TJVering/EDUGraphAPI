@@ -6,7 +6,8 @@
 function iniTiles(){
     $(".deskcontainer:not([position='0']").each(function () {
         var position = $(this).attr("position");
-        $(this).appendTo($(".desktile[position='" + position + "']"));
+        var tile = $(".desktile[position='" + position + "']")
+        $(this).appendTo(tile);
     });
 }
 function iniControl() {
@@ -62,6 +63,7 @@ function enableDragAndDrop() {
     $(".deskcontainer").on('dragstart', function (evt) {
         var id = $(this).attr("userid");
         evt.originalEvent.dataTransfer.setData("text", id);
+        $("#"+id).addClass("greenlist");
     });
 
     $(".desktile").on('drop', function (evt) {
@@ -78,9 +80,20 @@ function enableDragAndDrop() {
     });
 
     var greenTileTooltip = $("<div class='greenTileTooltip'>Place student here</div>");
-    $(".desktile").on('dragenter', function () {
+    $(".desktile").on('dragenter', function (evt) {
+        var container = $(this).find(".deskcontainer");
+        if (container.length > 0)
+        {
+            $(".greenTileTooltip").remove();
+            return;
+        }
+            
         greenTileTooltip.appendTo($(this));
-    });
+    }).on("dragend", function (evt) {
+        evt.preventDefault();
+        $(".greenTileTooltip").remove();
+        $(".greenlist").removeClass("greenlist");
+    });;
     
     //The dragover
     $("#dvright").on('dragover', function (evt) {

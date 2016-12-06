@@ -19,14 +19,7 @@
             <div class="section-school-name">
                 @Model.School.Name
             </div>
-            <div class="infocontainer">
-                <div class="infoheader">
-                    Address
-                </div>
-                <div class="infobody" title="@Model.School.Address">
-                    @Model.School.Address
-                </div>
-            </div>
+
 
 
             <div class="infocontainer">
@@ -35,7 +28,7 @@
                     PRINCIPAL
                 </div>
                 <div class="infobody" title="@Model.School.PrincipalName">
-                    @Model.School.PrincipalName
+                    @Html.Raw(string.IsNullOrEmpty(Model.School.PrincipalName)?"-" : Model.School.PrincipalName)
                 </div>
             </div>
 
@@ -58,48 +51,14 @@
         </div>
         <div style="clear:both;" />
     </div>
-    <table class="table table-green ignore">
-        <tr class="table-green-header">
-            <th>
-                Course Name
-            </th>
-            <th>
-                Course Number
-            </th>
-            <th>
-                Description
-            </th>
-            <th>
-                Status
-            </th>
-            <th>Teacher</th>
-        </tr>
-
-        @foreach (var s in Model.Sections)
-        {
-            <tr class="tr-content">
-                <td>
-                    @Html.ActionLink(s.DisplayName, "ClassDetails", null, new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId }, null)
-                </td>
-                <td>
-                    @s.CourseNumber
-                </td>
-                <td>@s.CourseDescription </td>
-                <td>@s.EducationStatus</td>
-                <td>
-
-                    @foreach (var teacher in s.Teachers)
-                    {
-                        <div>@teacher.DisplayName</div>
-                    }
-                </td>
-
-            </tr>
-        }
-
-    </table>
     <hr class="hr-green" />
     <div class="section-tiles">
+        
+
+        @if (Model.Sections == null || Model.Sections.Count == 0)
+        {
+        <div class="nodata"> There is no data available for this page at this time.</div>
+        }
         @foreach (var s in Model.Sections)
         {
             <div class="tile-container">
@@ -144,8 +103,9 @@
 @helper Tile(Section section)
 {
     <div class="tile">
-        <h5>Intro to @(section.DisplayName)</h5>
-        <h2>@(section.CombinedCourseNumber)</h2>
+        <h5>Intro to @(StringUtil.CropWholeWords( section.DisplayName,30))</h5>
+
+        <h2>@(StringUtil.CropWholeWords(section.CombinedCourseNumber,15))</h2>
     </div>
 }
 @Scripts.Render("~/bundles/section")

@@ -51,6 +51,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolUsersAsync(schoolId);
+            
             return View(model);
         }
 
@@ -79,6 +80,7 @@ namespace EDUGraphAPI.Web.Controllers
             model.IsStudent = userContext.IsStudent;
             model.O365UserId = userContext.User.O365UserId;
             model.MyFavoriteColor = userContext.User.FavoriteColor;
+            
             return View(model);
         }
 

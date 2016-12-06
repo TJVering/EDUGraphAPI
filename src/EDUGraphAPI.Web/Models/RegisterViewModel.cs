@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using static EDUGraphAPI.Constants;
 
 namespace EDUGraphAPI.Web.Models
 {
@@ -14,6 +13,7 @@ namespace EDUGraphAPI.Web.Models
 
         [Display(Name = "Favorite color")]
         public string FavoriteColor { get; set; }
+
         public List<ColorEntity> FavoriteColors { get; set; }
     }
 }

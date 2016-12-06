@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Teachers & Students";
     var isMySections = (bool?)ViewBag.IsMySections == true;
+   
 }
 <div class="row schools teacher-student">
     <div class="tophero">
@@ -27,7 +28,7 @@
                     PRINCIPAL
                 </div>
                 <div class="infobody" title="@Model.School.PrincipalName">
-                    @Model.School.PrincipalName
+                    @Html.Raw(string.IsNullOrEmpty(Model.School.PrincipalName) ? "-" : Model.School.PrincipalName)
                 </div>
             </div>
 
@@ -52,6 +53,12 @@
         <br style="clear:both;"/>
     </div>
     <div class="user-container">
+@if (Model.Users == null || Model.Users.Count() == 0)
+{
+    <div class="nodata"> There is no data available for this page at this time.</div>
+}
+else
+{
         <div id="content">
             @foreach (var user in Model.Users)
             {
@@ -72,6 +79,7 @@
         <div id="hiditem" class="hidden">
             
         </div>
+}
     </div>
 </div>
 

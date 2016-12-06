@@ -1,6 +1,13 @@
 ﻿@{
     var error = TempData["Error"] as string;
     var message = TempData["Message"] as string;
+
+    var routeData = Request.RequestContext.RouteData;
+    var controller = routeData.GetRequiredString("controller");
+    var action = routeData.GetRequiredString("action");
+
+    var isInASchool = controller.IgnoreCaseEquals("Schools")
+        && action.IgnoreCaseIn("Users", "Classes", "MyClasses", "ClassDetails");
 }
 <!DOCTYPE html>
 <html>
@@ -26,15 +33,18 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    @*<li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    @if (isInASchool)
+                    {
+                        var schoolId = routeData.GetRequiredString("schoolId");
+                        <li>@Html.ActionLink("Classes", "Classes", "Schools", new { schoolId = schoolId }, null)</li>
+                        <li>@Html.ActionLink("Teachers & Students", "Users", "Schools", new { schoolId = schoolId }, null)</li>
+                    }
                     @if (User.Identity.IsAuthenticated)
-                    {                        
+                    {
                         if (User.IsInRole(Constants.Roles.Admin))
                         {
                             <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
                         }
-                        
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -58,7 +68,6 @@
             </div>
         }
         @RenderBody()
-
         <footer></footer>
     </div>
     @Html.Action("Control", "DemoHelper")
