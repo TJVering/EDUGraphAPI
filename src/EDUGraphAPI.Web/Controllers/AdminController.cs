@@ -5,9 +5,6 @@ using EDUGraphAPI.Web.Services.GraphClients;
 using Microsoft.Data.OData;
 using System;
 using System.Data.Services.Client;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AAD = Microsoft.Azure.ActiveDirectory.GraphClient;
@@ -184,49 +181,6 @@ namespace EDUGraphAPI.Web.Controllers
             TempData["Message"] = count > 0
                 ? $"User access was successfully enabled for {count} user(s)."
                 : "User access had been enabled for all users.";
-            return RedirectToAction("Index");
-        }
-
-
-        //
-        // POST: /Admin/RemoveAppRoleAssignments
-        [HttpPost]
-        public async Task<ActionResult> RemoveAppRoleAssignments()
-        {
-            var client = await AuthenticationHelper.GetActiveDirectoryClientAsync(Permissions.Delegated);
-
-            var servicePrincipal = await client.ServicePrincipals
-               .Where(i => i.AppId == Constants.AADClientId)
-               .ExecuteSingleAsync();
-            if (servicePrincipal == null) return RedirectToAction("Index");
-
-            var resourceId = new Guid(servicePrincipal.ObjectId);
-
-            var users = await client.Users.ExecuteAllAsync();
-            var currentUserId = User.GetObjectIdentifier();
-            foreach (var user in users.Where(i => i.ObjectId != currentUserId))
-            {
-                var userFetcher = client.Users.GetByObjectId(user.ObjectId);
-                var appRoleAssignment = await userFetcher.AppRoleAssignments
-                    .Where(i => i.ResourceId == resourceId)
-                    .ExecuteFirstOrDefaultAsync();
-                if (appRoleAssignment == null) continue;
-
-                // Remove appRoleAssignment
-                // await appRoleAssignment.DeleteAsync();
-                // The line of code above does not work: {"odata.error":{"code":"Request_UnsupportedQuery","message":{"lang":"en","value":"Direct queries to this resource type are not supported."}}}
-                // Below is the workaround
-                var httpClient = new HttpClient();
-                var accessToken = await AuthenticationHelper.GetAccessTokenAsync(Constants.Resources.AADGraph);
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
-                var relativeUrl = $"/users/{user.ObjectId}/appRoleAssignments/{appRoleAssignment.ObjectId}?api-version=1.6";
-                await httpClient.DeleteAsync(new Uri(client.Context.BaseUri + relativeUrl));
-            }
-
-            var tenantId = User.GetTenantId();
-            await applicationService.UnlinkAllAccounts(tenantId);
-
-            TempData["Message"] = $"User access was disabled successfully.";
             return RedirectToAction("Index");
         }
     }

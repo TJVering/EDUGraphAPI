@@ -248,7 +248,7 @@ namespace EDUGraphAPI.Web.Services
             localUser.FirstName = o365User.GivenName;
             localUser.LastName = o365User.Surname;
             localUser.O365UserId = o365User.Id;
-            localUser.O365Email = o365User.UserPrincipalName;
+            localUser.O365Email = o365User.Mail ?? o365User.UserPrincipalName;
 
             // Update organization
             if (localUser.Organization == null || localUser.Organization.TenantId != tenant.Id)

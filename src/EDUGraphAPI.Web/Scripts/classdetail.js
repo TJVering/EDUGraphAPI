@@ -39,7 +39,7 @@ function iniControl() {
     }
 }
 function iniTableSort() {
-    $("#studentsTable").tablesorter({ sortList: [[0, 0], [1, 0]] });
+    $("#studentsTable").tablesorter({ sortList: [[0, 0]] });
 }
 
 

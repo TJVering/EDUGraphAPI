@@ -73,7 +73,7 @@ namespace EDUGraphAPI.Web.Controllers
             var isAccountLinked = await applicationService.IsO365AccountLinkedAsync(user.Id);
             if (isAccountLinked)
             {
-                TempData["Error"] = $"Failed to link accounts. The Office 365 account '{user.UserPrincipalName}' is already linked to another local account.";
+                TempData["Error"] = $"Failed to link accounts. The Office 365 account '{ user.Mail ?? user.UserPrincipalName}' is already linked to another local account.";
                 return RedirectToAction("Index");
             }
 
@@ -143,7 +143,7 @@ namespace EDUGraphAPI.Web.Controllers
             {
                 FirstName = aadUser.GivenName,
                 LastName = aadUser.Surname,
-                Email = aadUser.UserPrincipalName,
+                Email = aadUser.Mail ?? aadUser.UserPrincipalName,
                 FavoriteColors = Constants.FavoriteColors
             };
 
@@ -162,7 +162,7 @@ namespace EDUGraphAPI.Web.Controllers
             var user = await graphClient.GetCurrentUserAsync();
             var tenant = await graphClient.GetTenantAsync(tenantId);
 
-            model.Email = user.UserPrincipalName;
+            model.Email = user.Mail ?? user.UserPrincipalName;
             model.FavoriteColors = Constants.FavoriteColors;
             if (!ModelState.IsValid) return View(model);
 

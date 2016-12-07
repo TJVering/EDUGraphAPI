@@ -23,6 +23,7 @@ namespace EDUGraphAPI.Web.Services.GraphClients
                 Id = me.ObjectId,
                 GivenName = me.GivenName,
                 Surname = me.Surname,
+                Mail = me.Mail,
                 UserPrincipalName = me.UserPrincipalName,
                 Roles = await GetRolesAsync(me)
             };

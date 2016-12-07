@@ -127,7 +127,7 @@ textarea {
 .table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
 .table-green .table-green-header{ background:#237e17;color:white; }
 .table-green .tdleft{border-collapse:inherit;   }
-.table-green .table-green-header th{text-transform:uppercase;padding:20px 0 20px 6px ;border-top:0; border-bottom: 1px solid white;}
+.table-green .table-green-header th{text-transform:uppercase;padding:10px 0 10px 6px ;border-top:0; border-bottom: 1px solid white;}
 .table-green .tr-content td{padding-top:10px;padding-bottom:10px;    vertical-align: inherit;    border-bottom: 1px solid white;}
 .table-green > tbody > tr > td{border-top:1px solid white;}
 .table-green .td-green, .table-green .td-green a{ background-color: #277F79; color:white;}
