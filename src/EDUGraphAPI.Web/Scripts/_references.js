@@ -3,6 +3,7 @@
 /// <reference path="classdetail.js" />
 /// <reference path="jquery.ba-hashchange.js" />
 /// <reference path="jquery.paging.min.js" />
+/// <reference path="jquery.tablesorter.min.js" />
 /// <reference path="jquery.validate.min.js" />
 /// <reference path="jquery.validate.unobtrusive.js" />
 /// <reference path="jquery-1.10.2.js" />

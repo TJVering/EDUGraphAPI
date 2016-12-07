@@ -300,6 +300,9 @@
     <Content Include="fonts\HelveticaNeueLTStd-Roman.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\arrow-all.png" />
+    <Content Include="Images\arrow-down.png" />
+    <Content Include="Images\arrow-up.png" />
     <Content Include="Images\btngreenbg.png" />
     <Content Include="Images\cancel.png" />
     <Content Include="Images\ClassDetailsTiles-bg.jpg" />
@@ -341,6 +344,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery.ba-hashchange.js" />
     <Content Include="Scripts\jquery.paging.min.js" />
+    <Content Include="Scripts\jquery.tablesorter.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

@@ -306,7 +306,7 @@ namespace EDUGraphAPI.Web.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        public async Task<ActionResult> Aboutme()
+        public async Task<ActionResult> Aboutme(bool? showSaveMessage)
         {
             AboutMeViewModel model = new AboutMeViewModel();
             var userContext = await applicationService.GetUserContextAsync();
@@ -336,6 +336,10 @@ namespace EDUGraphAPI.Web.Controllers
  
 
             }
+            if (showSaveMessage == true)
+            {
+                TempData["saveresult"] = "<span class='saveresult'>Favorite color has been updated!</span>";
+            }
             return View(model);
         }
         [HttpPost]
@@ -346,7 +350,7 @@ namespace EDUGraphAPI.Web.Controllers
                 var userContext = await applicationService.GetUserContextAsync();
                  applicationService.UpdateUserFavoriteColor(favoritecolor);
             }
-            return RedirectToAction("Aboutme");
+            return RedirectToAction("Aboutme","Manage",new { showSaveMessage =true});
         }
         #region Helpers
         // Used for XSRF protection when adding external logins

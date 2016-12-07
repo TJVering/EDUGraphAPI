@@ -143,7 +143,7 @@ namespace EDUGraphAPI.Web.Controllers
             {
                 FirstName = aadUser.GivenName,
                 LastName = aadUser.Surname,
-                Email = aadUser.Mail,
+                Email = aadUser.UserPrincipalName,
                 FavoriteColors = Constants.FavoriteColors
             };
 

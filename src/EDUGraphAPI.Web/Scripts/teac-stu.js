@@ -58,9 +58,10 @@
     {
         $(".pagination").html("");
         var cont = $('#content div.element');
+        var pageSize = 12;
         Paging =  $(".pagination").paging(cont.length, {
             format: '[< ncnnn! >]',
-            perpage: 12,
+            perpage: pageSize,
             lapping: 0,
             onSelect: function (page) {
                 var data = this.slice;
@@ -78,8 +79,10 @@
                             return '<a href="#' + this.value + '">' + this.value + '</a>';
                         return '<span class="current">' + this.value + '</span>';
                     case 'next': // >
+                        if (cont.length > pageSize)
                         return '<a href="#">Next</a>';
                     case 'prev': // <
+                        if (cont.length > pageSize)
                         return '<a href="#">Previous</a>';
                     case 'first': // [
                         return '<a href="#"></a>';

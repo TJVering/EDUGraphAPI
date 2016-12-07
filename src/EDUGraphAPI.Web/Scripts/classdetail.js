@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     iniTiles();
     iniControl();
-
+    iniTableSort();
 });
 function iniTiles(){
     $(".deskcontainer:not([position='0']").each(function () {
@@ -38,6 +38,10 @@ function iniControl() {
         $('.nav-tabs li:eq(' + tabToActivate + ') a').tab('show');
     }
 }
+function iniTableSort() {
+    $("#studentsTable").tablesorter({ sortList: [[0, 0], [1, 0]] });
+}
+
 
 function enableDragAndDrop() {
     $(".deskcontainer").attr("draggable", true);
@@ -111,7 +115,6 @@ function enableDragAndDrop() {
     });
 
 }
-
 function SaveEditDesk() {
     var classroomSeatingArrangements = [];
     var classId = $("#hidSectionid").val();
@@ -144,7 +147,6 @@ function SaveEditDesk() {
         }
     });
 }
-
 function getSeatingArrangements(O365UserId, Position) {
     return { O365UserId: O365UserId, Position: Position };
 }

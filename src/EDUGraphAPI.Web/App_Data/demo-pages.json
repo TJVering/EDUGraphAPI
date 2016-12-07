@@ -1,15 +1,127 @@
 ﻿[
   {
     "controller": "schools",
-    "action":  "index",
+    "action": "index",
     "links": [
       {
         "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AdminController.cs"
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
       },
       {
         "title": "View",
         "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Index.cshtml"
+      },
+      {
+        "title": "ApplicationService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/ApplicationService.cs"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SchoolsViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SchoolsViewModel.cs"
+      }
+    ]
+  },
+  {
+    "controller": "schools",
+    "action": "classes",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Classes.cshtml"
+      },
+      {
+        "title": "ApplicationService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/ApplicationService.cs"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SectionsViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SectionsViewModel.cs"
+      }
+    ]
+  },
+  {
+    "controller": "schools",
+    "action": "users",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Users.cshtml"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SchoolUsersViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SchoolUsersViewModel.cs"
+      }
+    ]
+  },
+  {
+    "controller": "schools",
+    "action": "myclasses",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Classes.cshtml"
+      },
+      {
+        "title": "ApplicationService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/ApplicationService.cs"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SectionsViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SectionsViewModel.cs"
+      }
+    ]
+  },
+  {
+    "controller": "schools",
+    "action": "classdetails",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/ClassDetails.cshtml"
+      },
+      {
+        "title": "ApplicationService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/ApplicationService.cs"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SectionDetailsViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SectionDetailsViewModel.cs"
       }
     ]
   }

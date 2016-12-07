@@ -48,79 +48,7 @@
     </div>
     <div class="students">
 
-        <div class="col-md-6 ignore">
-            <dvi class="coursename b-title">
-                Student Conversation(s)
-            </dvi>
-            @if (Model.Section == null || Model.Section.Students == null || Model.Section.Students.Count() == 0)
-            {
-                <div class="nodata"> There is no data available for this page at this time.</div>
-            }
-            else
-            {
-
-
-            <table class="table  table-green ">
-                <tr class="table-green-header">
-                    <th class="tdleft">
-                        student name
-                    </th>
-                    <th>
-                        grade
-                    </th>
-                    <th>
-                        conversations(s)
-                    </th>
-
-                </tr>
-                @foreach (var stu in Model.Section.Students)
-                {
-                    <tr class="tr-content">
-                        <td>@stu.DisplayName</td>
-                        <td>@stu.EducationGrade</td>
-                        <td>a link here.</td>
-
-                    </tr>
-                }
-
-
-            </table>
-
-            }
-        </div>
-
-        <div class="col-md-6 ignore">
-            <dvi class="coursename b-title">
-                Reading Links
-            </dvi>
-            <table class="table  table-green">
-                <tr class="table-green-header">
-                    <th class="tdleft">
-                        reading list
-                    </th>
-                    <th>
-                       due date
-                    </th>
-                    <th>
-                        download links
-                    </th>
-
-                </tr>
-                @foreach (var stu in Model.Section.Students)
-                {
-                    <tr class="tr-content">
-                        <td><a>@stu.DisplayName</a></td>
-                        <td>@stu.EducationGrade</td>
-                        <td>a link here.</td>
-
-                    </tr>
-                }
-
-
-            </table>
-
-
-        </div>
+    
 
         <ul class="nav nav-tabs">
             <li  class="active"><a data-toggle="tab" href="#students"><span>Students</span></a></li>
@@ -130,23 +58,34 @@
         </ul>
         <div class="tab-content">
             <div id="students" class="tab-pane fade in active">
-                <table class="table  table-green table-studnet">
-                    <tr class="table-green-header">
-                        <th class="tdleft">
-                            student name
-                        </th>
-                        <th>
-                            grade
-                        </th>
-                    </tr>
-                    @foreach (var stu in Model.Section.Students)
-                    {
-                        <tr class="tr-content">
-                            <td>@stu.DisplayName </td>
-                            <td>@stu.EducationGrade</td>
+            @if (Model.Section == null || Model.Section.Students == null || Model.Section.Students.Count() == 0)
+            {
+                <div class="nodata"> There is no data available for this page at this time.</div>
+            }
+            else
+            {
+                <table class="table  table-green table-studnet tablesorter" id="studentsTable">
+                    <thead>
+                        <tr class="table-green-header">
+                            <th class="tdleft">
+                                student name
+                            </th>
+                            <th>
+                                grade
+                            </th>
                         </tr>
-                    }
+                    </thead> 
+                    <tbody>
+                        @foreach (var stu in Model.Section.Students)
+                        {
+                            <tr class="tr-content">
+                                <td><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> @stu.DisplayName </td>
+                                <td>@stu.EducationGrade</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
+            }
             </div>
             <div id="documents" class="tab-pane fade">
                 @if (Model.DriveItems == null || Model.DriveItems.Count() == 0)

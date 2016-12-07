@@ -18,6 +18,7 @@
         {
             @ColorsDropdown(Model.MyFavoriteColor, Model.FavoriteColors)
             <input type="submit"  value="Save"/>
+            @Html.Raw(TempData["saveresult"])
         }
     </div>
     }
