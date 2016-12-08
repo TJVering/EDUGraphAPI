@@ -619,6 +619,7 @@ So far, It is only used on the **SchoolsController**.
   | GetAllSectionsAsync | Get sections within a school             |
   | GetMySectionsAsync  | Get my sections within a school          |
   | GetSectionAsync     | Get a section by using the object id     |
+  | GetMembersAsync     | Get members within a school              |
   | GetStudentAsync     | Get the current logged in user as a Student |
   | GetTeacherAsync     | Get the current logged in user as a Teacher |
 
@@ -695,15 +696,19 @@ So far, It is only used on the **SchoolsController**.
   | GetUserContextAsync             | Get current user's context               |
   | GetLinkedUsers                  | Get linked users with the specified filter |
   | IsO365AccountLinkedAsync        | Is the specified O365 account linked with an local account |
+  | SaveSeatingArrangements         | Save seating arrangements                |
   | UnlinkAccountsAsync             | Unlink the specified the account         |
-  | UpdateUserFavoriteColor         | Update current user's favorite color     |
+  | UnlinkAllAccounts               | Unlink all accounts in the specified tenant |
   | UpdateLocalUserAsync            | Update the local user with O365 user and tenant info |
+  | UpdateOrganizationAsync         | Update organization                      |
+  | UpdateUserFavoriteColor         | Update current user's favorite color     |
 
 * **`Services.SchoolsService`**: a service class used to get education data.
 
   | Method                          | Description                              |
   | ------------------------------- | ---------------------------------------- |
   | GetSchoolsViewModelAsync        | Get SchoolsViewModel                     |
+  | GetSchoolUsersAsync             | Get teachers and students of the specified school |
   | GetSectionsViewModelAsync       | Get SectionsViewModel of the specified school |
   | GetSectionDetailsViewModelAsync | Get SectionDetailsViewModel of the specified section |
   | GetMyClasses                    | Get my classes                           |

@@ -248,7 +248,7 @@
     <Compile Include="Infrastructure\LinkedOrO365UsersOnlyAttribute.cs" />
     <Compile Include="Models\AboutMeViewModel.cs" />
     <Compile Include="Models\DemoPage.cs" />
-    <Compile Include="Models\SaveEditSeatsViewModel.cs" />
+    <Compile Include="Models\SeatingViewModel.cs" />
     <Compile Include="Models\SchoolUsersViewModel.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="Models\TenantInfo.cs" />
@@ -309,6 +309,10 @@
     <Content Include="Images\close.png" />
     <Content Include="Images\contaerbg.gif" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\global_pagination_first.png" />
+    <Content Include="Images\global_pagination_last.png" />
+    <Content Include="Images\global_pagination_next.png" />
+    <Content Include="Images\global_pagination_previous.png" />
     <Content Include="Images\header-default.jpg" />
     <Content Include="Images\icon-map_30x28px-BLU.png" />
     <Content Include="Images\icon-map_30x28px-WHT.png" />

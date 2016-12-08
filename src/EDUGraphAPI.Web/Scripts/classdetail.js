@@ -133,7 +133,7 @@ function SaveEditDesk() {
 
     $.ajax({
         type: 'POST',
-        url: "/Schools/SaveEditSeats",
+        url: "/Schools/SaveSeatingArrangements",
         dataType: 'json',
         data: JSON.stringify(classroomSeatingArrangements),
         contentType: "application/json; charset=utf-8",

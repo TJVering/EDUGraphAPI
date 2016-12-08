@@ -73,7 +73,7 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
-        
+
         /// <summary>
         /// Update current user's favorite color
         /// </summary>
@@ -86,7 +86,7 @@ namespace EDUGraphAPI.Web.Services
                 dbContext.SaveChanges();
             }
         }
-        
+
         /// <summary>
         /// Get current user's context
         /// </summary>
@@ -95,7 +95,7 @@ namespace EDUGraphAPI.Web.Services
             var currentUser = GetCurrentUser();
             return new UserContext(HttpContext.Current, currentUser);
         }
-        
+
         /// <summary>
         /// Get current user's context
         /// </summary>
@@ -154,7 +154,7 @@ namespace EDUGraphAPI.Web.Services
             organization.IsAdminConsented = adminConsented;
             await dbContext.SaveChangesAsync();
         }
-        
+
         public async Task UpdateOrganizationAsync(string tenantId, bool adminConsented)
         {
             var organization = await dbContext.Organizations
@@ -197,11 +197,14 @@ namespace EDUGraphAPI.Web.Services
             await dbContext.SaveChangesAsync();
 
             var rolesToRemove = (await userManager.GetRolesAsync(user.Id))
-                .Union(new [] { Constants.Roles.Admin, Constants.Roles.Faculty, Constants.Roles.Student })
+                .Union(new[] { Constants.Roles.Admin, Constants.Roles.Faculty, Constants.Roles.Student })
                 .ToArray();
             await userManager.RemoveFromRolesAsync(user.Id, rolesToRemove);
         }
 
+        /// <summary>
+        /// Unlink all accounts in the specified tenant
+        /// </summary>
         public async Task UnlinkAllAccounts(string tenantId)
         {
             var users = await dbContext.Users
@@ -216,6 +219,42 @@ namespace EDUGraphAPI.Web.Services
                 user.O365Email = null;
             }
             dbContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Save SeatingArrangements
+        /// </summary>
+        public async Task<int> SaveSeatingArrangements(List<SeatingViewModel> seatingArrangements)
+        {
+            foreach (var item in seatingArrangements)
+            {
+                var seat = dbContext.ClassroomSeatingArrangements
+                    .Where(c => c.O365UserId == item.O365UserId && c.ClassId == item.ClassId)
+                    .FirstOrDefault();
+
+                //update
+                if (seat != null && item.Position != 0)
+                {
+                    seat.Position = item.Position;
+                }
+                //delete
+                if (seat != null && item.Position == 0)
+                {
+                    dbContext.ClassroomSeatingArrangements.Remove(seat);
+                }
+                //insert
+                if (seat == null && item.Position != 0)
+                {
+                    var seating = new ClassroomSeatingArrangements()
+                    {
+                        O365UserId = item.O365UserId,
+                        Position = item.Position,
+                        ClassId = item.ClassId
+                    };
+                    dbContext.ClassroomSeatingArrangements.Add(seating);
+                }
+            }
+            return await dbContext.SaveChangesAsync();
         }
 
         private string GetUserId()
@@ -283,30 +322,6 @@ namespace EDUGraphAPI.Web.Services
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<int> SaveEditSeats(List<SaveEditSeatsViewModel> seats)
-        {
-            foreach (var item in seats)
-            {
-                var seat = dbContext.ClassroomSeatingArrangements
-                    .Where(c => c.O365UserId == item.O365UserId && c.ClassId== item.ClassId).FirstOrDefault();
-                //update
-                if (seat != null && item.Position!=0) 
-                {
-                    seat.Position = item.Position;
-                }
-                //delete
-                if (seat != null && item.Position == 0) 
-                {
-                    dbContext.ClassroomSeatingArrangements.Remove(seat);
-                }
-                //insert
-                if (seat == null && item.Position != 0)
-                {
-                    dbContext.ClassroomSeatingArrangements.Add(new ClassroomSeatingArrangements() { O365UserId=item.O365UserId,Position=item.Position,ClassId=item.ClassId});
-                }
-            }
-            return dbContext.SaveChanges();
-        }
 
     }
 }

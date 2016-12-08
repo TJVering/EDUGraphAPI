@@ -15,6 +15,7 @@ namespace EDUGraphAPI.Web.Controllers
     {
         private ApplicationService applicationService;
         private ApplicationDbContext dbContext;
+
         public SchoolsController(ApplicationService applicationService, ApplicationDbContext dbContext)
         {
             this.applicationService = applicationService;
@@ -38,7 +39,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes
         public async Task<ActionResult> Classes(string schoolId)
         {
             var userContext = await applicationService.GetUserContextAsync();
@@ -47,6 +48,8 @@ namespace EDUGraphAPI.Web.Controllers
             return View(model);
         }
 
+        //
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Users
         public async Task<ActionResult> Users(string schoolId)
         {
             var schoolsService = await GetSchoolsServiceAsync();
@@ -56,7 +59,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections/My
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/My
         public async Task<ActionResult> MyClasses(string schoolId)
         {
             var userContext = await applicationService.GetUserContextAsync();
@@ -67,7 +70,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Sections/6510F0FC-53B3-4D9B-9742-84C9C8FA2BE4
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/6510F0FC-53B3-4D9B-9742-84C9C8FA2BE4
         public async Task<ActionResult> ClassDetails(string schoolId, string sectionId)
         {
             var userContext = await applicationService.GetUserContextAsync();
@@ -84,17 +87,19 @@ namespace EDUGraphAPI.Web.Controllers
             return View(model);
         }
 
+        //
+        // POST: /Schools/SaveSeatingArrangements
+        [HttpPost]
+        public async Task<JsonResult> SaveSeatingArrangements(List<SeatingViewModel> seatingArrangements)
+        {
+            await applicationService.SaveSeatingArrangements(seatingArrangements);
+            return Json("");
+        }
+        
         private async Task<SchoolsService> GetSchoolsServiceAsync()
         {
             var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
             return new SchoolsService(educationServiceClient, dbContext);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> SaveEditSeats(List<SaveEditSeatsViewModel> seats)
-        {
-            await applicationService.SaveEditSeats(seats);
-            return Json("");
         }
     }
 }

@@ -29,7 +29,7 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     height:100%;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-family: "HelveticaNeue Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -122,10 +122,10 @@ textarea {
 .schooltiles{margin:20px 0 20px 0;    padding-right: 0;}
 .schooltiles .infocontainer{margin-right:0;}
 
-.table-green { border:none;background-color:white;opacity:0.9;}
+.table-green { border:none;background-color:white}
 .table-green tr.tr-content:nth-child(2n+1){background-color:#f8f8f8}
 .table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
-.table-green .table-green-header{ background:#237e17;color:white; }
+.table-green .table-green-header{ background:#127605;color:white; }
 .table-green .tdleft{border-collapse:inherit;   }
 .table-green .table-green-header th{text-transform:uppercase;padding:10px 0 10px 6px ;border-top:0; border-bottom: 1px solid white;}
 .table-green .tr-content td{padding-top:10px;padding-bottom:10px;    vertical-align: inherit;    border-bottom: 1px solid white;}
@@ -192,12 +192,13 @@ textarea {
 .students > ul > li{width:22%;margin-right:20px;text-align: center;}
 .students > ul > li:first-child{margin-left:20px;}
 .students > ul > li>a{color:#ABABAB;height:56px;font-size:18px;text-transform:uppercase;background-color:#fff;border-radius:0 0 0 0;font-weight:400;padding-top:15px;}
-.students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {background-color:#237e17;color:white;font-weight:700;}
-.students .table-green .table-green-header{border-bottom:1px solid #237e17;background-color:#237e17;}
-.students .table-green .table-green-header th {background-color:#237e17;border-bottom:1px solid #237e17}
+.students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {background-color:#127605;color:white;font-weight:700;}
+.students .table-green .table-green-header{border-bottom:1px solid #127605;background-color:#127605;}
+.students .table-green .table-green-header th {background-color:#127605;border-bottom:1px solid #127605}
 .students .table-green .tdleft{border-left-color:#ABABAB;}
 .students .see-more{margin-left:12px;}
-.students  ul  li.active a span{border-bottom:3px solid white;    padding-bottom: 6px;}
+.students  ul  li.active a span{border-bottom:3px solid white; padding-bottom: 6px;}
+.students #students.active{border:none}
 
 /*User info popup window*/
 .navbar-right a{color:white;text-decoration:none;}
@@ -224,7 +225,7 @@ textarea {
 .margin-top-12{margin-top:12px;}
 
 #skipLinkAccount{width:90px;}
-.tab-content div.tab-pane{border:2px solid #237e17;background-color:white;position:relative;}
+.tab-content div.tab-pane{border:2px solid #127605;background-color:white;position:relative;}
 #seatingchart{padding:24px 12px;}
 #seatingchart .left{width:25%;float:left;}
 #seatingchart .right{width:65%;float:left;border-left:2px solid #666565;}
@@ -333,8 +334,11 @@ border: 1px solid #e4e4e4;
 .teacher-student .user-container .stubg{background-color:#444444}
 .teacher-student .user-container .teacbg{background-color:#4DA143;}
 .teacher-student .pagination{width:100%;text-align:center;}
-.teacher-student .pagination a{margin:0 10px;color:#474747;text-decoration:none;}
-.teacher-student .pagination .current{background-color:#444444; color:white;padding:6px 10px;}
+.teacher-student .pagination a{font-family:'Helvetica Neue LT Std Bold'; color:#444344; margin:0 10px;color:#474747;text-decoration:none;}
+.teacher-student .pagination a:not([href='#']){background-color:#f4f4f4; padding:6px 10px; margin:2px;}
+.teacher-student .pagination a.disabled{ color:#c2c2c2 !important; background-color:transparent; }
+
+.teacher-student .pagination .current{background-color:#444444; color:white; padding:6px 10px; margin:2px;}
 .teacher-student .filterlink{text-decoration:none;color:#6F83F8;cursor:pointer;}
 .teacher-student .filterlink.selected{text-decoration:none;color:black;cursor:default;font-weight:bold;}
 
