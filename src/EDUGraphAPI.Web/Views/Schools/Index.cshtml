@@ -89,8 +89,9 @@
                         
                         @if (!string.IsNullOrEmpty(school.City))
                         {
-                            Html.Raw(school.City + ",");
                             <br />
+                            @Html.Raw(school.City + ",")
+                            
                         }                        
                         @school.State @school.Zip
                     </div>

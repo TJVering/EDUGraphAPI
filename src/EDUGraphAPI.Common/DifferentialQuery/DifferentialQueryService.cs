@@ -17,7 +17,7 @@ namespace EDUGraphAPI.DifferentialQuery
             this.accessTokenGetter = accessTokenGetter;
         }
 
-        public async Task<DeltaResult<Delta<TEntity>>> QueryAsync<TEntity>(string url) where TEntity : class
+        public async Task<DeltaResult<Delta<TEntity>>> QueryAsync<TEntity>(string url, string apiVersion) where TEntity : class
         {
             var items = new List<Delta<TEntity>>();
 
@@ -26,7 +26,7 @@ namespace EDUGraphAPI.DifferentialQuery
 
             while (true)
             {
-                var json = await HttpGetAsync(nextLink);
+                var json = await HttpGetAsync(nextLink + "&api-version=" + apiVersion);
                 var result = DeltaResultParser.Parse<TEntity>(json);
                 items.AddRange(result.Items);
 

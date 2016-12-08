@@ -55,27 +55,39 @@ namespace EDUGraphAPI.DataSync
 
             foreach (var org in consentedOrganizations)
             {
-                await WriteLogAsync($"Starting to sync users for the {org.Name} organization.");
-
-                var dataSyncRecord = await GetOrCreateDataSyncRecord(org.TenantId, UsersQuery);
-                var url = dataSyncRecord.DeltaLink += "&api-version=" + APIVersion;
-
-                await WriteLogAsync($"Send Differential Query.");
-                if (dataSyncRecord.Id == 0)
-                    await WriteLogAsync("First time executing differential query; all items will return.");
-                var differentialQueryService = new DifferentialQueryService(() => getTenantAccessTokenAsync(org.TenantId));
-                var result = await differentialQueryService.QueryAsync<User>(url);
-                await WriteLogAsync($"Get {result.Items.Length} users.");
-
-                foreach (var differentialUser in result.Items)
-                    await UpdateUserAsync(differentialUser);
-
-                dataSyncRecord.DeltaLink = result.DeltaLink;
-                dataSyncRecord.Updated = DateTime.UtcNow;
+                try
+                {
+                    await SyncOrganizationUsersAsync(org);
+                }
+                catch (Exception ex)
+                {
+                    await WriteLogAsync($"Failed to sync users of {org.Name}. Error: {ex.Message}");
+                }
             }
 
             dbContext.SaveChanges();
             await WriteLogAsync($"All the changes were saved.");
+        }
+
+        private async Task SyncOrganizationUsersAsync(Organization org)
+        {
+            await WriteLogAsync($"Starting to sync users for the {org.Name} organization.");
+
+            var dataSyncRecord = await GetOrCreateDataSyncRecord(org.TenantId, UsersQuery);
+
+            await WriteLogAsync($"Send Differential Query.");
+            if (dataSyncRecord.Id == 0)
+                await WriteLogAsync("First time executing differential query; all items will return.");
+            var differentialQueryService = new DifferentialQueryService(() => getTenantAccessTokenAsync(org.TenantId));
+
+            var result = await differentialQueryService.QueryAsync<User>(dataSyncRecord.DeltaLink, APIVersion);
+            await WriteLogAsync($"Get {result.Items.Length} users.");
+
+            foreach (var differentialUser in result.Items)
+                await UpdateUserAsync(differentialUser);
+
+            dataSyncRecord.DeltaLink = result.DeltaLink;
+            dataSyncRecord.Updated = DateTime.UtcNow;
         }
 
         private async Task<DataSyncRecord> GetOrCreateDataSyncRecord(string tenantId, string query)

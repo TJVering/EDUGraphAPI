@@ -69,7 +69,7 @@ else
                 }
                 <div class="element @bg">
                     <div class="userimg">
-                        <img src="@Url.Action("UserPhoto", "Photo", new { id = user.O365UserId })" />
+                        <img src="/images/header-default.jpg" realheader="@Url.Action("UserPhoto", "Photo", new { id = user.O365UserId })" />
                     </div>
                     <div class="username">@user.DisplayName</div>
                 </div>

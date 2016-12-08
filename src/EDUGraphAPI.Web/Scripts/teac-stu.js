@@ -66,7 +66,10 @@
             onSelect: function (page) {
                 var data = this.slice;
                 cont.slice(prev[0], prev[1]).css('display', 'none');
-                cont.slice(data[0], data[1]).fadeIn("slow");
+                cont.slice(data[0], data[1]).fadeIn("slow").each(function (index) {
+                    var img = $(this).find("img");
+                    img.attr("src", img.attr("realheader"));
+                });
                 prev = data;
                 return true; // locate!
             },
@@ -80,10 +83,10 @@
                         return '<span class="current">' + this.value + '</span>';
                     case 'next': // >
                         if (cont.length > pageSize)
-                        return '<a href="#">Next</a>';
+                        return '<a href="javascript:void(0)">Next</a>';
                     case 'prev': // <
                         if (cont.length > pageSize)
-                        return '<a href="#">Previous</a>';
+                            return '<a href="javascript:void(0)">Previous</a>';
                     case 'first': // [
                         return '<a href="#"></a>';
                     case 'last': // ]

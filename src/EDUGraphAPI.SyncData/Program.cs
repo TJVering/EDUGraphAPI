@@ -7,7 +7,7 @@ namespace EDUGraphAPI.SyncData
         static void Main()
         {
             // Uncomment the following line of code to debug quickly (no need to wait for the scheduled time to arrive).
-            // Functions.SyncUsers(null, System.Console.Out).Wait();
+            // Functions.SyncUsersAsync(null, System.Console.Out).Wait();
 
             JobHostConfiguration config = new JobHostConfiguration();
             config.UseTimers();
