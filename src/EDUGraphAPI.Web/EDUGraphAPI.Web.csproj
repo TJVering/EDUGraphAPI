@@ -263,7 +263,7 @@
     <Compile Include="Infrastructure\EduAuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\HandleAdalExceptionAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\EducationRegisterViewModel.cs" />
     <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\AdminContext.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -412,7 +412,7 @@
     <Content Include="Views\Error\Index.cshtml" />
     <Content Include="Views\Shared\NoAccess.cshtml" />
     <Content Include="Services\GraphClients\GraphClients.cd" />
-    <Content Include="Views\Manage\Aboutme.cshtml" />
+    <Content Include="Views\Manage\AboutMe.cshtml" />
     <Content Include="Views\Schools\Users.cshtml" />
     <Content Include="Views\DemoHelper\Control.cshtml" />
   </ItemGroup>

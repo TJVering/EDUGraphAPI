@@ -14,7 +14,7 @@
     {
     <div class="margin-btm-12">
         <b>Favorite Color:</b> 
-        @using (Html.BeginForm("Aboutme", "Manage"))
+        @using (Html.BeginForm("UpdateFavoriteColor", "Manage"))
         {
             @ColorsDropdown(Model.MyFavoriteColor, Model.FavoriteColors)
             <input type="submit"  value="Save"/>

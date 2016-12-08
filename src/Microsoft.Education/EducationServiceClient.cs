@@ -103,11 +103,6 @@ namespace Microsoft.Education
             return HttpGetObjectAsync<Student>("me?api-version=1.5");
         }
 
-        public async Task<SectionUser[]> GetUsersAsync(string objectId)
-        {
-            return await HttpGetArrayAsync<SectionUser>($"administrativeUnits/{objectId}/members?api-version=beta");
-        }
-
         /// <summary>
         /// You can get the current logged in user and check if that user is a student.
         /// Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-current-user.
@@ -117,6 +112,18 @@ namespace Microsoft.Education
         {
             return HttpGetObjectAsync<Teacher>("me?api-version=1.5");
         }
+
+        /// <summary>
+        /// Get members within a school
+        /// Reference URL: https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations#get-school-members
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        public async Task<SectionUser[]> GetMembersAsync(string objectId)
+        {
+            return await HttpGetArrayAsync<SectionUser>($"administrativeUnits/{objectId}/members?api-version=beta");
+        }
+
         #endregion
 
         #region HttpGet

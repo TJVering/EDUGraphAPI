@@ -4,13 +4,8 @@ using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using Microsoft.AspNet.Identity;
-using Microsoft.Azure.ActiveDirectory.GraphClient;
-using Microsoft.Education;
-using Microsoft.Education.Data;
-using Microsoft.IdentityModel.Protocols;
 using Microsoft.Owin.Security;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -25,7 +20,7 @@ namespace EDUGraphAPI.Web.Controllers
         private ApplicationUserManager userManager;
         private ApplicationService applicationService;
         private ApplicationDbContext dbContext;
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, 
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager,
             ApplicationService applicationService, ApplicationDbContext dbContext)
         {
             this.userManager = userManager;
@@ -306,12 +301,15 @@ namespace EDUGraphAPI.Web.Controllers
             return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
 
-        public async Task<ActionResult> Aboutme(bool? showSaveMessage)
+
+        //
+        // GET: /Manage/AboutMe
+        public async Task<ActionResult> AboutMe(bool? showSaveMessage)
         {
             AboutMeViewModel model = new AboutMeViewModel();
             var userContext = await applicationService.GetUserContextAsync();
-            
-            if (userContext.User==null)
+
+            if (userContext.User == null)
             {
                 model.Username = userContext.UserDisplayName;
                 model.MyFavoriteColor = "";
@@ -332,8 +330,8 @@ namespace EDUGraphAPI.Web.Controllers
             {
                 var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
                 var schoolsService = await GetSchoolsServiceAsync();
-                model.Groups= await schoolsService.GetMyClasses(userContext);
- 
+                model.Groups = await schoolsService.GetMyClasses(userContext);
+
 
             }
             if (showSaveMessage == true)
@@ -342,15 +340,18 @@ namespace EDUGraphAPI.Web.Controllers
             }
             return View(model);
         }
+
+        //
+        // GET: /Manage/UpdateFavoriteColor
         [HttpPost]
-        public async Task<ActionResult> Aboutme(string favoritecolor)
+        public async Task<ActionResult> UpdateFavoriteColor(string favoritecolor)
         {
             if (!string.IsNullOrEmpty(favoritecolor))
             {
                 var userContext = await applicationService.GetUserContextAsync();
-                 applicationService.UpdateUserFavoriteColor(favoritecolor);
+                applicationService.UpdateUserFavoriteColor(favoritecolor);
             }
-            return RedirectToAction("Aboutme","Manage",new { showSaveMessage =true});
+            return RedirectToAction("AboutMe", "Manage", new { showSaveMessage = true });
         }
         #region Helpers
         // Used for XSRF protection when adding external logins

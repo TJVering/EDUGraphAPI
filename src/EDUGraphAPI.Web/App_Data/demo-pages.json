@@ -53,28 +53,6 @@
   },
   {
     "controller": "schools",
-    "action": "users",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Users.cshtml"
-      },
-      {
-        "title": "SchoolsService",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
-      },
-      {
-        "title": "SchoolUsersViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SchoolUsersViewModel.cs"
-      }
-    ]
-  },
-  {
-    "controller": "schools",
     "action": "myclasses",
     "links": [
       {
@@ -101,6 +79,28 @@
   },
   {
     "controller": "schools",
+    "action": "users",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/SchoolsController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Schools/Users.cshtml"
+      },
+      {
+        "title": "SchoolsService",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/SchoolsService.cs"
+      },
+      {
+        "title": "SchoolUsersViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SchoolUsersViewModel.cs"
+      }
+    ]
+  },
+  {
+    "controller": "schools",
     "action": "classdetails",
     "links": [
       {
@@ -122,6 +122,10 @@
       {
         "title": "SectionDetailsViewModel",
         "url": "/blob/master/src/EDUGraphAPI.Web/Models/SectionDetailsViewModel.cs"
+      },
+      {
+        "title": "SeatingViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/SeatingViewModel.cs"
       }
     ]
   },
@@ -145,24 +149,6 @@
   },
   {
     "controller": "account",
-    "action": "verifycode",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/VerifyCode.cshtml"
-      },
-      {
-        "title": "VerifyCodeViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
-      }
-    ]
-  },
-  {
-    "controller": "account",
     "action": "register",
     "links": [
       {
@@ -174,139 +160,157 @@
         "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/Register.cshtml"
       },
       {
-        "title": "LoginViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+        "title": "EducationRegisterViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/EducationRegisterViewModel.cs"
       }
     ]
   },
-  {
-    "controller": "account",
-    "action": "confirmemail",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ConfirmEmail.cshtml"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "forgotpassword",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ForgotPassword.cshtml"
-      },
-      {
-        "title": "ForgotPasswordViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "forgotpasswordconfirmation",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ForgotPasswordConfirmation.cshtml"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "resetpassword",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ResetPassword.cshtml"
-      },
-      {
-        "title": "ResetPasswordViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "resetpasswordconfirmation",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ResetPasswordConfirmation.cshtml"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "sendcode",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/SendCode.cshtml"
-      },
-      {
-        "title": "SendCodeViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "externalloginconfirmation",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ExternalLoginConfirmation.cshtml"
-      },
-      {
-        "title": "ExternalLoginConfirmationViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
-      }
-    ]
-  },
-  {
-    "controller": "account",
-    "action": "externalloginfailure",
-    "links": [
-      {
-        "title": "Controller",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
-      },
-      {
-        "title": "View",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ExternalLoginFailure.cshtml"
-      }
-    ]
-  },
+  //{
+  //  "controller": "account",
+  //  "action": "verifycode",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/VerifyCode.cshtml"
+  //    },
+  //    {
+  //      "title": "VerifyCodeViewModel",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "confirmemail",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ConfirmEmail.cshtml"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "forgotpassword",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ForgotPassword.cshtml"
+  //    },
+  //    {
+  //      "title": "ForgotPasswordViewModel",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "forgotpasswordconfirmation",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ForgotPasswordConfirmation.cshtml"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "resetpassword",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ResetPassword.cshtml"
+  //    },
+  //    {
+  //      "title": "ResetPasswordViewModel",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "resetpasswordconfirmation",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ResetPasswordConfirmation.cshtml"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "sendcode",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/SendCode.cshtml"
+  //    },
+  //    {
+  //      "title": "SendCodeViewModel",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "externalloginconfirmation",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ExternalLoginConfirmation.cshtml"
+  //    },
+  //    {
+  //      "title": "ExternalLoginConfirmationViewModel",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+  //    }
+  //  ]
+  //},
+  //{
+  //  "controller": "account",
+  //  "action": "externalloginfailure",
+  //  "links": [
+  //    {
+  //      "title": "Controller",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/AccountController.cs"
+  //    },
+  //    {
+  //      "title": "View",
+  //      "url": "/blob/master/src/EDUGraphAPI.Web/Views/Account/ExternalLoginFailure.cshtml"
+  //    }
+  //  ]
+  //},
   {
     "controller": "admin",
     "action": "index",
@@ -384,6 +388,14 @@
       {
         "title": "UserContext",
         "url": "/blob/master/src/EDUGraphAPI.Web/Models/UserContext.cs"
+      },
+      {
+        "title": "AADGraphClient",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/GraphClients/AADGraphClient.cs"
+      },
+      {
+        "title": "MSGraphClient",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/GraphClients/MSGraphClient.cs"
       }
     ]
   },
@@ -402,6 +414,10 @@
       {
         "title": "LoginViewModel",
         "url": "/blob/master/src/EDUGraphAPI.Web/Models/AccountViewModels.cs"
+      },
+      {
+        "title": "AADGraphClient",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/GraphClients/AADGraphClient.cs"
       }
     ]
   },
@@ -423,7 +439,11 @@
       },
       {
         "title": "EducationRegisterViewModel",
-        "url": "/blob/master/src/EDUGraphAPI.Web/Models/RegisterViewModel.cs"
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/EducationRegisterViewModel.cs"
+      },
+      {
+        "title": "AADGraphClient",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Services/GraphClients/AADGraphClient.cs"
       }
     ]
   },
@@ -438,6 +458,24 @@
       {
         "title": "View",
         "url": "/blob/master/src/EDUGraphAPI.Web/Views/Link/LoginO365Required.cshtml"
+      }
+    ]
+  },
+  {
+    "controller": "manage",
+    "action": "aboutme",
+    "links": [
+      {
+        "title": "Controller",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Controllers/ManageController.cs"
+      },
+      {
+        "title": "View",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Views/Manage/AboutMe.cshtml"
+      },
+      {
+        "title": "AboutMeViewModel",
+        "url": "/blob/master/src/EDUGraphAPI.Web/Models/AboutMeViewModel.cs"
       }
     ]
   }

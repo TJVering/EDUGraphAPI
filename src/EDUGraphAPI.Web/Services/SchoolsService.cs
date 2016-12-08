@@ -96,7 +96,7 @@ namespace EDUGraphAPI.Web.Services
         public async Task<SchoolUsersViewModel> GetSchoolUsersAsync(string objectId)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
-            var users = await educationServiceClient.GetUsersAsync(objectId);
+            var users = await educationServiceClient.GetMembersAsync(objectId);
             return new SchoolUsersViewModel(school,users);
         }
 

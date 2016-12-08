@@ -85,45 +85,54 @@
             onFormat: function (type) {
                 switch (type) {
                     case 'block': // n and c
-                        if (!this.active)
-                            return '';
-                        else if (this.value != this.page)
-                            return '<a href="#' + this.value + '">' + this.value + '</a>';
-                        return '<span class="current">' + this.value + '</span>';
+                        if (this.pages > 1) {
+                            if (!this.active)
+                                return '';
+                            else if (this.value != this.page)
+                                return '<a href="#' + this.value + '">' + this.value + '</a>';
+                        }
                     case 'next': // >
-                        if (cont.length > pageSize) {
-                            if (this.page == this.pages) {
-                                return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Next</a>';
-                            }
-                            else {
-                                return '<a class="withicon" href="javascript:void(0)">Next</a>';
+                        if (this.pages > 1) {
+                            if (cont.length > pageSize) {
+                                if (this.page == this.pages) {
+                                    return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Next</a>';
+                                }
+                                else {
+                                    return '<a class="withicon" href="javascript:void(0)">Next</a>';
+                                }
                             }
                         }
 
+
                     case 'prev': // <
-                        if (cont.length > pageSize) {
-                            if (this.page != 1) {
-                                return '<a  class="withicon" href="javascript:void(0)">Previous</a>';
-                            }
-                            else {
-                                return '<a class="disabled" disabled = "true"   class="withicon" href="javascript:void(0)">Previous</a>';
+                        if (this.pages > 1) {
+                            if (cont.length > pageSize) {
+                                if (this.page != 1) {
+                                    return '<a  class="withicon" href="javascript:void(0)">Previous</a>';
+                                }
+                                else {
+                                    return '<a class="disabled" disabled = "true"   class="withicon" href="javascript:void(0)">Previous</a>';
+                                }
                             }
                         }
                         //Show first and last
                     case 'first': // [
-                        if (this.page == 1) {
-                            return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">First</a>';
+                        if (this.pages > 1) {
+                            if (this.page == 1) {
+                                return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">First</a>';
 
+                            }
+                            else {
+                                return '<a  class="withicon" href="javascript:void(0)">First</a>';
+                            }
                         }
-                        else {
-                            return '<a  class="withicon" href="javascript:void(0)">First</a>';
-                        }
-
                     case 'last': // ]
-                        if (this.page == this.pages) {
-                            return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Last</a>';
-                        } else {
-                            return '<a  class="withicon" href="javascript:void(0)">Last</a>';
+                        if (this.pages > 1) {
+                            if (this.page == this.pages) {
+                                return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Last</a>';
+                            } else {
+                                return '<a  class="withicon" href="javascript:void(0)">Last</a>';
+                            }
                         }
                     case 'fill':
                         if (this.active)

@@ -155,6 +155,9 @@ namespace EDUGraphAPI.Web.Services
             await dbContext.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Update organization
+        /// </summary>
         public async Task UpdateOrganizationAsync(string tenantId, bool adminConsented)
         {
             var organization = await dbContext.Organizations
@@ -222,7 +225,7 @@ namespace EDUGraphAPI.Web.Services
         }
 
         /// <summary>
-        /// Save SeatingArrangements
+        /// Save seating arrangements
         /// </summary>
         public async Task<int> SaveSeatingArrangements(List<SeatingViewModel> seatingArrangements)
         {
@@ -321,7 +324,6 @@ namespace EDUGraphAPI.Web.Services
                 .Where(i => i.TenantId == tenantId)
                 .FirstOrDefaultAsync();
         }
-
 
     }
 }
