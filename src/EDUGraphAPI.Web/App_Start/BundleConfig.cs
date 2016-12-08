@@ -42,8 +42,7 @@ namespace EDUGraphAPI.Web
             "~/Scripts/classdetail.js"
             ));
             bundles.Add(new ScriptBundle("~/bundles/paging").Include(
-                "~/Scripts/jquery.ba-hashchange.js",
-            "~/Scripts/jquery.paging.min.js",
+            "~/Scripts/jquery.pagination.js",
             "~/Scripts/teac-stu.js"));
         }
     }

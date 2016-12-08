@@ -334,11 +334,12 @@ border: 1px solid #e4e4e4;
 .teacher-student .user-container .stubg{background-color:#444444}
 .teacher-student .user-container .teacbg{background-color:#4DA143;}
 .teacher-student .pagination{width:100%;text-align:center;}
-.teacher-student .pagination a{font-family:'Helvetica Neue LT Std Bold'; color:#444344; margin:0 10px;color:#474747;text-decoration:none;}
-.teacher-student .pagination a:not([href='#']){background-color:#f4f4f4; padding:6px 10px; margin:2px;}
+.teacher-student .pagination a, .teacher-student .pagination span{font-family:'Helvetica Neue LT Std Roman'; font-size:12px; color:#444344; text-decoration:none;background-color:#f4f4f4; padding:6px 10px; margin:2px;}
+.teacher-student .pagination *:nth-child(1), .teacher-student .pagination *:nth-last-child(1){background-color:transparent; margin:0 10px; font-family:'Helvetica Neue LT Std Bold'; }
 .teacher-student .pagination a.disabled{ color:#c2c2c2 !important; background-color:transparent; }
+.teacher-student .pagination .current{background-color:#444444; color:white;}
+.teacher-student .pagination .current.next,.teacher-student .pagination .current.prev{background-color:transparent;color:#c2c2c2;}
 
-.teacher-student .pagination .current{background-color:#444444; color:white; padding:6px 10px; margin:2px;}
 .teacher-student .filterlink{text-decoration:none;color:#6F83F8;cursor:pointer;}
 .teacher-student .filterlink.selected{text-decoration:none;color:black;cursor:default;font-weight:bold;}
 

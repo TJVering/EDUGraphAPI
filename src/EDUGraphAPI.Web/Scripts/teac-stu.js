@@ -1,155 +1,72 @@
 ﻿$(document).ready(function () {
-    var prev = { start: 0, stop: 0 }, Paging;
-    setPageing();
-    $(window).hashchange();
+    
+    IniPage();
+    function IniPage() {
+        $("#content").append($("#hiditem .element").clone());
+        IniPagiation();
+    }
+    
 
     $("#filterteacher").click(function () {
         ResetFilterClass($(this));
         $('.nodata').remove();
-        $(".stubg").appendTo($("#hiditem"));
+        $("#content").html("").append($("#hiditem .teacbg").clone());
         if ($(".teacbg").length == 0) {
             ShowNoData();
         }
         else {
-            $(".teacbg").appendTo($("#content")).hide();
-            ResetPagedContent();
+            IniPagiation();
         }
     });
     $("#filterstudnet").click(function () {
         ResetFilterClass($(this));
-        $('.nodata').remove();
-        $(".teacbg").appendTo($("#hiditem"));
+        $("#content").html("").append($("#hiditem .stubg").clone());
+
         if ($(".stubg").length == 0) {
             ShowNoData();
         }
         else {
-            $(".stubg").appendTo($("#content")).hide();
-            ResetPagedContent();
+            IniPagiation();
         }
     });
     $("#filterall").click(function () {
         ResetFilterClass($(this));
+        $('#content').html("");
         if ($(".stubg").length != 0 && $(".teacbg").length != 0) {
             $('.nodata').remove();
         }
-        $(".teacbg").appendTo($("#content")).hide();
-        $(".stubg").appendTo($("#content")).hide();
-        ResetPagedContent();
+        IniPage();
     });
 
-    $(window).hashchange(function () {
 
-        if (window.location.hash)
-            Paging.setPage(window.location.hash.substr(1));
-        else
-            Paging.setPage(1); // we dropped the initial page selection and need to run it manually
-    });
+    
+    function IniPagiation() {
+        var num_entries = jQuery('#content div.element').length;
+        $("#pagination").pagination(num_entries, {
+            callback: pageselectCallback,
+            items_per_page: 12, 
+            next_text: "Next",
+            num_display_entries: 10,
+            num_edge_entries: 2,
+            prev_text: "Previous"
+        });
+    }
+    function pageselectCallback(page_index, jq) {
+                var start = page_index * this.items_per_page;
+                var end = start + this.items_per_page;
+                $('#content div.element').hide()
+                    .slice(start, end).fadeIn("slow").each(function (index) {
+                        var img = $(this).find("img");
+                        img.attr("src", img.attr("realheader"));
+                    });
+
+                return false;
+            }
 
     function ResetFilterClass(obj) {
         $(".filterlink").removeClass("selected");
         obj.addClass("selected");
     }
-    function ResetPagedContent() {
-        setPageing();
-        Paging.setPage(1);
-    }
-    function setPageing() {
-        $(".pagination").html("");
-        var cont = $('#content div.element');
-        var pageSize = 12;
-        Paging = $(".pagination").paging(cont.length, {
-            //format: " [ <  (qq -) nnncnnn (- pp) > ]",
-            // format: "[ < > ] . (qq -) nnncnnn (- pp)",
-            format: "[ < . (qq -) nnncnnn (- pp)> ] ",
-            perpage: pageSize,
-            lapping: 0,
-
-            labels: {
-                first: "First",
-                leap: " &nbsp; ",
-                last: "Last",
-                prev: "<",
-                next: ">",
-                fill: "..."
-            },
-            onSelect: function (page) {
-                var data = this.slice;
-                cont.slice(prev[0], prev[1]).css('display', 'none');
-                cont.slice(data[0], data[1]).fadeIn("slow").each(function (index) {
-                    var img = $(this).find("img");
-                    img.attr("src", img.attr("realheader"));
-                });
-                prev = data;
-                return true; // locate!
-            },
-            onFormat: function (type) {
-                switch (type) {
-                    case 'block': // n and c
-                        if (this.pages > 1) {
-                            if (!this.active)
-                                return '';
-                            else if (this.value != this.page)
-                                return '<a href="#' + this.value + '">' + this.value + '</a>';
-                        }
-                    case 'next': // >
-                        if (this.pages > 1) {
-                            if (cont.length > pageSize) {
-                                if (this.page == this.pages) {
-                                    return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Next</a>';
-                                }
-                                else {
-                                    return '<a class="withicon" href="javascript:void(0)">Next</a>';
-                                }
-                            }
-                        }
-
-
-                    case 'prev': // <
-                        if (this.pages > 1) {
-                            if (cont.length > pageSize) {
-                                if (this.page != 1) {
-                                    return '<a  class="withicon" href="javascript:void(0)">Previous</a>';
-                                }
-                                else {
-                                    return '<a class="disabled" disabled = "true"   class="withicon" href="javascript:void(0)">Previous</a>';
-                                }
-                            }
-                        }
-                        //Show first and last
-                    case 'first': // [
-                        if (this.pages > 1) {
-                            if (this.page == 1) {
-                                return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">First</a>';
-
-                            }
-                            else {
-                                return '<a  class="withicon" href="javascript:void(0)">First</a>';
-                            }
-                        }
-                    case 'last': // ]
-                        if (this.pages > 1) {
-                            if (this.page == this.pages) {
-                                return '<a class="disabled" disabled = "true"  class="withicon" href="javascript:void(0)">Last</a>';
-                            } else {
-                                return '<a  class="withicon" href="javascript:void(0)">Last</a>';
-                            }
-                        }
-                    case 'fill':
-                        if (this.active)
-                            return "...";
-                        return "";
-                    case "leap":
-                        return "";
-                    case "left":
-                        return "";
-                    case "right":
-                        return "";
-                }
-            }
-
-        });
-    }
-
     function ShowNoData() {
         $(".pagination").html("");
         $("#content").html('');
