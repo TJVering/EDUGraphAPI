@@ -96,33 +96,37 @@
                 {
 
 
-                <table class="table  table-green table-studnet">
-                    <tr class="table-green-header">
-                        <th class="tdleft">
-                            document name
-                        </th>
-                        <th class="tdleft">
-                            created
-                        </th>
-                        <th class="tdleft">
-                            created by
-                        </th>
-                    </tr>
-                    @foreach (var doc in Model.DriveItems)
-                    {
-                        <tr class="tr-content">
-                            <td>
-                                <a target="_blank"  href="@doc.WebUrl">@doc.Name</a>
-                            </td>
-                            <td>
-                                @doc.CreatedDateTime
-                            </td>
-                            <td>
-                               @doc.CreatedBy.User.DisplayName
-                            </td>
+                <table id="studoc" class="table  table-green table-studnet tablesorter">
+                    <thead>
+                        <tr class="table-green-header">
+                            <th class="tdleft">
+                                document name
+                            </th>
+                            <th class="tdleft">
+                                created
+                            </th>
+                            <th class="tdleft">
+                                created by
+                            </th>
                         </tr>
-                    }
-                </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var doc in Model.DriveItems)
+                        {
+                            <tr class="tr-content">
+                                <td>
+                                    <a target="_blank" href="@doc.WebUrl">@doc.Name</a>
+                                </td>
+                                <td>
+                                    @doc.CreatedDateTime
+                                </td>
+                                <td>
+                                    @doc.CreatedBy.User.DisplayName
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+</table>
                 }
                 <span class="see-more"><a href="@Model.SeeMoreFilesUrl">See More</a></span>
                

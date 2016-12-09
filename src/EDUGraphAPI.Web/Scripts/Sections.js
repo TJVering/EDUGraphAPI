@@ -42,4 +42,25 @@ $(document).ready(function () {
         $("#myMap").offset({ top: 0, left: 0 }).hide();
     });
     sections.bindShowDetail();
+    IniPagiation();
+
 });
+
+function IniPagiation() {
+    var num_entries = $('.section-tiles div.tile-container').length;
+    $("#pagination").pagination(num_entries, {
+        callback: pageselectCallback,
+        items_per_page: 12,
+        next_text: "Next",
+        num_display_entries: 10,
+        num_edge_entries: 2,
+        prev_text: "Previous"
+    });
+}
+function pageselectCallback(page_index, jq) {
+    var start = page_index * this.items_per_page;
+    var end = start + this.items_per_page;
+    $('.section-tiles div.tile-container').hide()
+        .slice(start, end).fadeIn("slow");
+    return false;
+}

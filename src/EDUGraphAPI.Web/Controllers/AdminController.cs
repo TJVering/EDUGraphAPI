@@ -2,9 +2,9 @@
 using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.Services.GraphClients;
-using Microsoft.Data.OData;
 using System;
-using System.Data.Services.Client;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using AAD = Microsoft.Azure.ActiveDirectory.GraphClient;
@@ -138,45 +138,41 @@ namespace EDUGraphAPI.Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            var resourceId = new Guid(servicePrincipal.ObjectId);
-
             int count = 0;
-            var users = await client.Users.ExecuteAllAsync();
+            var tasks = new List<Task>();
+            var resourceId = new Guid(servicePrincipal.ObjectId);
+            var users = await client.Users
+                .Expand(i => i.AppRoleAssignments)
+                .ExecuteAllAsync();
+
             foreach (var user in users)
             {
-                var userFetcher = client.Users.GetByObjectId(user.ObjectId);
+                var task = Task.Run(async () =>
+                {
+                    if (await user.AppRoleAssignments.AnyAsync(i => i.ResourceId == resourceId)) return;
 
-                var appRoleAssignment = await userFetcher.AppRoleAssignments
-                    .Where(i => i.ResourceId == resourceId)
-                    .ExecuteFirstOrDefaultAsync();
-                if (appRoleAssignment != null) continue;
-
-                // https://github.com/microsoftgraph/microsoft-graph-docs/blob/master/api-reference/beta/resources/approleassignment.md
-                appRoleAssignment = new AAD.AppRoleAssignment
-                {
-                    CreationTimestamp = DateTime.UtcNow,
-                    //Id = Guid.Empty,
-                    PrincipalDisplayName = user.DisplayName,
-                    PrincipalId = new Guid(user.ObjectId),
-                    PrincipalType = "User",
-                    ResourceId = resourceId,
-                    ResourceDisplayName = servicePrincipal.DisplayName
-                };
-
-                try
-                {
-                    await userFetcher.AppRoleAssignments.AddAppRoleAssignmentAsync(appRoleAssignment);
-                }
-                catch (DataServiceRequestException)
-                {
-                    // Ignore this exception.
-                }
-                catch (ODataErrorException)
-                {
-                    // Ignore this exception.
-                }
-                count++;
+                    // https://github.com/microsoftgraph/microsoft-graph-docs/blob/master/api-reference/beta/resources/approleassignment.md
+                    var appRoleAssignment = new AAD.AppRoleAssignment
+                    {
+                        CreationTimestamp = DateTime.UtcNow,
+                        //Id = Guid.Empty,
+                        PrincipalDisplayName = user.DisplayName,
+                        PrincipalId = new Guid(user.ObjectId),
+                        PrincipalType = "User",
+                        ResourceId = resourceId,
+                        ResourceDisplayName = servicePrincipal.DisplayName
+                    };
+                    var userFetcher = client.Users.GetByObjectId(user.ObjectId);
+                    try
+                    {
+                        await userFetcher.AppRoleAssignments.AddAppRoleAssignmentAsync(appRoleAssignment);
+                    }
+                    catch { }
+                    Interlocked.Increment(ref count);
+                });
+                tasks.Add(task);
             }
+            Task.WaitAll(tasks.ToArray());
 
             TempData["Message"] = count > 0
                 ? $"User access was successfully enabled for {count} user(s)."

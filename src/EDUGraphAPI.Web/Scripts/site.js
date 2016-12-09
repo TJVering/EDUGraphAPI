@@ -15,4 +15,6 @@
         console.log($(this).closest('.demo-helper-control').html());
         $(this).closest('.demo-helper-control').toggleClass('collapsed');
     });
+
+    $('.message-container').fadeOut(5000);
 });

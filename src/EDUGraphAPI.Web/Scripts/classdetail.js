@@ -27,7 +27,6 @@ function iniControl() {
         $("#imgcancel").hide();
         $("#imgedit").show();
         $(".deskcontainer ").attr("draggable", false);
-        $("#lstproducts").find(".seated").hide();
         $("#lstproducts").find("li").attr("draggable", false);
         $(".deskclose").hide();
         SaveEditDesk();
@@ -39,7 +38,7 @@ function iniControl() {
     }
 }
 function iniTableSort() {
-    $("#studentsTable").tablesorter({ sortList: [[0, 0]] });
+    $(".tablesorter").tablesorter({ sortList: [[0, 0]] });
 }
 
 

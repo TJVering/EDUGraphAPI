@@ -4,10 +4,9 @@
     ViewBag.Title = "CLASSES";
     var isMySections = (bool?)ViewBag.IsMySections == true;
 }
-<div class="row schools">
+<div class="row schools sections">
     <div class="tophero">
-
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="secondnav">
                 <a href="/schools"> All Schools</a> > @Model.School.Name
             </div>
@@ -15,15 +14,11 @@
                 Classes
             </div>
         </div>
-        <div class=" toptiles">
+        <div class="toptiles">
             <div class="section-school-name">
                 @Model.School.Name
             </div>
-
-
-
             <div class="infocontainer">
-
                 <div class="infoheader">
                     PRINCIPAL
                 </div>
@@ -31,7 +26,6 @@
                     @Html.Raw(string.IsNullOrEmpty(Model.School.PrincipalName)?"-" : Model.School.PrincipalName)
                 </div>
             </div>
-
             <div class="infocontainer">
                 <div class="infoheader">
                     Grade level
@@ -42,19 +36,19 @@
             </div>
         </div>
         <div >
-
+            <div class="col-md-6 usericon">
+                <div class="icon"></div><div>Non-Class</div>
+                <div class="icon my-class"></div><div>My Class</div>
+            </div>
             <div class="col-md-6 mysection section-link-container">
                 VIEW:
                 @Html.ActionLink("My Classes", "MyClasses", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
                 @Html.ActionLink("All Classes", "Classes", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
             </div>
         </div>
-        <div style="clear:both;" />
+        <br style="clear:both;" />
     </div>
-    <hr class="hr-green" />
     <div class="section-tiles">
-        
-
         @if (Model.Sections == null || Model.Sections.Count == 0)
         {
         <div class="nodata"> There is no data available for this page at this time.</div>
@@ -99,6 +93,7 @@
             </div>
         }
     </div>
+    <div class="pagination" id="pagination"></div>
 </div>
 @helper Tile(Section section)
 {

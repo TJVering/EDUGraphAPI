@@ -1,6 +1,7 @@
 ﻿using Microsoft.Education.Data;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -148,7 +149,16 @@ namespace Microsoft.Education
         {
             var responseString = await HttpGetAsync(relativeUrl);
             var array = JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
-            return array.Value;
+            List<T> result = new List<T>();
+            result.AddRange(array.Value);
+            while (!string.IsNullOrEmpty(array.NextLink) && array.NextLink.IndexOf('?')>=0)
+            {
+                var url = array.NextLink.Split('?')[1];
+                responseString = await HttpGetAsync(relativeUrl+"&"+url);
+                array = JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
+                result.AddRange(array.Value);
+            }
+            return result.ToArray();
         }
         #endregion
     }
