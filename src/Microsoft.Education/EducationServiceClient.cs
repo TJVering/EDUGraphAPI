@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Microsoft.Education
@@ -151,12 +152,16 @@ namespace Microsoft.Education
             var array = JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
             List<T> result = new List<T>();
             result.AddRange(array.Value);
-            while (!string.IsNullOrEmpty(array.NextLink) && array.NextLink.IndexOf('?')>=0)
+            while (!string.IsNullOrEmpty(array.NextLink) && array.NextLink.IndexOf('?') >= 0)
             {
-                var url = array.NextLink.Split('?')[1];
-                responseString = await HttpGetAsync(relativeUrl+"&"+url);
-                array = JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
-                result.AddRange(array.Value);
+                var token = Regex.Match(array.NextLink, @"[$]skiptoken[=][^&]+", RegexOptions.Compiled).Value;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    var str = relativeUrl.IndexOf('?') >= 0 ? "&" : "?";
+                    responseString = await HttpGetAsync(relativeUrl + str + token);
+                    array = JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
+                    result.AddRange(array.Value);
+                }
             }
             return result.ToArray();
         }

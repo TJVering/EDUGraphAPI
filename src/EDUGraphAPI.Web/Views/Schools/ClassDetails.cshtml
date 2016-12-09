@@ -64,7 +64,7 @@
             }
             else
             {
-                <table class="table  table-green table-studnet tablesorter" id="studentsTable">
+                <table class="table  table-green table-student tablesorter" id="studentsTable">
                     <thead>
                         <tr class="table-green-header">
                             <th class="tdleft">
@@ -96,40 +96,46 @@
                 {
 
 
-                <table id="studoc" class="table  table-green table-studnet tablesorter">
+                <table id="studoc" class="table  table-green table-student tablesorter">
                     <thead>
                         <tr class="table-green-header">
+                            <th class="border-holder"></th>
+                            <th class="space-holder left"></th>
                             <th class="tdleft">
                                 document name
                             </th>
                             <th class="tdleft">
-                                created
+                                modified
                             </th>
                             <th class="tdleft">
-                                created by
+                                modified by
                             </th>
+                            <th class="space-holder right"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var doc in Model.DriveItems)
                         {
                             <tr class="tr-content">
+                                <td class="border-holder"></td>
+                                <td class="space-holder left"></td>
                                 <td>
                                     <a target="_blank" href="@doc.WebUrl">@doc.Name</a>
                                 </td>
                                 <td>
-                                    @doc.CreatedDateTime
+                                    @doc.LastModifiedDateTime
                                 </td>
                                 <td>
-                                    @doc.CreatedBy.User.DisplayName
+                                    @doc.LastModifiedBy.User.DisplayName
                                 </td>
+                                <td class="space-holder right"></td>
                             </tr>
                         }
                     </tbody>
 </table>
                 }
                 <span class="see-more"><a href="@Model.SeeMoreFilesUrl">See More</a></span>
-               
+                <br style="clear:both" />
             </div>
             <div id="conversations" class="tab-pane fade">
             @if (Model.Conversations == null || Model.Conversations.Count() == 0)
@@ -139,21 +145,22 @@
             else
             {
 
-                <table class="table  table-green table-studnet">
-                    <tr class="table-green-header">
-                        <th class="tdleft">
-                           topic
-                        </th>
-                    </tr>
-                @foreach (var con in Model.Conversations)
-                {
-                    <tr class="tr-content">
-                        <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}", Model.SeeMoreConversationsUrl, Uri.EscapeDataString(con.Id).Replace("_", "%2B")) ">@con.Topic</a></td>
-                    </tr>
-                }
+                <table id="stuconv" class="table  table-green table-student">
+                    <tbody>
+                        @foreach (var con in Model.Conversations)
+                        {
+                            <tr class="tr-content">
+                                <td class="border-holder"></td>
+                                <td class="space-holder left"></td>
+                                <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}", Model.SeeMoreConversationsUrl, Uri.EscapeDataString(con.Id).Replace("_", "%2B")) ">@con.Topic</a></td>
+                                <td class="space-holder right"></td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             }
                 <span class="see-more"><a target="_blank"  href="@Model.SeeMoreConversationsUrl">See More</a></span>
+                <br style="clear:both" />
             </div>
 
             <div id="seatingchart"  class="tab-pane fade ">

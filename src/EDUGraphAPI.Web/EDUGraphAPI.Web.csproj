@@ -298,6 +298,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\HelveticaNeueLTStd-Bd.svg" />
     <Content Include="fonts\HelveticaNeueLTStd-Roman.svg" />
+    <Content Include="fonts\HelveticaNeueLTStd-Th.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\arrow-all.png" />
@@ -335,6 +336,9 @@
     <Content Include="fonts\HelveticaNeueLTStd-Roman.eot" />
     <Content Include="fonts\HelveticaNeueLTStd-Roman.ttf" />
     <Content Include="fonts\HelveticaNeueLTStd-Roman.woff" />
+    <Content Include="fonts\HelveticaNeueLTStd-Th.eot" />
+    <Content Include="fonts\HelveticaNeueLTStd-Th.ttf" />
+    <Content Include="fonts\HelveticaNeueLTStd-Th.woff" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

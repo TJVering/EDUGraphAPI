@@ -31,6 +31,9 @@ function iniControl() {
         $(".deskclose").hide();
         SaveEditDesk();
     });
+    $(".students #studoc tbody tr, .students #conversations tbody tr").click(function () {
+        $(this).addClass("selected").siblings().removeClass("selected");
+    });
 
     var tabToActivate = $.urlParam("tab");
     if (tabToActivate) {

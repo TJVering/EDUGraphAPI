@@ -51,24 +51,28 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @if (error.IsNotNullAndEmpty())
+    <div class="containerbg">
+
+
+        <div class="container body-content">
+            @if (error.IsNotNullAndEmpty())
         {
-            <div class="message-container bg-danger">
-                <p>@error</p>
-            </div>
+                <div class="message-container bg-danger">
+                    <p>@error</p>
+                </div>
         }
-        @if (message.IsNotNullAndEmpty())
+            @if (message.IsNotNullAndEmpty())
         {
-            <div class="message-container bg-success">
-                @foreach (var line in message.Split(new[] { "\r\n" }, StringSplitOptions.None))
+                <div class="message-container bg-success">
+                    @foreach (var line in message.Split(new[] { "\r\n" }, StringSplitOptions.None))
                 {
-                    <p>@line</p>
+                        <p>@line</p>
                 }
-            </div>
+                </div>
         }
-        @RenderBody()
-        <footer></footer>
+            @RenderBody()
+            <footer></footer>
+        </div>
     </div>
     @Html.Action("Control", "DemoHelper")
     @Scripts.Render("~/bundles/bootstrap")
