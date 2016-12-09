@@ -212,7 +212,7 @@ textarea {
 .students > ul > li>a{font-family:'Helvetica Neue LT Std Th'; color:#ABABAB; height:56px; font-size:18px; text-transform:uppercase; background-color:#fff; border-radius:0 0 0 0; padding-top:15px;}
 .students > ul > li.active > a,.students > ul > li.active > a:hover,.students > ul > li.active > a:focus {font-family:'Helvetica Neue LT Std Bold'; background-color:#127605; color:white;}
 .students .table-green .table-green-header{border-bottom:1px solid #127605;background-color:#127605;}
-.students .table-green .table-green-header th {background-color:#127605;border-bottom:1px solid #127605}
+.students .table-green .table-green-header th {background-color:#127605;border-bottom:1px solid #127605; padding-top:15px; padding-bottom:15px}
 .students .table-green .tdleft{border-left-color:#ABABAB;}
 .students .table-green tbody tr{font-family:'Helvetica Neue LT Std Bold'; font-size:18px; color:#000000}
 .students .see-more{margin-left:12px;}
