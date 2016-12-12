@@ -40,6 +40,7 @@
                     if (localAccountExisted)
                     {
                         htmlAttributes.Add("disabled", "disabled");
+                        htmlAttributes.Add("href", "javascript:void(0)");
                     }
                     @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, htmlAttributes)
                     @:&nbsp; &nbsp;

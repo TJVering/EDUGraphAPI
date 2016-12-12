@@ -56,7 +56,7 @@
         @foreach (var s in Model.Sections)
         {
             <div class="tile-container">
-                @if (Model.IsMy(s))
+                @if (Model.IsMy(s,Model.MySections))
                 {
                     <a class="mysectionlink" href="@Url.Action("ClassDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
                         @Tile(s)

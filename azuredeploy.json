@@ -84,18 +84,18 @@
     {
       "type": "Microsoft.Web/serverfarms",
       "sku": {
-        "name": "D1",
-        "tier": "Shared",
-        "size": "D1",
-        "family": "D",
-        "capacity": 0
+        "name": "B1",
+        "tier": "Basic",
+        "size": "B1",
+        "family": "B",
+        "capacity": 1
       },
       "name": "[parameters('hostingPlanName')]",
       "apiVersion": "2015-08-01",
       "location": "[variables('location')]",
       "properties": {
         "name": "[parameters('hostingPlanName')]",
-        "numberOfWorkers": 0
+        "numberOfWorkers": 1
       }
     },
     {
@@ -139,14 +139,13 @@
         {
           "type": "firewallRules",
           "kind": "v12.0",
-          "name": "AllowAllWindowsAzureIps",
+          "name": "AllowAllInternalIPs",
           "apiVersion": "2014-04-01-preview",
-          "location": "West US",
+          "location": "[variables('location')]",
           "properties": {
             "startIpAddress": "0.0.0.0",
             "endIpAddress": "0.0.0.0"
           },
-          "resources": [ ],
           "dependsOn": [
             "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
           ]
@@ -160,7 +159,10 @@
       "location": "[variables('location')]",
       "properties": {
         "name": "[variables('webSiteName')]",
-        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]",
+        "siteConfig": {
+          "AlwaysOn": true
+        }
       },
       "resources": [
         {

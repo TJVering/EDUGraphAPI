@@ -80,14 +80,21 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get SectionsViewModel of the specified school
         /// </summary>
-        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool mySections)
+        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool isMySection)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
-            var sections = mySections
-                ? await educationServiceClient.GetMySectionsAsync(school.SchoolId)
-                : await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
-
-            return new SectionsViewModel(userContext.UserO365Email, school, sections.OrderBy(c => c.CombinedCourseNumber));
+            //var sections = mySections
+            //    ? await educationServiceClient.GetMySectionsAsync(school.SchoolId)
+            //    : await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
+            var mySections = await educationServiceClient.GetMySectionsAsync(school.SchoolId);
+            if (!isMySection)
+            {
+                var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
+                return new SectionsViewModel(userContext.UserO365Email, school, allSections.OrderBy(c => c.CombinedCourseNumber), mySections);
+            }
+            else {
+                return new SectionsViewModel(userContext.UserO365Email, school, mySections.OrderBy(c => c.CombinedCourseNumber), mySections);
+            }
         }
 
         /// <summary>

@@ -58,7 +58,7 @@ namespace Microsoft.Education
         /// <returns></returns>
         public Task<Section[]> GetAllSectionsAsync(string schoolId)
         {
-            var relativeUrl = $"groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
+            var relativeUrl = $"groups?api-version=beta&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
             return HttpGetArrayAsync<Section>(relativeUrl);
         }
 

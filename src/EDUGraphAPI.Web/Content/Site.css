@@ -1,33 +1,51 @@
 ﻿@font-face {
-  font-family: 'HelveticaNeue Light';
-  src: url('../fonts/HelveticaNeue Light.ttf');
+  font-family: 'Helvetica Neue LT Std Light';
+  src: url("../fonts/HelveticaNeueLTStd-Light.eot"); /* IE9 Compat Modes */
+  src: url("../fonts/HelveticaNeueLTStd-Light.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+       url("../fonts/HelveticaNeueLTStd-Light.woff2") format("woff2"), /* Pretty Modern Browsers */
+       url("../fonts/HelveticaNeueLTStd-Light.woff") format("woff"),
+       url("../fonts/HelveticaNeueLTStd-Light.ttf") format("truetype"), /* Safari, Android, iOS */
+       url("../fonts/HelveticaNeueLTStd-Light.svg#Helvetica Neue LT Std Light") format("svg"); /* Legacy iOS */
 }
 
 @font-face {
   font-family: 'Helvetica Neue LT Std Roman';
   src: url('../fonts/HelveticaNeueLTStd-Roman.eot'); /* IE9 Compat Modes */
   src: url('../fonts/HelveticaNeueLTStd-Roman.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/HelveticaNeueLTStd-Roman.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Roman.woff2') format('woff2'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Roman.woff') format('woff'),
        url('../fonts/HelveticaNeueLTStd-Roman.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/HelveticaNeueLTStd-Roman.svg#svgFontName') format('svg'); /* Legacy iOS */
+       url('../fonts/HelveticaNeueLTStd-Roman.svg#Helvetica Neue LT Std Roman') format('svg'); /* Legacy iOS */
 }
 
 @font-face {
   font-family: 'Helvetica Neue LT Std Bold';
   src: url('../fonts/HelveticaNeueLTStd-Bd.eot'); /* IE9 Compat Modes */
   src: url('../fonts/HelveticaNeueLTStd-Bd.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/HelveticaNeueLTStd-Bd.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Bd.woff2') format('woff2'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Bd.woff') format('woff'),
        url('../fonts/HelveticaNeueLTStd-Bd.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/HelveticaNeueLTStd-Bd.svg#svgFontName') format('svg'); /* Legacy iOS */
+       url('../fonts/HelveticaNeueLTStd-Bd.svg#Helvetica Neue LT Std Bold') format('svg'); /* Legacy iOS */
 }
 
 @font-face {
   font-family: 'Helvetica Neue LT Std Th';
   src: url('../fonts/HelveticaNeueLTStd-Th.eot'); /* IE9 Compat Modes */
   src: url('../fonts/HelveticaNeueLTStd-Th.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('../fonts/HelveticaNeueLTStd-Th.woff') format('woff'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Th.woff2') format('woff2'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-Th.woff') format('woff'),
        url('../fonts/HelveticaNeueLTStd-Th.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('../fonts/HelveticaNeueLTStd-Th.svg#svgFontName') format('svg'); /* Legacy iOS */
+       url('../fonts/HelveticaNeueLTStd-Th.svg#Helvetica Neue LT Std Th') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'Helvetica Neue LT Std It';
+  src: url('../fonts/HelveticaNeueLTStd-It.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/HelveticaNeueLTStd-It.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('../fonts/HelveticaNeueLTStd-It.woff2') format('woff2'), /* Pretty Modern Browsers */
+       url('../fonts/HelveticaNeueLTStd-It.woff') format('woff'),
+       url('../fonts/HelveticaNeueLTStd-It.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('../fonts/HelveticaNeueLTStd-It.svg#Helvetica Neue LT Std It') format('svg'); /* Legacy iOS */
 }
 
 html{height:100%;}
@@ -37,7 +55,7 @@ body {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     height:100%;
-    font-family: "HelveticaNeue Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: "Helvetica Neue LT Std Roman", "Helvetica Neue Roman", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 }
 .containerbg{    background: linear-gradient(to bottom, white, #9e9e9e);height:auto; height: auto;
     min-height: 100%;padding-bottom:20px;
@@ -72,8 +90,8 @@ textarea {
 /*Top navigation*/
 .navbar-inverse{background-color:#237e17;border-color:#237e17;}
 .navbar-inverse .navbar-brand, 
-.navbar-inverse .navbar-nav > li > a
-{color:white;}
+.navbar-inverse .navbar-nav > li > a {color:white;}
+.navbar-inverse .navbar-brand{font-size:14px}
 
 /* Message */
 .message-container {
@@ -91,7 +109,7 @@ textarea {
 /*Schools and sections */
 .displayname{text-align:right;padding:12px 30px 12px 12px;}
 .secondnav{padding:20px 0 12px 0;}
-.a-heading{font-size:48px;color:#666565;padding-left: 0;text-transform:uppercase;}
+.a-heading{font-family:'Helvetica Neue LT Std Th'; font-size:48px; color:#666565; padding-left:0; text-transform:uppercase;}
 .infocontainer {
     text-align: center;
     border: 1px solid #c2c2c2;
@@ -105,11 +123,9 @@ textarea {
     border-radius: 5px; 
     -moz-border-radius : 5px; 
 }
-.infocontainer .infoheader{font-size:12px;font-weight:bold;text-align:center;height:25px;line-height:25px; text-transform:uppercase;}
-.infocontainer .infobody{font-size:18px;text-align:center;height:35px;overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;}
-.myschool{     padding: 12px 0 12px 0;float:left;}
+.infocontainer .infoheader{font-size:12px;font-family:'Helvetica Neue LT Std Bold';text-align:center;height:25px;line-height:25px; text-transform:uppercase;}
+.infocontainer .infobody{font-size:18px; text-align:center; height:30px; line-height:30px; margin-bottom:5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.myschool{padding: 12px 0 12px 0;float:left;}
 .myschool .schoolenrolled{float:right; font-size:14px;padding-right:15px;}
 .myschool .greenicon{width:12px;height:12px;float:right;margin:5px 6px 0 0;background-color:#277F79;}
 .sectionschoolname{font-size:24px;color:#666565;padding-left: 0;}
@@ -129,28 +145,29 @@ textarea {
     border-top-right-radius:0;
 }
 .schoolname{margin-top:20px;}
-.schooltiles{margin:20px 0 20px 0;    padding-right: 0;}
+.schooltiles{margin:20px 0 20px 0; padding-right: 0;}
 .schooltiles .infocontainer{margin-right:0;}
 
 .table-green { border:none;background-color:white}
 .table-green tr.tr-content:nth-child(2n+1){background-color:#f8f8f8}
 .table-green> tbody > tr > th{ border:none; padding:20px 0 20px 6px;}
 .table-green .table-green-header{ background:#127605;color:white; }
-.table-green .tdleft{border-collapse:inherit;   }
-.table-green .table-green-header th{text-transform:uppercase;padding:10px 0 10px 6px ;border-top:0; border-bottom: 1px solid white;}
-.table-green .tr-content td{padding-top:10px;padding-bottom:10px;    vertical-align: inherit;    border-bottom: 1px solid white;}
+.table-green .tdleft{border-collapse:inherit;}
+.table-green .table-green-header th{text-transform:uppercase; padding:10px 0 10px 6px; border-top:0; border-bottom:1px solid white;}
+.table-green .tr-content td{padding-top:10px;padding-bottom:10px; vertical-align: inherit; border-bottom:1px solid white;}
 .table-green > tbody > tr > td{border-top:1px solid white;}
-.table-green .td-green, .table-green .td-green a{ background-color: #277F79; color:white;}
+.table-green .td-green, .table-green .td-green a{font-family:'Helvetica Neue LT Std Bold'; background-color:#277F79; color:white;}
 .table-green  a.btnlink{
     color:black;text-transform: uppercase;
-    font-weight: bold;
+    font-family:'Helvetica Neue LT Std Bold';
+    font-size:12px;
     color: #fff;
     background-image: url(/Images/btngreenbg.png);
     padding: 3px 12px;
     border: 1px solid #127604;
     text-decoration:none;
 }
-.table-green .td-green a.btnlink{background-color:white !important; background-image:none;color:black;text-transform:uppercase;font-weight:bold;}
+.table-green .td-green a.btnlink{background-color:white !important; background-image:none;color:black;text-transform:uppercase;}
 .table-student .tr-content td img{max-width:40px;height:auto;margin-right:6px;}
 .table-student .tr-content td:nth-child(1){width:25%;}
 .schools .table-schools tr td:nth-child(1){width:20%;}
@@ -158,6 +175,7 @@ textarea {
 .schools .table-schools tr td:nth-child(3){width:16%;}
 .schools .table-schools tr td:nth-child(4){width:23%;}
 .schools .table-schools tr td:nth-child(5){width:26%;}
+.schools .table-schools .table-green-header th {font-family: 'Helvetica Neue LT Std Bold';}
 
 .ignore{display:none;}
 .container>div.row{height:100%;background-color:#fff;}
@@ -168,11 +186,13 @@ textarea {
 
 /*sections*/
 .sections .tophero{border-bottom:5px solid #127604;}
+.sections .tophero .infocontainer:nth-child(2) .infobody{font-size:12px;}
 .sections .tophero .usericon{margin-top:10px;}
 .sections .tophero .usericon div{float:left;}
 .sections .tophero .usericon .icon{width:12px; height:12px; margin:5px 6px 0 0; background:-prefix-linear-zgradient(top, #434345, #BBBBBB); background:linear-gradient(to bottom, #434345, #BBBBBB);}
 .sections .tophero .usericon .icon.my-class{margin-left:12px; background:-prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background:linear-gradient(to bottom, #4E9F42, #B8E2B2);}
-.sections .tophero .mysection{width:48%; float:right;}
+.sections .tophero .mysection{width:48%; float:right;font-family:'Helvetica Neue LT Std Bold'}
+.sections .tophero .mysection :not(.current){font-family:'Helvetica Neue LT Std Roman'}
 
 .section-tiles{padding-left:15px; background-color:white;display:none;}
 .section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
@@ -182,17 +202,20 @@ textarea {
 .section-tiles .tile>h5{text-align: center;margin: 60px 5px 0 5px;font-size:14px;font-style: normal;font-variant: normal;}
 .section-tiles .tile>h2{text-align: center;margin-top:4px;font-size:30px;}
 .section-tiles .tile:hover{background-image:url('/Images/ClassDetailsTiles-bg.jpg');color:#000;border:2px solid green;}
-.section-tiles .tile:hover>h5{font-weight:bold;font-size:16px;}
-.section-tiles .tile:hover>h2{font-weight:bold;font-size:36px;}
+.section-tiles .tile:hover>h5{font-family:'Helvetica Neue LT Std Bold';font-size:16px;}
+.section-tiles .tile:hover>h2{font-family:'Helvetica Neue LT Std Bold';font-size:36px;}
 .section-tiles .detail {display:none;position:absolute; background:#fff; color:#000;top:-5px; left:188px;width:360px; min-height:230px;padding:8px 20px 30px 20px;z-index:10;border:solid #C2C2C2 1px;border-radius:5px;-moz-border-radius:5px;-moz-box-shadow:1px 2px 1px 2px #c2c2c2;-webkit-box-shadow: 1px 2px 1px 2px #c2c2c2;box-shadow:1px 2px 1px 2px #c2c2c2;}
+.section-tiles .detail h5{font-family:'Helvetica Neue LT Std Bold';}
 .section-tiles .tile-container:nth-child(6n) .detail,.section-tiles .tile-container:nth-child(6n-1) .detail{left:-380px;}
 .section-tiles .detail>h5{margin-top: 10px;font-weight: 800;font-size:12px;text-transform:uppercase;}
 .section-tiles .detail>h6{margin-top: 10px;font-size:12px;}
-.section-school-name{width:100%;    padding: 0 20px 10px 0;    text-align: right;}
+.section-school-name{font-size:18px; width:100%; padding:0 20px 10px 0; text-align:right;}
 
 /*section detail*/
 .b-title{font-size:24px;color:#666565;}
+.class-details .b-title{font-family:'Helvetica Neue LT Std Th'}
 .coursedetail .col-md-6{padding:12px 0 6px 0;}
+.coursedetail .col-md-6 span{font-family:'Helvetica Neue LT Std Bold'}
 .coursedetail .col-md-6:last-child{padding:12px 0 6px 0;}
 .coursedetail .col-md-6:last-child > b{color:#F7F7F7;}
 .coursedetail .col-md-6:last-child > b:first-child{color:#333;}
@@ -214,12 +237,14 @@ textarea {
 .students .table-green .table-green-header{border-bottom:1px solid #127605;background-color:#127605;}
 .students .table-green .table-green-header th {background-color:#127605;border-bottom:1px solid #127605; padding-top:15px; padding-bottom:15px}
 .students .table-green .tdleft{border-left-color:#ABABAB;}
-.students .table-green tbody tr{font-family:'Helvetica Neue LT Std Bold'; font-size:18px; color:#000000}
+.students .table-green tbody tr{font-family:'Helvetica Neue LT Std Roman'; font-size:18px; color:#000000}
+.students #stuconv.table-green tbody tr{font-family:'Helvetica Neue LT Std Th'}
 .students .see-more{margin-left:12px;}
 .students  ul  li.active a span{border-bottom:3px solid white; padding-bottom: 6px;}
 .students #students.active{border:none;}
 .students #documents, .students #conversations{padding-bottom:40px}
 .students #stuconv.table-green{margin-top:40px; margin-bottom:40px}
+.students #stuconv.table-green tbody tr{font-family:'Helvetica Neue LT Std Th'}
 .students #studoc.table-green tr.tr-content:nth-child(2n+1), .students #conversations .table-green tr.tr-content:nth-child(2n+1){background-color:transparent}
 .students #studoc.table-green tbody tr.tr-content td:nth-child(3) a, .students #stuconv.table-green tbody tr.tr-content td:nth-child(3) a{display:inline-block; color:#000000; padding-left:68px; line-height:58px; background:url('/images/document_icon.png') center left no-repeat; background-size:contain}
 .students #stuconv.table-green tbody tr.tr-content td:nth-child(3) a{padding-left:64px; line-height:39px; background-image:url('/images/conversation_icon.png')}
@@ -313,14 +338,14 @@ top: -10px;cursor:pointer;}
 }
 .desktileseated{background-color:#CECECE;}
 .deskcontainer.green{background-color:#5DCB50;color:white;border-color:#2B4E26;}
-.seated{color:#237e17;text-transform:uppercase;font-weight:bold;}
+.seated{color:#237e17;text-transform:uppercase;font-family:'Helvetica Neue LT Std Bold';}
 
-.teacherdesk{color:white;width:200px;margin:auto;border:1px solid gray;
+.teacherdesk{font-family:'Helvetica Neue LT Std Bold';color:white;width:200px;margin:auto;border:1px solid gray;
              background-color:#ABABAB;text-transform:uppercase;margin-bottom:20px;height:60px;line-height:60px;text-align:center;}
 .deskclose, #imgsave, #imgcancel{display:none;}
 .greenlist{background-color: #287F79;}
 .greenlist *{color:white;}
-.greenTileTooltip{background-color: #287F79;color:white;text-align:center;height:98px;width:98px;text-transform:uppercase;padding-top:20px;}
+.greenTileTooltip{font-family:'Helvetica Neue LT Std Bold'; background-color:#287F79;color:white;text-align:center;height:98px;width:98px;text-transform:uppercase;padding-top:20px;}
 #saveResult{position: absolute;
     width: 220px;
     margin: auto;
@@ -342,7 +367,8 @@ top: -10px;cursor:pointer;}
 
 
 /*Teachers & Students page*/
-.teacher-student .mysection{width:48%;float:right;}
+.teacher-student .mysection{width:48%;float:right;font-family:'Helvetica Neue LT Std Bold';}
+.teacher-student .mysection .filterlink:not(.selected){font-family:'Helvetica Neue LT Std Roman';}
 .teacher-student .tophero{border-bottom:5px solid #127604;}
 .teacher-student .usericon{margin-top:10px;}
 .teacher-student .usericon div{float:left;}

@@ -296,6 +296,8 @@
     <Content Include="Content\login.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\HelveticaNeueLTStd-It.svg" />
+    <Content Include="fonts\HelveticaNeueLTStd-Light.svg" />
     <Content Include="fonts\HelveticaNeueLTStd-Bd.svg" />
     <Content Include="fonts\HelveticaNeueLTStd-Roman.svg" />
     <Content Include="fonts\HelveticaNeueLTStd-Th.svg" />
@@ -335,7 +337,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\HelveticaNeue Light.ttf" />
     <Content Include="fonts\HelveticaNeueLTStd-Bd.eot" />
     <Content Include="fonts\HelveticaNeueLTStd-Bd.ttf" />
     <Content Include="fonts\HelveticaNeueLTStd-Bd.woff" />
@@ -345,6 +346,17 @@
     <Content Include="fonts\HelveticaNeueLTStd-Th.eot" />
     <Content Include="fonts\HelveticaNeueLTStd-Th.ttf" />
     <Content Include="fonts\HelveticaNeueLTStd-Th.woff" />
+    <Content Include="fonts\HelveticaNeueLTStd-Light.eot" />
+    <Content Include="fonts\HelveticaNeueLTStd-Light.ttf" />
+    <Content Include="fonts\HelveticaNeueLTStd-Light.woff" />
+    <Content Include="fonts\HelveticaNeueLTStd-Light.woff2" />
+    <Content Include="fonts\HelveticaNeueLTStd-Bd.woff2" />
+    <Content Include="fonts\HelveticaNeueLTStd-Roman.woff2" />
+    <Content Include="fonts\HelveticaNeueLTStd-Th.woff2" />
+    <Content Include="fonts\HelveticaNeueLTStd-It.eot" />
+    <Content Include="fonts\HelveticaNeueLTStd-It.ttf" />
+    <Content Include="fonts\HelveticaNeueLTStd-It.woff" />
+    <Content Include="fonts\HelveticaNeueLTStd-It.woff2" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\EDUGraphAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

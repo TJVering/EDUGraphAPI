@@ -20,8 +20,8 @@ namespace EDUGraphAPI
         public static readonly string BingMapKey = ConfigurationManager.AppSettings["BingMapKey"];
 
         public static readonly string SourceCodeRepositoryUrl = ConfigurationManager.AppSettings["SourceCodeRepositoryUrl"];
-
-        public static readonly string O365GroupConversationsUrl = "https://outlook.office.com/owa/?path=/group/{0}";
+        
+        public static readonly string O365GroupConversationsUrl = "https://outlook.office.com/owa/?path=/group/{0}/mail&exsvurl=1&ispopout=0";
 
         public static readonly string AADCompanyAdminRoleName = "Company Administrator";
 
