@@ -307,8 +307,9 @@ namespace EDUGraphAPI.Web.Controllers
         public async Task<ActionResult> AboutMe(bool? showSaveMessage)
         {
             AboutMeViewModel model = new AboutMeViewModel();
-            var userContext = await applicationService.GetUserContextAsync();
+            model.FavoriteColors = Constants.FavoriteColors;
 
+            var userContext = await applicationService.GetUserContextAsync();
             if (userContext.User == null)
             {
                 model.Username = userContext.UserDisplayName;
@@ -324,13 +325,11 @@ namespace EDUGraphAPI.Web.Controllers
                     model.ShowFavoriteColor = false;
 
             }
-            model.Groups = new List<string>();
-            model.FavoriteColors = Constants.FavoriteColors;
             if (userContext.IsO365Account || userContext.AreAccountsLinked)
             {
                 var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
                 var schoolsService = await GetSchoolsServiceAsync();
-                model.Groups = await schoolsService.GetMyClasses(userContext);
+                model.Groups = await schoolsService.GetMyClassesAsync(userContext);
 
 
             }

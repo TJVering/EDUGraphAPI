@@ -40,13 +40,14 @@ $(document).ready(function () {
     });
     $(document).click(function () {
         $("#myMap").offset({ top: 0, left: 0 }).hide();
-    });
+    });    
     sections.bindShowDetail();
     IniPagiation();
 
 });
 
 function IniPagiation() {
+    $(".section-tiles").show();
     var num_entries = $('.section-tiles div.tile-container').length;
     $("#pagination").pagination(num_entries, {
         callback: pageselectCallback,

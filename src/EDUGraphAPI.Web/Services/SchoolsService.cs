@@ -127,7 +127,7 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get my classes
         /// </summary>
-        public async Task<List<string>> GetMyClasses(UserContext userContext)
+        public async Task<List<string>> GetMyClassesAsync(UserContext userContext)
         {
             List<string> results = new List<string>();
             var currentUser = userContext.IsStudent

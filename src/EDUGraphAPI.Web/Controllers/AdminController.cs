@@ -176,7 +176,7 @@ namespace EDUGraphAPI.Web.Controllers
 
             TempData["Message"] = count > 0
                 ? $"User access was successfully enabled for {count} user(s)."
-                : "User access had been enabled for all users.";
+                : "User access was enabled for all users.";
             return RedirectToAction("Index");
         }
     }

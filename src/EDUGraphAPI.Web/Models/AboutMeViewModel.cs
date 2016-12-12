@@ -4,6 +4,11 @@ namespace EDUGraphAPI.Web.Models
 {
     public class AboutMeViewModel
     {
+        public AboutMeViewModel()
+        {
+            this.Groups = new List<string>();
+        }
+
         public string Username { get; set; }
 
         public string MyFavoriteColor { get; set; }
