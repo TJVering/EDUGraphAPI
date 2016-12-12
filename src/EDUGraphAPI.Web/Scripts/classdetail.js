@@ -41,7 +41,9 @@ function iniControl() {
     }
 }
 function iniTableSort() {
-    $(".tablesorter").tablesorter({ sortList: [[0, 0]] });
+    $("#studentsTable").tablesorter({ sortList: [[0, 0]] });
+
+    $("#studoc").tablesorter({ sortList: [[2, 0]] });
 }
 
 
