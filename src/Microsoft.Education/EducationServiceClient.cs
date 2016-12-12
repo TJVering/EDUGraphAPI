@@ -1,6 +1,7 @@
 ﻿using Microsoft.Education.Data;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -57,8 +58,38 @@ namespace Microsoft.Education
         /// <returns></returns>
         public Task<Section[]> GetAllSectionsAsync(string schoolId)
         {
-            var relativeUrl = $"/groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
+            var relativeUrl = $"groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
             return HttpGetArrayAsync<Section>(relativeUrl);
+        }
+
+        /// <summary>
+        /// Get my sections
+        /// </summary>
+        /// <returns></returns>
+        public async Task<Section[]> GetMySectionsAsync(bool loadMembers = false)
+        {
+            var relativeUrl = $"me/memberOf?api-version=1.5";
+            var memberOf = await HttpGetArrayAsync<Section>(relativeUrl);
+            var sections = memberOf
+                .Where(i => i.ObjectType == "Group")
+                .Where(i => i.EducationObjectType == "Section")
+                .ToArray();
+            if (loadMembers == false) return sections;
+
+            // Get sections with members
+            var tasks = new List<Task>();
+            var sectionBag = new ConcurrentBag<Section>();
+            foreach (var section in sections)
+            {
+                var task = Task.Run(async () =>
+                {
+                    var s = await GetSectionAsync(section.ObjectId);
+                    sectionBag.Add(s);
+                });
+                tasks.Add(task);
+            }
+            Task.WaitAll(tasks.ToArray());
+            return sectionBag.ToArray();
         }
 
         /// <summary>
@@ -68,18 +99,11 @@ namespace Microsoft.Education
         /// <returns></returns>
         public async Task<Section[]> GetMySectionsAsync(string schoolId)
         {
-            //You can get the membership of the student using the query below.
-            //Reference URL: https://msdn.microsoft.com/office/office365/api/student-rest-operations#get-section-of-a-student.
-            var me = await HttpGetObjectAsync<SectionUser>("/me?api-version=1.5");
-
-            var sections = await GetAllSectionsAsync(schoolId);
-
+            var sections = await GetMySectionsAsync(true);
             return sections
-                .Where(i => i.Members.Any(j => j.Email == me.Email))
+                .Where(i => i.SchoolId == schoolId)
                 .ToArray();
         }
-
-
 
         /// <summary>
         /// Get a section by using the object_id.

@@ -127,30 +127,12 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get my classes
         /// </summary>
-        public async Task<List<string>> GetMyClassesAsync(UserContext userContext)
+        public async Task<string[]> GetMyClassesAsync()
         {
-            List<string> results = new List<string>();
-            var currentUser = userContext.IsStudent
-            ? await educationServiceClient.GetStudentAsync() as SectionUser
-            : await educationServiceClient.GetTeacherAsync() as SectionUser;
-
-            var schools = (await educationServiceClient.GetSchoolsAsync())
-                .OrderBy(i => i.Name)
+            var myClasses = await educationServiceClient.GetMySectionsAsync();
+            return myClasses
+                .Select(i => i.SectionName)
                 .ToArray();
-            var mySchools = schools
-                .Where(i => i.SchoolId == currentUser.SchoolId)
-                .ToArray();
-
-            var myFirstSchool = mySchools.FirstOrDefault();
-            if(myFirstSchool !=null)
-            {
-                var myClasses = (await educationServiceClient.GetMySectionsAsync(myFirstSchool.SchoolId));
-                foreach (var item in myClasses)
-                {
-                    results.Add(item.DisplayName);
-                }
-            }
-            return results;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿@model UserContext
 @{
     ViewBag.Title = "Link Office 365 & Local Account";
+    var localAccountExistedMessage = ViewBag.LocalAccountExistedMessage as string;
+    var localAccountExisted = localAccountExistedMessage.IsNotNullAndEmpty();
 }
 
 <h2>@ViewBag.Title</h2>
@@ -17,8 +19,7 @@
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
                 <p>
-                    <input type="submit" value="Use Existing O365 account" class="btn btn-primary" />
-                    &nbsp; &nbsp;
+                    <input type="submit" value="Use Existing O365 account" class="btn btn-primary" /> &nbsp; &nbsp;
                     @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
                 </p>
             }
@@ -28,13 +29,25 @@
     {
         <hr />
         <div class="form-horizontal">
+            @if (localAccountExisted)
+            {
+                <p>@localAccountExistedMessage</p>
+            }
             <p>
                 @Html.ActionLink("Use Existing Local Account", "LoginLocal", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
-            @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, new { @class = "btn btn-primary" }) &nbsp; &nbsp;
-            @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
-        </p>
+                @{ 
+                    var htmlAttributes = new RouteValueDictionary(new { @class = "btn btn-primary" });
+                    if (localAccountExisted)
+                    {
+                        htmlAttributes.Add("disabled", "disabled");
+                    }
+                    @Html.ActionLink("Create Local Account", "CreateLocalAccount", null, htmlAttributes)
+                    @:&nbsp; &nbsp;
+                }
+                @Html.ActionLink("Cancel", "index", "Schools", null, new { @class = "btn btn-primary" })
+            </p>
 
-    </div>
+        </div>
     }
 }
 else

@@ -12,6 +12,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace EDUGraphAPI.Web.Controllers
 {
@@ -36,6 +37,16 @@ namespace EDUGraphAPI.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var userContext = await applicationService.GetUserContextAsync();
+            if (userContext.IsO365Account && !userContext.AreAccountsLinked)
+            {
+                var activeDirectoryClient = await AuthenticationHelper.GetActiveDirectoryClientAsync();
+                var graphClient = new AADGraphClient(activeDirectoryClient);
+                var user = await graphClient.GetCurrentUserAsync();
+                var email = user.Mail ?? user.UserPrincipalName;
+
+                if (await userManager.Users.AnyAsync(i => i.Email == email))
+                    ViewBag.LocalAccountExistedMessage = $"There is a local account: {email} matching you O365 account.";
+            }
             return View(userContext);
         }
 

@@ -5,7 +5,6 @@ using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -306,7 +305,7 @@ namespace EDUGraphAPI.Web.Controllers
         // GET: /Manage/AboutMe
         public async Task<ActionResult> AboutMe(bool? showSaveMessage)
         {
-            AboutMeViewModel model = new AboutMeViewModel();
+            var model = new AboutMeViewModel();
             model.FavoriteColors = Constants.FavoriteColors;
 
             var userContext = await applicationService.GetUserContextAsync();
@@ -323,20 +322,17 @@ namespace EDUGraphAPI.Web.Controllers
                 model.ShowFavoriteColor = true;
                 if (userContext.IsO365Account && string.IsNullOrEmpty(userContext.User.O365UserId))
                     model.ShowFavoriteColor = false;
-
             }
+
             if (userContext.IsO365Account || userContext.AreAccountsLinked)
             {
-                var client = await AuthenticationHelper.GetActiveDirectoryClientAsync();
-                var schoolsService = await GetSchoolsServiceAsync();
-                model.Groups = await schoolsService.GetMyClassesAsync(userContext);
-
-
+                var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
+                var schoolsService = new SchoolsService(educationServiceClient, dbContext); 
+                model.Groups.AddRange(await schoolsService.GetMyClassesAsync());
             }
+
             if (showSaveMessage == true)
-            {
                 TempData["saveresult"] = "<span class='saveresult'>Favorite color has been updated!</span>";
-            }
             return View(model);
         }
 
@@ -401,11 +397,6 @@ namespace EDUGraphAPI.Web.Controllers
             RemoveLoginSuccess,
             RemovePhoneSuccess,
             Error
-        }
-        private async Task<SchoolsService> GetSchoolsServiceAsync()
-        {
-            var educationServiceClient = await AuthenticationHelper.GetEducationServiceClientAsync();
-            return new SchoolsService(educationServiceClient, dbContext);
         }
         #endregion
     }

@@ -112,7 +112,11 @@
                             </th>
                             <th class="space-holder right"></th>
                         </tr>
+                        <tr class="blanktr">
+                            <th colspan="5"></th>
+                        </tr>
                     </thead>
+
                     <tbody>
                         @foreach (var doc in Model.DriveItems)
                         {
@@ -152,7 +156,7 @@
                             <tr class="tr-content">
                                 <td class="border-holder"></td>
                                 <td class="space-holder left"></td>
-                                <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}", Model.SeeMoreConversationsUrl, Uri.EscapeDataString(con.Id).Replace("_", "%2B")) ">@con.Topic</a></td>
+                                <td><a target="_blank" href="@string.Format("{0}/mail&exsvurl=1&ispopout=0&ConvID={1}", Model.SeeMoreConversationsUrl, Uri.EscapeDataString(con.Id).Replace("_", "%2B").Replace("-", "%2f")) ">@con.Topic</a></td>
                                 <td class="space-holder right"></td>
                             </tr>
                         }

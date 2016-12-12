@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Education.Data
 {
@@ -79,7 +80,7 @@ namespace Microsoft.Education.Data
         [JsonProperty("extension_fe2174665583431c953114ff7268b7b3_Education_Status")]
         public string EducationStatus { get; set; }
 
-        public string CombinedCourseNumber => CourseName.Substring(0, 3).ToUpper() + CourseNumber;
+        public string CombinedCourseNumber => CourseName.Substring(0, 3).ToUpper() + Regex.Match(CourseNumber, @"\d+").Value;
 
         public List<SectionUser> Members { get; set; }
 

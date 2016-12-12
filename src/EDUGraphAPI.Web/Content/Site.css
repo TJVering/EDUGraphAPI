@@ -481,3 +481,4 @@ border: 1px solid #e4e4e4;
 #studoc  .header:nth-child(4){background-position-x:76px;}
 #studoc  .header:nth-child(5){background-position-x:97px;}
 
+.blanktr th{border:none !important;height:30px;}

@@ -23,7 +23,7 @@
                     PRINCIPAL
                 </div>
                 <div class="infobody" title="@Model.School.PrincipalName">
-                    @Html.Raw(string.IsNullOrEmpty(Model.School.PrincipalName)?"-" : Model.School.PrincipalName)
+                    @Html.Raw(string.IsNullOrEmpty(Model.School.PrincipalName) ? "-" : Model.School.PrincipalName)
                 </div>
             </div>
             <div class="infocontainer">
@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div >
+        <div>
             <div class="col-md-6 usericon">
                 <div class="icon"></div><div>Non-Class</div>
                 <div class="icon my-class"></div><div>My Class</div>
@@ -51,7 +51,7 @@
     <div class="section-tiles">
         @if (Model.Sections == null || Model.Sections.Count == 0)
         {
-        <div class="nodata"> There is no data available for this page at this time.</div>
+            <div class="nodata"> There is no data available for this page at this time.</div>
         }
         @foreach (var s in Model.Sections)
         {
@@ -81,10 +81,10 @@
                         @s.TermName
                     </h6>
                     <h5>Start/Finish Date:</h5>
-                    
+
                     <h6>
                         @Convert.ToDateTime(s.TermStartDate).ToString("MMMM y")
-                     - 
+                        -
                         @Convert.ToDateTime(s.TermEndDate).ToString("MMMM y")
                     </h6>
                     <h5>Period:</h5>
@@ -98,9 +98,8 @@
 @helper Tile(Section section)
 {
     <div class="tile">
-        <h5>Intro to @(StringUtil.CropWholeWords( section.DisplayName,30))</h5>
-
-        <h2>@(StringUtil.CropWholeWords(section.CombinedCourseNumber,15))</h2>
+        <h5>Intro to @(section.DisplayName.CropWholeWords(30))</h5>
+        <h2>@(section.CombinedCourseNumber)</h2>
     </div>
 }
 @Scripts.Render("~/bundles/section")
