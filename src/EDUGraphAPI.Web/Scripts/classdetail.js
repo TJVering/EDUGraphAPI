@@ -1,8 +1,11 @@
 ﻿$(document).ready(function () {
     iniTiles();
     iniControl();
+    formatDateTime();
+    loadImages();
     iniTableSort();
 });
+
 function iniTiles(){
     $(".deskcontainer:not([position='0']").each(function () {
         var position = $(this).attr("position");
@@ -10,6 +13,7 @@ function iniTiles(){
         $(this).appendTo(tile);
     });
 }
+
 function iniControl() {
     $("#imgedit").click(function () {
         $(this).hide();
@@ -20,16 +24,12 @@ function iniControl() {
         enableDragAndDrop();
     });
     $("#imgcancel").click(function () {
-        window.location.href = addParam(window.location.href,"tab","3");
+        exitEdit();
+        cancelEditDesk();
     });
     $("#imgsave").click(function () {
-        $(this).hide();
-        $("#imgcancel").hide();
-        $("#imgedit").show();
-        $(".deskcontainer ").attr("draggable", false);
-        $("#lstproducts").find("li").attr("draggable", false);
-        $(".deskclose").hide();
-        SaveEditDesk();
+        exitEdit();
+        saveEditDesk();
     });
     $(".students #studoc tbody tr, .students #conversations tbody tr").click(function () {
         $(this).addClass("selected").siblings().removeClass("selected");
@@ -39,69 +39,91 @@ function iniControl() {
     if (tabToActivate) {
         $('.nav-tabs li:eq(' + tabToActivate + ') a').tab('show');
     }
+
+    function exitEdit() {
+        $("#imgsave").hide();
+        $("#imgcancel").hide();
+        $("#imgedit").show();
+        $(".deskclose").hide();
+        disableDragAndDrop();
+    }
 }
+
+function formatDateTime() {
+    $("#studoc tbody .tr-content td:nth-child(4)").each(function (i, e) {
+        var $e = $(e);
+        $e.text(moment($e.text()).local().format('MM/DD/YYYY hh: mm: ss A'));
+    });
+}
+
+function loadImages() {
+    $("img [realheader]").each(function (i, e) {
+        var $e = $(e);
+        $e.attr("src", $e.attr("realheader"));
+    });
+}
+
 function iniTableSort() {
     $("#studentsTable").tablesorter({ sortList: [[0, 0]] });
 
     $("#studoc").tablesorter({ sortList: [[2, 0]] });
 }
 
-
 function enableDragAndDrop() {
-    $(".deskcontainer").attr("draggable", true);
     var lstProducts = $('#lstproducts li');
     //Set Drag on Each 'li' in the list 
     $.each(lstProducts, function (idx, val) {
         var id = $(this).attr("id");
         var position = $(".deskcontainer[userid='" + id + "']").attr("position");
         if (position == '0') {
-            $(this).attr("draggable", true);
+            enableDragOnLeft(this, true);
         } else {
-            $(this).find(".seated ").removeClass("hideitem").show();
-            $(this).attr("draggable", false);
+            enableDragOnLeft($(this), false).find(".seated").removeClass("hideitem");
         }
-        $(this).on('dragstart', function (evt) {
-            evt.target.draggable = false;
-            var id = $(this).attr("id");
-            evt.originalEvent.dataTransfer.setData("text", id);
-            $(this).addClass("greenlist");
-        });
 
     });
     $(".deskcontainer").on('dragstart', function (evt) {
         var id = $(this).attr("userid");
-        evt.originalEvent.dataTransfer.setData("text", id);
-        $("#"+id).addClass("greenlist");
+        evt.originalEvent.dataTransfer.setData("text", "userid:" + id);
+        $("#" + id).addClass("greenlist");
+        var prevPosition = $(this).attr("prev-position");
+        if (!prevPosition) {
+            $(this).attr("prev-position", $(this).attr("position"));
+        }
     });
 
     $(".desktile").on('drop', function (evt) {
         evt.preventDefault();
+        var idData = evt.originalEvent.dataTransfer.getData("text");
+        var prefix = "userid:";
+        var id = "";
+        if (typeof (idData) === "string" && idData.indexOf(prefix) == 0) {
+            id = idData.substr(prefix.length);
+        }
         var container = $(this).find(".deskcontainer");
-        if (container.length>0)
+        if (container.length > 0 || id.length == 0)
             return;
         $(".greenTileTooltip").remove();
-        var id = evt.originalEvent.dataTransfer.getData("text");
-        $("#" + id).removeClass("greenlist").attr("draggable", "").find(".seated").show();
+        enableDragOnLeft($("#" + id), false).removeClass("greenlist").find(".seated").removeClass("hideitem");
         $(".deskcontainer[userid='" + id + "']").addClass("white").appendTo($(this));
         var position = $(this).attr("position");
         $(this).find(".deskcontainer").attr("position", position);
     });
 
-    var greenTileTooltip = $("<div class='greenTileTooltip'>Place student here</div>");
     $(".desktile").on('dragenter', function (evt) {
-        var container = $(this).find(".deskcontainer");
-        if (container.length > 0)
-        {
-            $(".greenTileTooltip").remove();
-            return;
+        evt.preventDefault();
+        if ($(this).find(".deskcontainer").length == 0 && $('#lstproducts li.greenlist').length > 0) {
+            var tooltip = $(".desktile .greenTileTooltip");
+            if (tooltip.length == 0) {
+                tooltip = $("<div class='greenTileTooltip'>Place student here</div>")
+            }
+            tooltip.appendTo($(this));
         }
-            
-        greenTileTooltip.appendTo($(this));
     }).on("dragend", function (evt) {
         evt.preventDefault();
         $(".greenTileTooltip").remove();
         $(".greenlist").removeClass("greenlist");
-    });;
+    });
     
     //The dragover
     $("#dvright").on('dragover', function (evt) {
@@ -112,14 +134,40 @@ function enableDragAndDrop() {
         var parent = $(this).closest(".deskcontainer");
         var id = parent.attr("userid");
         var user = $("#" + id);
-        user.find(".seated").hide();
-        user.attr("draggable", true);
-        parent.attr("position", 0);
+        user.find(".seated").addClass("hideitem");
+        enableDragOnLeft(user, true);
+        var position = parent.attr("position");
+        parent.attr({"prev-position": position, "position": 0});
         parent.appendTo($("#hidtiles"));
     });
 
+    function enableDragOnLeft(item, enable) {
+        item = $(item);
+        if (typeof (enable) === undefined || enable == true) {
+            item.on('dragstart', function (evt) {
+                $(this).addClass("greenlist");
+                var id = $(this).attr("id");
+                evt.originalEvent.dataTransfer.setData("text", "userid:" + id);
+            }).on('dragend', function () {
+                $(this).removeClass("greenlist");
+                $(".greenTileTooltip").remove();
+            });
+        }
+        else {
+            item.off("dragstart dragend");
+        }
+        return item;
+    }
 }
-function SaveEditDesk() {
+
+function disableDragAndDrop() {
+    $('#lstproducts li, .deskcontainer').off('dragstart');
+    $(".desktile").off('dragenter drop dragend');
+    $("#dvright").off('dragover');
+    $(".deskclose").off('click');
+}
+
+function saveEditDesk() {
     var classroomSeatingArrangements = [];
     var classId = $("#hidSectionid").val();
     $(".deskcontainer").each(function () {
@@ -142,6 +190,9 @@ function SaveEditDesk() {
         data: JSON.stringify(classroomSeatingArrangements),
         contentType: "application/json; charset=utf-8",
         success: function (responseData) {
+            $(".desktile .deskcontainer.unsaved").removeClass("unsaved");
+            $(".desktile .deskcontainer[prev-position]").removeAttr("prev-position");
+            $("#hidtiles .deskcontainer:not(.unsaved)").remove();
             $('<div id="saveResult"><div>Seating map changes saved.</div></div>')
             .insertBefore($('#dvleft'))
            .fadeIn("slow", function () { $(this).delay(3000).fadeOut("slow"); });
@@ -151,6 +202,26 @@ function SaveEditDesk() {
         }
     });
 }
+
+function cancelEditDesk() {
+    var id = $(".desktile .deskcontainer.unsaved").appendTo($("#hidtiles")).attr("position", 0).attr("userid");
+    $("#" + id).find(".seated").addClass("hideitem");
+    $("#hidtiles .deskcontainer:not(.unsaved)").each(function (i, e) {
+        $e = $(e);
+        var position = $e.attr("prev-position");
+        $e.attr("position", position).removeAttr("prev-position").appendTo($(".desktile[position=" + position + "]"));
+        $("#" + $e.attr("userid")).find(".seated").removeClass("hideitem");
+    });
+    $(".desktile .deskcontainer[prev-position]").each(function (i, e) {
+        $e = $(e);
+        var prevPosition = $e.attr("prev-position");
+        if (prevPosition == $e.attr("position")) {
+            return;
+        }
+        $e.attr("position", prevPosition).removeAttr("prev-position").appendTo($(".desktile[position=" + prevPosition + "]"));
+    })
+}
+
 function getSeatingArrangements(O365UserId, Position) {
     return { O365UserId: O365UserId, Position: Position };
 }
@@ -164,6 +235,7 @@ $.urlParam = function (name) {
         return results[1] || 0;
     }
 }
+
 function addParam(url, param, value) {
     var a = document.createElement('a'), regex = /(?:\?|&amp;|&)+([^=]+)(?:=([^&]*))*/g;
     var match, str = []; a.href = url; param = encodeURIComponent(param);

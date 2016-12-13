@@ -9,6 +9,7 @@
 /// <reference path="jquery-3.1.1.js" />
 /// <reference path="jquery-3.1.1.slim.js" />
 /// <reference path="modernizr-2.6.2.js" />
+/// <reference path="moment.min.js" />
 /// <reference path="respond.min.js" />
 /// <reference path="sections.js" />
 /// <reference path="site.js" />

@@ -40,10 +40,8 @@ namespace EDUGraphAPI.Web
           "~/Scripts/Sections.js"));
             bundles.Add(new ScriptBundle("~/bundles/classdetail").Include(
             "~/Scripts/jquery.tablesorter.min.js",
+            "~/Scripts/moment.min.js",
             "~/Scripts/classdetail.js"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/momentjs").Include(
-            "~/Scripts/moment.min.js"
             ));
             bundles.Add(new ScriptBundle("~/bundles/paging").Include(
             "~/Scripts/jquery.pagination.js",

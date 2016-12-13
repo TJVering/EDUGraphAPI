@@ -67,7 +67,7 @@
                             @foreach (var stu in Model.Section.Students)
                             {
                                 <tr class="tr-content">
-                                    <td><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> @stu.DisplayName </td>
+                                    <td><img src="/images/header-default.jpg" realheader="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> @stu.DisplayName </td>
                                     <td>@stu.EducationGrade</td>
                                 </tr>
                             }
@@ -98,7 +98,6 @@
                         </thead>
 
                     <tbody>
-                        @Scripts.Render("~/bundles/momentjs")
                         @foreach (var doc in Model.DriveItems)
                         {
                             <tr class="tr-content">
@@ -107,7 +106,7 @@
                                 <td>
                                     <a target="_blank" href="@doc.WebUrl">@doc.Name</a>
                                 </td>
-                                <td><script>document.write(moment.utc('@doc.LastModifiedDateTime').local().format('MM/DD/YYYY hh: mm: ss A'));</script></td>
+                                <td>@doc.LastModifiedDateTime</td>
                                 <td>@doc.LastModifiedBy.User.DisplayName</td>
                                 <td class="space-holder right"></td>
                             </tr>
@@ -163,13 +162,13 @@
                         @foreach (var stu in Model.Section.Students)
                         {
                             var hide = stu.Position == 0 ? "hideitem" : "";
-                            <li id="@stu.O365UserId"><img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> <span class="disname"> @stu.DisplayName </span> <span class="seated @hide">seated ✓</span> </li>
+                            <li id="@stu.O365UserId"><img src="/images/header-default.jpg" realheader="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" /> <span class="disname"> @stu.DisplayName </span> <span class="seated @hide">seated ✓</span> </li>
                         }
                     </ul>
                     <div id="hidtiles" class="hideitem">
                         @foreach (var stu in Model.Section.Students)
                         {
-                            var containerClass = "";
+                            var containerClass = "unsaved";
                             var style = "";
                             if (stu.Position != 0)
                             {

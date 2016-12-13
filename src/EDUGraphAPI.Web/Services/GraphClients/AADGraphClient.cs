@@ -47,9 +47,9 @@ namespace EDUGraphAPI.Web.Services.GraphClients
             var directoryAdminRole = await GetDirectoryAdminRoleAsync();
             if (await directoryAdminRole.Members.AnyAsync(i => i.ObjectId == user.ObjectId))
                 roles.Add(Constants.Roles.Admin);
-            if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Faculty))
+            if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Faculty || i.SkuId == Constants.O365ProductLicenses.FacultyPro))
                 roles.Add(Constants.Roles.Faculty);
-            if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Student))
+            if (user.AssignedLicenses.Any(i => i.SkuId == Constants.O365ProductLicenses.Student || i.SkuId == Constants.O365ProductLicenses.StudentPro))
                 roles.Add(Constants.Roles.Student);
             return roles.ToArray();
         }

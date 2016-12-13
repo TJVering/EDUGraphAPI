@@ -45,7 +45,7 @@ namespace EDUGraphAPI.Web.Controllers
                 var email = user.Mail ?? user.UserPrincipalName;
 
                 if (await userManager.Users.AnyAsync(i => i.Email == email))
-                    ViewBag.LocalAccountExistedMessage = $"There is a local account: {email} matching you O365 account.";
+                    ViewBag.LocalAccountExistedMessage = $"There is a local account: {email} matching your O365 account.";
             }
             return View(userContext);
         }
