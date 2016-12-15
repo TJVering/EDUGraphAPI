@@ -52,7 +52,10 @@ function iniControl() {
 function formatDateTime() {
     $("#studoc tbody .tr-content td:nth-child(4)").each(function (i, e) {
         var $e = $(e);
-        $e.text(moment($e.text()).local().format('MM/DD/YYYY hh: mm: ss A'));
+        var dateStr = $e.text();
+        if (dateStr) {
+            $e.text(moment.utc(dateStr).local().format('MM/DD/YYYY hh: mm: ss A'));
+        }
     });
 }
 

@@ -106,7 +106,7 @@
                                 <td>
                                     <a target="_blank" href="@doc.WebUrl">@doc.Name</a>
                                 </td>
-                                <td>@doc.LastModifiedDateTime</td>
+                                <td>@(@doc.LastModifiedDateTime.HasValue ? @doc.LastModifiedDateTime.Value.ToString("yyyy-MM-ddTHH:mm:sszzz") : "")</td>
                                 <td>@doc.LastModifiedBy.User.DisplayName</td>
                                 <td class="space-holder right"></td>
                             </tr>
@@ -182,7 +182,7 @@
                             <div class="deskcontainer @containerClass" style="@style" position="@stu.Position" userid="@stu.O365UserId">
                                 <div class="deskclose"><img src="/Images/close.png"></div>
                                 <div class="deskicon">
-                                    <img src="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" />
+                                    <img src="/images/header-default.jpg" realheader="@Url.Action("UserPhoto", "Photo", new { id = stu.O365UserId })" />
                                 </div>
                                 <div class="stuname">@stu.DisplayName</div>
                             </div>
