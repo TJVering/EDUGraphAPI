@@ -6,25 +6,24 @@ namespace EDUGraphAPI.Web.ViewModels
 {
     public class SectionsViewModel
     {
-        public SectionsViewModel(string userEmail, School School, IEnumerable<Section> sections, IEnumerable<Section> mySections)
+        public SectionsViewModel(string userEmail, School School, IEnumerable<Section> sections, IEnumerable<Section> mySections, string nextLinkOfSections)
         {
             this.UserEmail = userEmail;
             this.School = School;
             this.Sections = sections.ToList();
             this.MySections = mySections.ToList();
+            this.NextLinkOfSections = nextLinkOfSections;
         }
 
         public string UserEmail { get; set; }
-        
         public School School { get; set; }
-
         public List<Section> Sections { get; set; }
+        public string NextLinkOfSections { get; set; }
         public List<Section> MySections { get; set; }
-        public bool IsMy(Section section, List<Section> mySections)
+
+        public bool IsMy(Section section)
         {
-            if (MySections == null)
-                return false;
-            return mySections.Where(c => c.Email == section.Email).Count() > 0 ? true : false;
+            return MySections != null && MySections.Any(c => c.Email == section.Email);
         }
     }
 }

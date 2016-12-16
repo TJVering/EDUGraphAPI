@@ -26,7 +26,10 @@
                 <br />
                 <span>Term Name:</span> @Model.Section.TermName
                 <br />
-                <span>Start/Finish Date:</span>@Convert.ToDateTime(Model.Section.TermStartDate).ToString("MMMM y") - @Convert.ToDateTime(Model.Section.TermEndDate).ToString("MMMM y")
+                <span>Start/Finish Date:</span>
+                <span id="termdate">@(string.IsNullOrEmpty(Model.Section.TermStartDate) ? "" : Convert.ToDateTime(Model.Section.TermStartDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
+                <span> - </span>
+                <span id="termdate">@(string.IsNullOrEmpty(Model.Section.TermEndDate) ? "" : Convert.ToDateTime(Model.Section.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
             </div>
             <div class="col-md-6">
                 @for (var i = 0; i < teachersList.Count(); i++)

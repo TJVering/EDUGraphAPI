@@ -50,6 +50,13 @@ function iniControl() {
 }
 
 function formatDateTime() {
+    $(".coursedetail #termdate").each(function (i, e) {
+        var $e = $(e);
+        var dateStr = $e.text();
+        if (dateStr) {
+            $e.text(moment.utc(dateStr).local().format('MMMM D YYYY'));
+        }
+    });
     $("#studoc tbody .tr-content td:nth-child(4)").each(function (i, e) {
         var $e = $(e);
         var dateStr = $e.text();

@@ -102,9 +102,30 @@ textarea {
     margin: 0.5em 0;
 }
 
-    .message-container p {
-        margin: 0.25em 0;
-    }
+.message-container p {margin: 0.25em 0;}
+
+/* Pagination */
+.pagination{width:100%;text-align:center;}
+.pagination a, .pagination span{font-family:'Helvetica Neue LT Std Roman'; font-size:12px; color:#444344; text-decoration:none;background-color:#f4f4f4; padding:6px 10px; margin:2px;}
+.pagination *:nth-child(1), .pagination *:nth-last-child(1){background-color:transparent; margin:0 10px; font-family:'Helvetica Neue LT Std Bold'; }
+.pagination a.disabled{ color:#c2c2c2 !important; background-color:transparent; }
+.pagination .current{background-color:#444444; color:white;}
+.pagination .current.next,.pagination .current.prev{background-color:transparent;color:#c2c2c2;}
+.pagination .next:not(.current){cursor:pointer}
+.pagination + .loading{display:none; text-align:center; color:#444344; margin:20px 10px;}
+.pagination + .loading .text{font-family:'Helvetica Neue LT Std Bold'; padding-left:5px}
+.pagination + .loading .glyphicon.glyphicon-refresh-animate {
+    animation: spin 1s infinite linear;
+    -webkit-animation: spin2 1s infinite linear;
+}
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
 
 /*Schools and sections */
 .displayname{text-align:right;padding:12px 30px 12px 12px;}
@@ -199,7 +220,7 @@ textarea {
 .section-tiles .tile-container:nth-child(6n){margin-right:0;}
 .section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
 .mysectionlink .tile{border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background: linear-gradient(to bottom, #4E9F42, #B8E2B2); }
-.section-tiles .tile>h5{text-align: center;margin: 60px 5px 0 5px;font-size:14px;font-style: normal;font-variant: normal;}
+.section-tiles .tile>h5{text-align: center;margin: 60px 5px 0 5px;font-size:14px;font-style: normal;font-variant: normal;text-overflow:ellipsis}
 .section-tiles .tile>h2{text-align: center;margin-top:4px;font-size:30px;}
 .section-tiles .tile:hover{background-image:url('/Images/ClassDetailsTiles-bg.jpg');color:#000;border:2px solid green;}
 .section-tiles .tile:hover>h5{font-family:'Helvetica Neue LT Std Bold';font-size:16px;}
@@ -325,8 +346,7 @@ max-width: 140px;
 .deskicon{padding-top:6px;text-align:center;}
 .stuname{font-size:8px; padding:6px; text-align:center; text-overflow:ellipsis; overflow:hidden; white-space:nowrap; display:block;}
 .deskicon img{max-height:60px;width:auto;}
-.deskclose{ width:20px;height:20px;float:right;position:absolute;right: -9px;
-top: -10px;cursor:pointer;}
+.deskclose{ width:20px; height:20px; float:right; position:absolute; right:-9px; top:-10px; cursor:pointer;}
 .hideitem{display:none;}
 .showitem{display:block;}
 #graybg{width:660px;margin:auto;}
@@ -393,13 +413,6 @@ border: 1px solid #e4e4e4;
 }
 .teacher-student .user-container .stubg{background-color:#444444}
 .teacher-student .user-container .teacbg{background-color:#4DA143;}
-.pagination{width:100%;text-align:center;}
-.pagination a, .pagination span{font-family:'Helvetica Neue LT Std Roman'; font-size:12px; color:#444344; text-decoration:none;background-color:#f4f4f4; padding:6px 10px; margin:2px;}
-.pagination *:nth-child(1), .pagination *:nth-last-child(1){background-color:transparent; margin:0 10px; font-family:'Helvetica Neue LT Std Bold'; }
-.pagination a.disabled{ color:#c2c2c2 !important; background-color:transparent; }
-.pagination .current{background-color:#444444; color:white;}
-.pagination .current.next,.pagination .current.prev{background-color:transparent;color:#c2c2c2;}
-
 .teacher-student .filterlink{text-decoration:none;color:#6F83F8;cursor:pointer;}
 .teacher-student .filterlink.selected{text-decoration:none;color:black;cursor:default;font-weight:bold;}
 

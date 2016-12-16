@@ -20,32 +20,39 @@ namespace EDUGraphAPI.Web
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
-
-            bundles.Add(new StyleBundle("~/Content/login").Include(
-          "~/Content/login.css"));
-            bundles.Add(new StyleBundle("~/Content/register").Include(
-            "~/Content/register.css"));
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/respond.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/site").Include(
-          "~/Scripts/site.js"));
+                        "~/Scripts/site.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/section").Include(
-                "~/Scripts/jquery.pagination.js",
-          "~/Scripts/Sections.js"));
+            bundles.Add(new ScriptBundle("~/bundles/schools").Include(
+                        "~/Scripts/schools.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/sections").Include(
+                        "~/Scripts/jquery.pagination.js",
+                        "~/Scripts/moment.min.js",
+                        "~/Scripts/sections.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/classdetail").Include(
-            "~/Scripts/jquery.tablesorter.min.js",
-            "~/Scripts/moment.min.js",
-            "~/Scripts/classdetail.js"
+                        "~/Scripts/jquery.tablesorter.min.js",
+                        "~/Scripts/moment.min.js",
+                        "~/Scripts/classdetail.js"
             ));
-            bundles.Add(new ScriptBundle("~/bundles/paging").Include(
-            "~/Scripts/jquery.pagination.js",
-            "~/Scripts/teac-stu.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/users").Include(
+                        "~/Scripts/jquery.pagination.js",
+                        "~/Scripts/users.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                        "~/Content/bootstrap.css",
+                        "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/login").Include(
+                        "~/Content/login.css"));
+
+            bundles.Add(new StyleBundle("~/Content/register").Include(
+                        "~/Content/register.css"));
         }
     }
 }

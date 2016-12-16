@@ -379,9 +379,10 @@
     <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\Sections.js" />
+    <Content Include="Scripts\schools.js" />
+    <Content Include="Scripts\sections.js" />
     <Content Include="Scripts\site.js" />
-    <Content Include="Scripts\teac-stu.js" />
+    <Content Include="Scripts\users.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

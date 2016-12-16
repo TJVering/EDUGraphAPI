@@ -80,21 +80,30 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get SectionsViewModel of the specified school
         /// </summary>
-        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool isMySection)
+        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool isMySection, int top)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
-            //var sections = mySections
-            //    ? await educationServiceClient.GetMySectionsAsync(school.SchoolId)
-            //    : await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
             var mySections = await educationServiceClient.GetMySectionsAsync(school.SchoolId);
             if (!isMySection)
             {
-                var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId);
-                return new SectionsViewModel(userContext.UserO365Email, school, allSections.OrderBy(c => c.CombinedCourseNumber), mySections);
+                var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId, top, null);
+                return new SectionsViewModel(userContext.UserO365Email, school, allSections.Value.OrderBy(c => c.CombinedCourseNumber), mySections, allSections.NextLink);
             }
             else {
-                return new SectionsViewModel(userContext.UserO365Email, school, mySections.OrderBy(c => c.CombinedCourseNumber), mySections);
+                return new SectionsViewModel(userContext.UserO365Email, school, mySections.OrderBy(c => c.CombinedCourseNumber), mySections, null);
             }
+        }
+
+        /// <summary>
+        /// Get SectionsViewModel of the specified school
+        /// </summary>
+        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, int top, string nextLink)
+        {
+            var school = await educationServiceClient.GetSchoolAsync(objectId);
+            var mySections = await educationServiceClient.GetMySectionsAsync(school.SchoolId);
+            var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId, top, nextLink);
+
+            return new SectionsViewModel(userContext.UserO365Email, school, allSections.Value.OrderBy(c => c.CombinedCourseNumber), mySections, allSections.NextLink);
         }
 
         /// <summary>

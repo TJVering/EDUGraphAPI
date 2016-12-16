@@ -56,10 +56,10 @@ namespace Microsoft.Education
         /// </summary>
         /// <param name="schoolId">The ID of the school in the School Information System (SIS).</param>
         /// <returns></returns>
-        public Task<Section[]> GetAllSectionsAsync(string schoolId)
+        public Task<ArrayResult<Section> > GetAllSectionsAsync(string schoolId, int top, string nextLink)
         {
-            var relativeUrl = $"groups?api-version=beta&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
-            return HttpGetArrayAsync<Section>(relativeUrl);
+            var relativeUrl = $"groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
+            return HttpGetArrayAsync<Section>(relativeUrl, top, nextLink);
         }
 
         /// <summary>
@@ -188,6 +188,22 @@ namespace Microsoft.Education
                 }
             }
             return result.ToArray();
+        }
+
+        private async Task<ArrayResult<T> > HttpGetArrayAsync<T>(string relativeUrl, int top, string nextLink)
+        {
+            var str = relativeUrl.IndexOf('?') >= 0 ? "&" : "?";
+            relativeUrl += $"{str}$top={top}";
+            if (!string.IsNullOrEmpty(nextLink) && nextLink.IndexOf('?') >= 0)
+            {
+                var token = Regex.Match(nextLink, @"[$]skiptoken[=][^&]+", RegexOptions.Compiled).Value;
+                if (!string.IsNullOrEmpty(token))
+                {
+                    relativeUrl += $"&{token}";
+                }
+            }
+            var responseString = await HttpGetAsync(relativeUrl);
+            return JsonConvert.DeserializeObject<ArrayResult<T>>(responseString);
         }
         #endregion
     }

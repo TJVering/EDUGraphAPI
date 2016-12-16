@@ -4,6 +4,8 @@ using EDUGraphAPI.Web.Infrastructure;
 using EDUGraphAPI.Web.Models;
 using EDUGraphAPI.Web.Services;
 using EDUGraphAPI.Web.ViewModels;
+using Microsoft.Education.Data;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -44,8 +46,32 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
-            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, false);
+            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, false, 12);
             return View(model);
+        }
+
+        //
+        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/Next
+        [HttpPost]
+        public async Task<JsonResult> ClassesNext(string schoolId, string nextLink)
+        {
+            var userContext = await applicationService.GetUserContextAsync();
+            var schoolsService = await GetSchoolsServiceAsync();
+            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, 12, nextLink);
+            var sections = new List<Section>(model.Sections);
+            sections.AddRange(model.MySections);
+            foreach (var section in sections)
+            {
+                if (!string.IsNullOrEmpty(section.TermStartDate))
+                {
+                    section.TermStartDate = Convert.ToDateTime(section.TermStartDate).ToString("yyyy-MM-ddTHH:mm:ss");
+                }
+                if (!string.IsNullOrEmpty(section.TermEndDate))
+                {
+                    section.TermEndDate = Convert.ToDateTime(section.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss");
+                }
+            }
+            return Json(model);
         }
 
         //
@@ -64,7 +90,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
-            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, true);
+            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, true, 12);
             ViewBag.IsMySections = true;
             return View("Classes", model);
         }

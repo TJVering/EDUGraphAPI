@@ -48,7 +48,7 @@
         </div>
         <br style="clear:both;" />
     </div>
-    <div class="section-tiles">
+    <div class="section-tiles clearfix">
         @if (Model.Sections == null || Model.Sections.Count == 0)
         {
             <div class="nodata"> There is no data available for this page at this time.</div>
@@ -56,7 +56,7 @@
         @foreach (var s in Model.Sections)
         {
             <div class="tile-container">
-                @if (Model.IsMy(s,Model.MySections))
+                @if (Model.IsMy(s))
                 {
                     <a class="mysectionlink" href="@Url.Action("ClassDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
                         @Tile(s)
@@ -81,11 +81,10 @@
                         @s.TermName
                     </h6>
                     <h5>Start/Finish Date:</h5>
-
                     <h6>
-                        @Convert.ToDateTime(s.TermStartDate).ToString("MMMM y")
-                        -
-                        @Convert.ToDateTime(s.TermEndDate).ToString("MMMM y")
+                        <span id="termdate">@(string.IsNullOrEmpty(s.TermStartDate) ? "" : Convert.ToDateTime(s.TermStartDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
+                        <span> - </span>
+                        <span id="termdate">@(string.IsNullOrEmpty(s.TermEndDate) ? "" : Convert.ToDateTime(s.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
                     </h6>
                     <h5>Period:</h5>
                     <h6>@s.Period</h6>
@@ -93,13 +92,16 @@
             </div>
         }
     </div>
+    <input id="next-link" type="hidden" value="@Model.NextLinkOfSections" />
+    <input id="school-id" type="hidden" value="@Model.School.ObjectId" />
     <div class="pagination" id="pagination"></div>
+    <div class="loading" id="loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="text">Loading...</span></div>
 </div>
 @helper Tile(Section section)
 {
     <div class="tile">
-        <h5>Intro to @(section.DisplayName.CropWholeWords(30))</h5>
+        <h5>@(section.DisplayName)</h5>
         <h2>@(section.CombinedCourseNumber)</h2>
     </div>
 }
-@Scripts.Render("~/bundles/section")
+@Scripts.Render("~/bundles/sections")
