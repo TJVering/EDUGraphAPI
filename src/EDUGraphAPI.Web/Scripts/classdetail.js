@@ -67,7 +67,7 @@ function formatDateTime() {
 }
 
 function loadImages() {
-    $("img [realheader]").each(function (i, e) {
+    $("img[realheader]").each(function (i, e) {
         var $e = $(e);
         $e.attr("src", $e.attr("realheader"));
     });

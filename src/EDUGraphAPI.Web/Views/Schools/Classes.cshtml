@@ -1,4 +1,5 @@
-﻿@using Microsoft.Education.Data
+﻿@using Microsoft.Education
+@using Microsoft.Education.Data
 @model SectionsViewModel
 @{
     ViewBag.Title = "CLASSES";
@@ -40,68 +41,111 @@
                 <div class="icon"></div><div>Non-Class</div>
                 <div class="icon my-class"></div><div>My Class</div>
             </div>
-            <div class="col-md-6 mysection section-link-container">
-                VIEW:
-                @Html.ActionLink("My Classes", "MyClasses", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "current" : "" }) |
-                @Html.ActionLink("All Classes", "Classes", null, new { schoolId = Model.School.ObjectId }, new { @class = isMySections ? "" : "current" })
+            <div class="col-md-6 filterlink-container">
+                <span>FILTER:</span> <a id="filtermyclasses" class="filterlink" data-type="myclasses">My Classes</a> | <a id="filterclasses" class="filterlink selected" data-type="allclasses">All Classes</a>
             </div>
         </div>
         <br style="clear:both;" />
     </div>
-    <div class="section-tiles clearfix">
-        @if (Model.Sections == null || Model.Sections.Count == 0)
-        {
-            <div class="nodata"> There is no data available for this page at this time.</div>
-        }
-        @foreach (var s in Model.Sections)
-        {
-            <div class="tile-container">
-                @if (Model.IsMy(s))
-                {
-                    <a class="mysectionlink" href="@Url.Action("ClassDetails", new { schoolId = Model.School.ObjectId, sectionId = s.ObjectId })">
-                        @Tile(s)
-                    </a>
-                }
-                else
-                {
-                    @Tile(s)
-                }
-                <div class="detail">
-                    <h5>Course Id:</h5>
-                    <h6>@s.CourseId</h6>
-                    <h5>Description:</h5>
-                    <h6>@s.CourseDescription</h6>
-                    <h5>Teachers:</h5>
-                    @foreach (var teacher in s.Teachers)
+
+    <div class="allclasses-container tiles-root-container">
+        <div id="allclasses" class="tiles-secondary-container">
+            <div class="section-tiles">
+                @{
+                    var sections = Model.Sections;
+                    if (sections == null || sections.Value == null || sections.Value.Count() == 0)
                     {
-                        <h6>@teacher.DisplayName</h6>
+                        <div class="nodata"> There is no data available for this page at this time.</div>
                     }
-                    <h5>Term Name:</h5>
-                    <h6>
-                        @s.TermName
-                    </h6>
-                    <h5>Start/Finish Date:</h5>
-                    <h6>
-                        <span id="termdate">@(string.IsNullOrEmpty(s.TermStartDate) ? "" : Convert.ToDateTime(s.TermStartDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
-                        <span> - </span>
-                        <span id="termdate">@(string.IsNullOrEmpty(s.TermEndDate) ? "" : Convert.ToDateTime(s.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
-                    </h6>
-                    <h5>Period:</h5>
-                    <h6>@s.Period</h6>
-                </div>
+                    else
+                    {
+                        <div class="content clearfix">
+                            @foreach (var s in sections.Value)
+                            {
+                                <div class="tile-container">
+                                    @Tile(s, Model.IsMy(s))
+                                    @TileDetail(s)
+                                </div>
+                            }
+                        </div>
+                        <div class="seemore @(string.IsNullOrEmpty(sections.NextLink) ? "hideitem" : string.Empty)" id="see-more">
+                            <input id="nextlink" type="hidden" value="@sections.NextLink" />
+                            <input id="schoolid" type="hidden" value="@Model.School.ObjectId" />
+                            <span>See More</span>
+                        </div>
+                    }
+                }
             </div>
-        }
+        </div>
+        <div id="myclasses" class="tiles-secondary-container">
+            <div class="section-tiles">
+                @{
+                    var mySections = Model.MySections;
+                    if (mySections == null || mySections.Count() == 0)
+                    {
+                        <div class="nodata"> There is no data available for this page at this time.</div>
+                    }
+                    else
+                    {
+                        <div class="content clearfix">
+                            @foreach (var s in mySections)
+                            {
+                                <div class="tile-container">
+                                    @Tile(s, true)
+                                    @TileDetail(s)
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     </div>
-    <input id="next-link" type="hidden" value="@Model.NextLinkOfSections" />
-    <input id="school-id" type="hidden" value="@Model.School.ObjectId" />
-    <div class="pagination" id="pagination"></div>
-    <div class="loading" id="loading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="text">Loading...</span></div>
 </div>
-@helper Tile(Section section)
+
+@helper Tile(Section section, bool isMine)
 {
-    <div class="tile">
-        <h5>@(section.DisplayName)</h5>
-        <h2>@(section.CombinedCourseNumber)</h2>
+    if (isMine)
+    {
+        <a class="mysectionlink" href="@Url.Action("ClassDetails", new { schoolId = Model.School.ObjectId, sectionId = section.ObjectId })">
+            <div class="tile">
+                <h5>@(section.DisplayName)</h5>
+                <h2>@(section.CombinedCourseNumber)</h2>
+            </div>
+        </a>
+    }
+    else
+    {
+        <div class="tile">
+            <h5>@(section.DisplayName)</h5>
+            <h2>@(section.CombinedCourseNumber)</h2>
+        </div>
+    }
+}
+@helper TileDetail(Section section)
+{
+    <div class="detail">
+        <h5>Course Id:</h5>
+        <h6>@(section.CourseId)</h6>
+        <h5>Description:</h5>
+        <h6>@(section.CourseDescription)</h6>
+        <h5>Teachers:</h5>
+        @foreach (var teacher in section.Teachers)
+        {
+            <h6>@(teacher.DisplayName)</h6>
+        }
+        <h5>Term Name:</h5>
+        <h6>
+            @(section.TermName)
+        </h6>
+        <h5>Start/Finish Date:</h5>
+        <h6>
+            <span id="termdate">@(string.IsNullOrEmpty(section.TermStartDate) ? "" : Convert.ToDateTime(section.TermStartDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
+            <span> - </span>
+            <span id="termdate">@(string.IsNullOrEmpty(section.TermEndDate) ? "" : Convert.ToDateTime(section.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss"))</span>
+        </h6>
+        <h5>Period:</h5>
+        <h6>@(section.Period)</h6>
     </div>
 }
 @Scripts.Render("~/bundles/sections")

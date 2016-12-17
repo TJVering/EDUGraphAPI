@@ -58,7 +58,7 @@ namespace Microsoft.Education
         /// <returns></returns>
         public Task<ArrayResult<Section> > GetAllSectionsAsync(string schoolId, int top, string nextLink)
         {
-            var relativeUrl = $"groups?api-version=beta&$expand=members&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
+            var relativeUrl = $"groups?api-version=beta&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Section'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'";
             return HttpGetArrayAsync<Section>(relativeUrl, top, nextLink);
         }
 
@@ -145,9 +145,31 @@ namespace Microsoft.Education
         /// </summary>
         /// <param name="objectId"></param>
         /// <returns></returns>
-        public async Task<SectionUser[]> GetMembersAsync(string objectId)
+        public async Task<ArrayResult<SectionUser> > GetMembersAsync(string objectId, int top, string nextLink)
         {
-            return await HttpGetArrayAsync<SectionUser>($"administrativeUnits/{objectId}/members?api-version=beta");
+            return await HttpGetArrayAsync<SectionUser>($"administrativeUnits/{objectId}/members?api-version=beta", top, nextLink);
+        }
+
+        /// <summary>
+        /// Get students within a school
+        /// Reference URL: https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations#get-school-members
+        /// </summary>
+        /// <param name="schoolId"></param>
+        /// <returns></returns>
+        public async Task<ArrayResult<SectionUser>> GetStudentsAsync(string schoolId, int top, string nextLink)
+        {
+            return await HttpGetArrayAsync<SectionUser>($"users?api-version=1.5&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Student'", top, nextLink);
+        }
+
+        /// <summary>
+        /// Get teachers within a school
+        /// Reference URL: https://msdn.microsoft.com/en-us/office/office365/api/school-rest-operations#get-school-members
+        /// </summary>
+        /// <param name="schoolId"></param>
+        /// <returns></returns>
+        public async Task<ArrayResult<SectionUser>> GetTeachersAsync(string schoolId, int top, string nextLink)
+        {
+            return await HttpGetArrayAsync<SectionUser>($"users?api-version=1.5&$filter=extension_fe2174665583431c953114ff7268b7b3_Education_SyncSource_SchoolId%20eq%20'{schoolId}'%20and%20extension_fe2174665583431c953114ff7268b7b3_Education_ObjectType%20eq%20'Teacher'", top, nextLink);
         }
 
         #endregion

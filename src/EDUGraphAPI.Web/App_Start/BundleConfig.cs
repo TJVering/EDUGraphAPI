@@ -30,7 +30,6 @@ namespace EDUGraphAPI.Web
                         "~/Scripts/schools.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sections").Include(
-                        "~/Scripts/jquery.pagination.js",
                         "~/Scripts/moment.min.js",
                         "~/Scripts/sections.js"));
 
@@ -41,7 +40,6 @@ namespace EDUGraphAPI.Web
             ));
 
             bundles.Add(new ScriptBundle("~/bundles/users").Include(
-                        "~/Scripts/jquery.pagination.js",
                         "~/Scripts/users.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(

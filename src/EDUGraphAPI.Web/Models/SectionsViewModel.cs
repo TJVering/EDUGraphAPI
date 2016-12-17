@@ -1,24 +1,23 @@
-﻿using Microsoft.Education.Data;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Education;
+using Microsoft.Education.Data;
 
 namespace EDUGraphAPI.Web.ViewModels
 {
     public class SectionsViewModel
     {
-        public SectionsViewModel(string userEmail, School School, IEnumerable<Section> sections, IEnumerable<Section> mySections, string nextLinkOfSections)
+        public SectionsViewModel(string userEmail, School School, ArrayResult<Section> sections, IEnumerable<Section> mySections)
         {
             this.UserEmail = userEmail;
             this.School = School;
-            this.Sections = sections.ToList();
+            this.Sections = sections;
             this.MySections = mySections.ToList();
-            this.NextLinkOfSections = nextLinkOfSections;
         }
 
         public string UserEmail { get; set; }
         public School School { get; set; }
-        public List<Section> Sections { get; set; }
-        public string NextLinkOfSections { get; set; }
+        public ArrayResult<Section> Sections { get; set; }
         public List<Section> MySections { get; set; }
 
         public bool IsMy(Section section)

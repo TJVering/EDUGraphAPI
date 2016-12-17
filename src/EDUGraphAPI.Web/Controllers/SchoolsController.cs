@@ -46,7 +46,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
-            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, false, 12);
+            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, 12);
             return View(model);
         }
 
@@ -58,7 +58,7 @@ namespace EDUGraphAPI.Web.Controllers
             var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, 12, nextLink);
-            var sections = new List<Section>(model.Sections);
+            var sections = new List<Section>(model.Sections.Value);
             sections.AddRange(model.MySections);
             foreach (var section in sections)
             {
@@ -79,20 +79,38 @@ namespace EDUGraphAPI.Web.Controllers
         public async Task<ActionResult> Users(string schoolId)
         {
             var schoolsService = await GetSchoolsServiceAsync();
-            var model = await schoolsService.GetSchoolUsersAsync(schoolId);
-            
+            var model = await schoolsService.GetSchoolUsersAsync(schoolId, 12);
             return View(model);
         }
 
         //
-        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/My
-        public async Task<ActionResult> MyClasses(string schoolId)
+        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Users/Next
+        [HttpPost]
+        public async Task<JsonResult> UsersNext(string schoolId, string nextLink)
         {
-            var userContext = await applicationService.GetUserContextAsync();
             var schoolsService = await GetSchoolsServiceAsync();
-            var model = await schoolsService.GetSectionsViewModelAsync(userContext, schoolId, true, 12);
-            ViewBag.IsMySections = true;
-            return View("Classes", model);
+            var model = await schoolsService.GetSchoolUsersAsync(schoolId, 12, nextLink);
+            return Json(model);
+        }
+
+        //
+        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Students/Next
+        [HttpPost]
+        public async Task<JsonResult> StudentsNext(string schoolId, string nextLink)
+        {
+            var schoolsService = await GetSchoolsServiceAsync();
+            var model = await schoolsService.GetSchoolStudentsAsync(schoolId, 12, nextLink);
+            return Json(model);
+        }
+
+        //
+        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Teachers/Next
+        [HttpPost]
+        public async Task<JsonResult> TeachersNext(string schoolId, string nextLink)
+        {
+            var schoolsService = await GetSchoolsServiceAsync();
+            var model = await schoolsService.GetSchoolTeachersAsync(schoolId, 12, nextLink);
+            return Json(model);
         }
 
         //

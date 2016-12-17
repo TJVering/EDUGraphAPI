@@ -80,18 +80,13 @@ namespace EDUGraphAPI.Web.Services
         /// <summary>
         /// Get SectionsViewModel of the specified school
         /// </summary>
-        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, bool isMySection, int top)
+        public async Task<SectionsViewModel> GetSectionsViewModelAsync(UserContext userContext, string objectId, int top)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
             var mySections = await educationServiceClient.GetMySectionsAsync(school.SchoolId);
-            if (!isMySection)
-            {
-                var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId, top, null);
-                return new SectionsViewModel(userContext.UserO365Email, school, allSections.Value.OrderBy(c => c.CombinedCourseNumber), mySections, allSections.NextLink);
-            }
-            else {
-                return new SectionsViewModel(userContext.UserO365Email, school, mySections.OrderBy(c => c.CombinedCourseNumber), mySections, null);
-            }
+            mySections = mySections.OrderBy(c => c.CombinedCourseNumber).ToArray();
+            var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId, top, null);
+            return new SectionsViewModel(userContext.UserO365Email, school, allSections, mySections);
         }
 
         /// <summary>
@@ -103,17 +98,49 @@ namespace EDUGraphAPI.Web.Services
             var mySections = await educationServiceClient.GetMySectionsAsync(school.SchoolId);
             var allSections = await educationServiceClient.GetAllSectionsAsync(school.SchoolId, top, nextLink);
 
-            return new SectionsViewModel(userContext.UserO365Email, school, allSections.Value.OrderBy(c => c.CombinedCourseNumber), mySections, allSections.NextLink);
+            return new SectionsViewModel(userContext.UserO365Email, school, allSections, mySections);
         }
 
         /// <summary>
-        /// Get teachers and students of the specified school
+        /// Get users, teachers and students of the specified school
         /// </summary>
-        public async Task<SchoolUsersViewModel> GetSchoolUsersAsync(string objectId)
+        public async Task<SchoolUsersViewModel> GetSchoolUsersAsync(string objectId, int top)
         {
             var school = await educationServiceClient.GetSchoolAsync(objectId);
-            var users = await educationServiceClient.GetMembersAsync(objectId);
-            return new SchoolUsersViewModel(school,users);
+            var users = await educationServiceClient.GetMembersAsync(objectId, top, null);
+            var students = await educationServiceClient.GetStudentsAsync(school.SchoolId, top, null);
+            var teachers = await educationServiceClient.GetTeachersAsync(school.SchoolId, top, null);
+            return new SchoolUsersViewModel(school, users, students, teachers);
+        }
+
+        /// <summary>
+        /// Get users of the specified school
+        /// </summary>
+        public async Task<SchoolUsersViewModel> GetSchoolUsersAsync(string objectId, int top, string nextLink)
+        {
+            var school = await educationServiceClient.GetSchoolAsync(objectId);
+            var users = await educationServiceClient.GetMembersAsync(objectId, top, nextLink);
+            return new SchoolUsersViewModel(school, users, null, null);
+        }
+
+        /// <summary>
+        /// Get students of the specified school
+        /// </summary>
+        public async Task<SchoolUsersViewModel> GetSchoolStudentsAsync(string objectId, int top, string nextLink)
+        {
+            var school = await educationServiceClient.GetSchoolAsync(objectId);
+            var students = await educationServiceClient.GetStudentsAsync(school.SchoolId, top, nextLink);
+            return new SchoolUsersViewModel(school, null, students, null);
+        }
+
+        /// <summary>
+        /// Get teachers of the specified school
+        /// </summary>
+        public async Task<SchoolUsersViewModel> GetSchoolTeachersAsync(string objectId, int top, string nextLink)
+        {
+            var school = await educationServiceClient.GetSchoolAsync(objectId);
+            var teachers = await educationServiceClient.GetTeachersAsync(school.SchoolId, top, nextLink);
+            return new SchoolUsersViewModel(school, null, null, teachers);
         }
 
         /// <summary>

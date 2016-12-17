@@ -104,28 +104,16 @@ textarea {
 
 .message-container p {margin: 0.25em 0;}
 
+/* Filters */
+.filterlink-container{text-align:right; padding-top:10px; width:48%; float:right; font-family:'Helvetica Neue LT Std Bold'}
+.filterlink-container .filterlink{text-decoration:none;color:#4b67f8;cursor:pointer;}
+.filterlink-container .filterlink.selected{text-decoration:none;color:black;cursor:default;font-weight:bold;}
+.filterlink-container .filterlink:not(.selected){font-family:'Helvetica Neue LT Std Roman';}
+
 /* Pagination */
 .pagination{width:100%;text-align:center;}
-.pagination a, .pagination span{font-family:'Helvetica Neue LT Std Roman'; font-size:12px; color:#444344; text-decoration:none;background-color:#f4f4f4; padding:6px 10px; margin:2px;}
-.pagination *:nth-child(1), .pagination *:nth-last-child(1){background-color:transparent; margin:0 10px; font-family:'Helvetica Neue LT Std Bold'; }
-.pagination a.disabled{ color:#c2c2c2 !important; background-color:transparent; }
-.pagination .current{background-color:#444444; color:white;}
-.pagination .current.next,.pagination .current.prev{background-color:transparent;color:#c2c2c2;}
-.pagination .next:not(.current){cursor:pointer}
-.pagination + .loading{display:none; text-align:center; color:#444344; margin:20px 10px;}
-.pagination + .loading .text{font-family:'Helvetica Neue LT Std Bold'; padding-left:5px}
-.pagination + .loading .glyphicon.glyphicon-refresh-animate {
-    animation: spin 1s infinite linear;
-    -webkit-animation: spin2 1s infinite linear;
-}
-@keyframes spin {
-    from { transform: scale(1) rotate(0deg); }
-    to { transform: scale(1) rotate(360deg); }
-}
-@-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg); }
-    to { -webkit-transform: rotate(360deg); }
-}
+.pagination span{font-size:12px; color:#444344; background-color:transparent; margin:0 10px; font-family:'Helvetica Neue LT Std Bold'; cursor:pointer}
+.pagination .disabled, .pagination .current{color:#c2c2c2; background-color:transparent; cursor:default}
 
 /*Schools and sections */
 .displayname{text-align:right;padding:12px 30px 12px 12px;}
@@ -151,7 +139,6 @@ textarea {
 .myschool .schoolenrolled{float:right; font-size:14px;padding-right:15px;}
 .myschool .greenicon{width:12px;height:12px;float:right;margin:5px 6px 0 0;background-color:#277F79;}
 .sectionschoolname{font-size:24px;color:#666565;padding-left: 0;}
-.mysection{text-align:right;padding-top: 10px;width:100%;}
 .tophero{background-color:#f8f8f8;padding-left:0px;}
 #myMap{position:absolute;}
 .bingMapLink{margin-left:12px;}
@@ -212,10 +199,8 @@ textarea {
 .sections .tophero .usericon div{float:left;}
 .sections .tophero .usericon .icon{width:12px; height:12px; margin:5px 6px 0 0; background:-prefix-linear-zgradient(top, #434345, #BBBBBB); background:linear-gradient(to bottom, #434345, #BBBBBB);}
 .sections .tophero .usericon .icon.my-class{margin-left:12px; background:-prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background:linear-gradient(to bottom, #4E9F42, #B8E2B2);}
-.sections .tophero .mysection{width:48%; float:right;font-family:'Helvetica Neue LT Std Bold'}
-.sections .tophero .mysection :not(.current){font-family:'Helvetica Neue LT Std Roman'}
 
-.section-tiles{padding-left:15px; background-color:white;display:none;}
+.section-tiles{padding-left:15px; background-color:white}
 .section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
 .section-tiles .tile-container:nth-child(6n){margin-right:0;}
 .section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
@@ -232,6 +217,13 @@ textarea {
 .section-tiles .detail>h6{margin-top: 10px;font-size:12px;}
 .section-school-name{font-size:18px; width:100%; padding:0 20px 10px 0; text-align:right;}
 
+.sections .tiles-root-container .tiles-secondary-container{display:none}
+.sections .allclasses-container #allclasses.tiles-secondary-container, .sections .myclasses-container #myclasses.tiles-secondary-container{display:block}
+
+.sections .seemore{text-align:center; margin:20px 10px}
+.sections .seemore span{font-family:'Helvetica Neue LT Std Bold'; font-size:14px; color:#444344; text-decoration:none; cursor:pointer}
+.sections .seemore span.disabled, .sections .seemore span.nomore{cursor:default; color:#c2c2c2}
+
 /*section detail*/
 .b-title{font-size:24px;color:#666565;}
 .class-details .b-title{font-family:'Helvetica Neue LT Std Th'}
@@ -243,12 +235,6 @@ textarea {
 .students .col-md-6:nth-child(1){padding-left:0;padding-right:8px;}
 .students .col-md-6:nth-child(2){padding-left:8px;padding-right:0;}
 .students .b-title{padding-left:6px;}
-
-.section-link-container .current,
-.section-link-container .current:hover {
-    color: black;
-    cursor: none;
-}
 
 .students{margin-top:20px;}
 .students > ul > li{width:22%;margin-right:20px;text-align: center;}
@@ -384,38 +370,35 @@ max-width: 140px;
 
 
 /*Teachers & Students page*/
-.teacher-student .mysection{width:48%;float:right;font-family:'Helvetica Neue LT Std Bold';}
-.teacher-student .mysection .filterlink:not(.selected){font-family:'Helvetica Neue LT Std Roman';}
 .teacher-student .tophero{border-bottom:5px solid #127604;}
 .teacher-student .usericon{margin-top:10px;}
 .teacher-student .usericon div{float:left;}
-.teacher-student .usericon .stuicon{width: 12px;    height: 12px; margin: 5px 6px 0 0;background-color: #444444;}
-.teacher-student .usericon .teacicon{width: 12px;    height: 12px; margin: 5px 6px 0 12px;background-color: #4DA143;}
-.teacher-student .user-container{background-color:white;padding:12px 0;}
-.teacher-student .user-container .element{margin:12px; float:left;width:170px;height:170px;border-radius:12px;background-color:gray;}
-.teacher-student .user-container .element .userimg{height:100px;text-align:center;position:relative;}
-.teacher-student .user-container .element .username{height:70px;color:white; text-align:center;padding-top:12px;}
-.teacher-student .user-container .element img{
+.teacher-student .usericon .stuicon{width:12px; height:12px; margin:5px 6px 0 0; background-color:#444444;}
+.teacher-student .usericon .teacicon{width:12px; height:12px; margin:5px 6px 0 12px; background-color:#4DA143;}
+.teacher-student .tiles-root-container{background-color:white; padding:12px 0;}
+.teacher-student .tiles-root-container .element{margin:12px; float:left; width:170px; height:170px; border-radius:12px; background-color:gray;}
+.teacher-student .tiles-root-container .element .userimg{height:100px;text-align:center;position:relative;}
+.teacher-student .tiles-root-container .element .username{height:70px;color:white; text-align:center;padding-top:12px;}
+.teacher-student .tiles-root-container .element img{
     border-radius: 60px;
--webkit-border-radius: 60px;
--moz-border-radius: 60px;
-border: 1px solid #e4e4e4;
- max-height: 100%;  
-    max-width: 100%; 
+    -webkit-border-radius: 60px;
+    -moz-border-radius: 60px;
+    border: 1px solid #e4e4e4;
+    max-height: 100%;
+    max-width: 100%;
     width: auto;
     height: auto;
-    position: absolute;  
-    top: 12px;  
-    bottom: 0;  
-    left: 0;  
-    right: 0;  
+    position: absolute;
+    top: 12px;
+    bottom: 0;
+    left: 0;
+    right: 0;
     margin: auto;
 }
-.teacher-student .user-container .stubg{background-color:#444444}
-.teacher-student .user-container .teacbg{background-color:#4DA143;}
-.teacher-student .filterlink{text-decoration:none;color:#6F83F8;cursor:pointer;}
-.teacher-student .filterlink.selected{text-decoration:none;color:black;cursor:default;font-weight:bold;}
-
+.teacher-student .tiles-root-container .student-bg{background-color:#444444}
+.teacher-student .tiles-root-container .teacher-bg{background-color:#4DA143;}
+.teacher-student .tiles-root-container .tiles-secondary-container{display:none}
+.teacher-student .users-container #users.tiles-secondary-container, .teacher-student .students-container #students.tiles-secondary-container, .teacher-student .teachers-container #teachers.tiles-secondary-container{display:block}
 
 /* Demo Helper Control */
 .demo-helper-control {
@@ -434,7 +417,7 @@ border: 1px solid #e4e4e4;
     height: 77px;
     background: url(Images/demo-helper-header-expanded.png) 15px 9px no-repeat white;      
     padding: 47px 4px 4px 4px;
-    text-align: center;    
+    text-align: center;
     font-family: 'Helvetica Neue LT Std Bold';
     font-weight: 700;
     line-height: 1.1em;
@@ -506,7 +489,7 @@ border: 1px solid #e4e4e4;
     text-align: center;
 }
 
-.nodata{width:100%;text-align:center;padding-top:20px; background-color:white;}
+.nodata{width:100%;text-align:center;padding:20px 0; background-color:white;}
 .saveresult{margin-left:6px;color:green;}
 .tablesorter .header{background-image:url('/images/arrow-all.png');background-repeat:no-repeat;background-position-y:center;background-size:10px;}
 .tablesorter .headerSortDown{background-image:url('/images/arrow-up.png');background-repeat:no-repeat;background-position-y:center;background-size:10px;}
