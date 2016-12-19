@@ -18,6 +18,13 @@ namespace EDUGraphAPI.Web.Infrastructure
         {
             if (!(filterContext.Exception is AdalException)) return;
 
+            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            {
+                filterContext.Result = new JsonResult { Data = new { error = "AdalException" } };
+                filterContext.ExceptionHandled = true;
+                return;
+            }
+
             var requestUrl = filterContext.HttpContext.Request.Url.ToString();
             var challengeImmediately = filterContext.Controller.TempData[ChallengeImmediatelyTempDataKey];
             if (challengeImmediately as bool? == true)

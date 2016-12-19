@@ -357,8 +357,6 @@
     <Content Include="fonts\HelveticaNeueLTStd-It.ttf" />
     <Content Include="fonts\HelveticaNeueLTStd-It.woff" />
     <Content Include="fonts\HelveticaNeueLTStd-It.woff2" />
-    <None Include="Properties\PublishProfiles\EDUGraphAPI - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\EDUGraphAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\classdetail.js" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />

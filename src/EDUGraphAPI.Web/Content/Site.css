@@ -88,7 +88,7 @@ textarea {
 }
 
 /*Top navigation*/
-.navbar-inverse{background-color:#237e17;border-color:#237e17;}
+.navbar-inverse{background-color:#127605;border-color:#127605;}
 .navbar-inverse .navbar-brand, 
 .navbar-inverse .navbar-nav > li > a {color:white;}
 .navbar-inverse .navbar-brand{font-size:14px}
@@ -146,8 +146,9 @@ textarea {
 .schoolmap{float:left;}
 .toptiles{
     padding: 10px 0 15px 0;
-    border: 1px solid #237e17;
+    border: 1px solid #117605;
     border-top: none;
+    border-bottom-color:#127605;
     background-color: white;
     border-radius:5px;
     border-top-left-radius:0;
@@ -173,7 +174,7 @@ textarea {
     color: #fff;
     background-image: url(/Images/btngreenbg.png);
     padding: 3px 12px;
-    border: 1px solid #127604;
+    border: 1px solid #127605;
     text-decoration:none;
 }
 .table-green .td-green a.btnlink{background-color:white !important; background-image:none;color:black;text-transform:uppercase;}
@@ -194,16 +195,16 @@ textarea {
 .hr-green{border: 0;height: 10px;margin-top: 10px;}
 
 /*sections*/
-.sections .tophero{border-bottom:5px solid #127604;}
+.sections .tophero{border-bottom:5px solid #127605;}
 .sections .tophero .usericon{margin-top:10px;}
 .sections .tophero .usericon div{float:left;}
 .sections .tophero .usericon .icon{width:12px; height:12px; margin:5px 6px 0 0; background:-prefix-linear-zgradient(top, #434345, #BBBBBB); background:linear-gradient(to bottom, #434345, #BBBBBB);}
 .sections .tophero .usericon .icon.my-class{margin-left:12px; background:-prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background:linear-gradient(to bottom, #4E9F42, #B8E2B2);}
 
-.section-tiles{padding-left:15px; background-color:white}
-.section-tiles .tile-container{margin-right: 18px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
+.section-tiles{padding:0 17.14px; background-color:white}
+.section-tiles .tile-container{margin-right:17.14px;float: left;margin-bottom: 5px;margin-top: 12px;position:relative;}
 .section-tiles .tile-container:nth-child(6n){margin-right:0;}
-.section-tiles .tile{display:inline-block;width:170px;height:170px;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
+.section-tiles .tile{display:inline-block;width:175px;height:175px;box-sizing:border-box;border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #434345, #BBBBBB); background: linear-gradient(to bottom, #434345, #BBBBBB); color:#fff;}
 .mysectionlink .tile{border:1px solid #C2C2C2;border-radius:5px;-moz-border-radius:5px;background: -prefix-linear-zgradient(top, #4E9F42, #B8E2B2); background: linear-gradient(to bottom, #4E9F42, #B8E2B2); }
 .section-tiles .tile>h5{text-align: center;margin: 60px 5px 0 5px;font-size:14px;font-style: normal;font-variant: normal;text-overflow:ellipsis}
 .section-tiles .tile>h2{text-align: center;margin-top:4px;font-size:30px;}
@@ -228,7 +229,7 @@ textarea {
 .b-title{font-size:24px;color:#666565;}
 .class-details .b-title{font-family:'Helvetica Neue LT Std Th'}
 .coursedetail .col-md-6{padding:12px 0 6px 0;}
-.coursedetail .col-md-6 span{font-family:'Helvetica Neue LT Std Bold'}
+.coursedetail .col-md-6 span:not(#termdate):not(#termdate-separator){font-family:'Helvetica Neue LT Std Bold'}
 .coursedetail .col-md-6:last-child{padding:12px 0 6px 0;}
 .coursedetail .col-md-6:last-child > b{color:#F7F7F7;}
 .coursedetail .col-md-6:last-child > b:first-child{color:#333;}
@@ -272,7 +273,7 @@ textarea {
 
 /*User info popup window*/
 .navbar-right a{color:white;text-decoration:none;}
-.userinfo .caret{color:white;font-size:20px;    }
+.userinfo .caret{color:white;font-size:20px;}
 .transformcaret{transform: rotate(180deg);}
 .userinfo{height:50px;line-height:50px;}
 .popupcontainer{display:none;}
@@ -285,7 +286,7 @@ textarea {
 }
 .subitem{float:left;width:100%;}
 .subitem a{color:black;text-decoration:none;width:100%;height:100%;display:block;padding:10px 0 10px 20px;}
-.subitem:hover{background-color:#237e17;color:white;}
+.subitem:hover{background-color:#127605;color:white;}
 .subitem a:hover{color:white;}
 .container {width: 1170px;}
 
@@ -370,13 +371,14 @@ max-width: 140px;
 
 
 /*Teachers & Students page*/
-.teacher-student .tophero{border-bottom:5px solid #127604;}
+.teacher-student .tophero{border-bottom:5px solid #127605;}
 .teacher-student .usericon{margin-top:10px;}
 .teacher-student .usericon div{float:left;}
 .teacher-student .usericon .stuicon{width:12px; height:12px; margin:5px 6px 0 0; background-color:#444444;}
 .teacher-student .usericon .teacicon{width:12px; height:12px; margin:5px 6px 0 12px; background-color:#4DA143;}
-.teacher-student .tiles-root-container{background-color:white; padding:12px 0;}
-.teacher-student .tiles-root-container .element{margin:12px; float:left; width:170px; height:170px; border-radius:12px; background-color:gray;}
+.teacher-student .tiles-root-container{background-color:white; padding:12px 17.14px;}
+.teacher-student .tiles-root-container .element{margin:12px 17.14px 12px 0; float:left; width:175px; height:175px; border-radius:12px; background-color:gray;}
+.teacher-student .tiles-root-container .element:nth-child(6n){margin-right:0;}
 .teacher-student .tiles-root-container .element .userimg{height:100px;text-align:center;position:relative;}
 .teacher-student .tiles-root-container .element .username{height:70px;color:white; text-align:center;padding-top:12px;}
 .teacher-student .tiles-root-container .element img{
