@@ -70,7 +70,7 @@ namespace EDUGraphAPI.Web.Controllers
                     section.TermEndDate = Convert.ToDateTime(section.TermEndDate).ToString("yyyy-MM-ddTHH:mm:ss");
                 }
             }
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -88,7 +88,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolUsersAsync(schoolId, 12, nextLink);
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -97,7 +97,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolStudentsAsync(schoolId, 12, nextLink);
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         //
@@ -106,7 +106,7 @@ namespace EDUGraphAPI.Web.Controllers
         {
             var schoolsService = await GetSchoolsServiceAsync();
             var model = await schoolsService.GetSchoolTeachersAsync(schoolId, 12, nextLink);
-            return Json(model);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
         //

@@ -46,7 +46,7 @@
                 type: 'GET',
                 url: url,
                 dataType: 'json',
-                data: JSON.stringify({ schoolId: schoolId, nextLink: nextLink }),
+                data: { schoolId: schoolId, nextLink: nextLink },
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     if (data.error === "AdalException" || data.error === "Unauthorized") {
