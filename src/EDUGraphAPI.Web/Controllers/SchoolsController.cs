@@ -51,8 +51,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/Next
-        [HttpPost]
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Classes/Next
         public async Task<JsonResult> ClassesNext(string schoolId, string nextLink)
         {
             var userContext = await applicationService.GetUserContextAsync();
@@ -84,8 +83,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Users/Next
-        [HttpPost]
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Users/Next
         public async Task<JsonResult> UsersNext(string schoolId, string nextLink)
         {
             var schoolsService = await GetSchoolsServiceAsync();
@@ -94,8 +92,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Students/Next
-        [HttpPost]
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Students/Next
         public async Task<JsonResult> StudentsNext(string schoolId, string nextLink)
         {
             var schoolsService = await GetSchoolsServiceAsync();
@@ -104,8 +101,7 @@ namespace EDUGraphAPI.Web.Controllers
         }
 
         //
-        // POST: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Teachers/Next
-        [HttpPost]
+        // GET: /Schools/48D68C86-6EA6-4C25-AA33-223FC9A27959/Teachers/Next
         public async Task<JsonResult> TeachersNext(string schoolId, string nextLink)
         {
             var schoolsService = await GetSchoolsServiceAsync();

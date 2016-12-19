@@ -48,12 +48,18 @@
 
         element.addClass("disabled");
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: url,
             dataType: 'json',
             data: JSON.stringify({ schoolId: schoolId, nextLink: nextLinkElement.val() }),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
+                if (data.error === "AdalException" || data.error === "Unauthorized") {
+                    alert("Your current session has expired. Please click OK to refresh the page.");
+                    window.location.reload(false);
+                    return;
+                }
+
                 var tiles = element.parent().prev(".content");
                 var newTiles = $();
                 $.each(data.Sections.Value, function (i, s) {
@@ -102,8 +108,6 @@
                     element.addClass("nomore");
                 }
                 $(window).scrollTop($(document).height() - $(window).height())
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
             },
             complete: function () {
                 element.removeClass("disabled");

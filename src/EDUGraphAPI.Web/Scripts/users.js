@@ -43,12 +43,18 @@
             var prevNext = prevElement.add(nextElement);
             prevNext.addClass("disabled");
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: url,
                 dataType: 'json',
                 data: JSON.stringify({ schoolId: schoolId, nextLink: nextLink }),
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
+                    if (data.error === "AdalException" || data.error === "Unauthorized") {
+                        alert("Your current session has expired. Please click OK to refresh the page.");
+                        window.location.reload(false);
+                        return;
+                    }
+
                     var users = data[action];
                     var value = users.Value;
                     if (!(value instanceof Array) || value.length == 0) {
@@ -69,8 +75,6 @@
                     nextLinkElement.val(newNextLink);
                     hasNextLink = typeof (newNextLink) == "string" && newNextLink.length > 0;
                     showPage(false, targetPageNum, hasNextLink, prevElement, nextElement, curPageElement, content);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
                 },
                 complete: function (XMLHttpRequest, textStatus, errorThrown) {
                     prevNext.removeClass("disabled");
