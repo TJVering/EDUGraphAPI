@@ -67,7 +67,7 @@
                     var newTile = $('<div class="tile-container"></div>');
                     var tileContainer = newTile;
                     if (isMine) {
-                        tileContainer = $('<a class="mysectionlink" href="' + s.ObjectId + '"></a>').appendTo(newTile)
+                        tileContainer = $('<a class="mysectionlink" href="/Schools/' + schoolId + '/Classes/' + s.ObjectId + '"></a>').appendTo(newTile);
                     }
                     var tile = $('<div class="tile"><h5>' + s.DisplayName + '</h5><h2>' + s.CombinedCourseNumber + '</h2></div>');
                     tile.appendTo(tileContainer);

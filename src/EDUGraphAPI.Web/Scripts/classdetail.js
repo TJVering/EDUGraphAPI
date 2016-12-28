@@ -217,13 +217,13 @@ function cancelEditDesk() {
     var id = $(".desktile .deskcontainer.unsaved").appendTo($("#hidtiles")).attr("position", 0).attr("userid");
     $("#" + id).find(".seated").addClass("hideitem");
     $("#hidtiles .deskcontainer:not(.unsaved)").each(function (i, e) {
-        $e = $(e);
+        var $e = $(e);
         var position = $e.attr("prev-position");
         $e.attr("position", position).removeAttr("prev-position").appendTo($(".desktile[position=" + position + "]"));
         $("#" + $e.attr("userid")).find(".seated").removeClass("hideitem");
     });
     $(".desktile .deskcontainer[prev-position]").each(function (i, e) {
-        $e = $(e);
+        var $e = $(e);
         var prevPosition = $e.attr("prev-position");
         if (prevPosition == $e.attr("position")) {
             return;
