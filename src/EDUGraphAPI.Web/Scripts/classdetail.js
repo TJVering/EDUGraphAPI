@@ -214,8 +214,9 @@ function saveEditDesk() {
 }
 
 function cancelEditDesk() {
-    var id = $(".desktile .deskcontainer.unsaved").appendTo($("#hidtiles")).attr("position", 0).attr("userid");
-    $("#" + id).find(".seated").addClass("hideitem");
+    $(".desktile .deskcontainer.unsaved").appendTo($("#hidtiles")).attr("position", 0).each(function (i, e) {
+        $("#" + $(e).attr("userid")).find(".seated").addClass("hideitem");
+    });
     $("#hidtiles .deskcontainer:not(.unsaved)").each(function (i, e) {
         var $e = $(e);
         var position = $e.attr("prev-position");

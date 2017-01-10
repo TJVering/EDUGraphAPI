@@ -188,9 +188,9 @@ textarea {
 .schools .table-schools .table-green-header th {font-family: 'Helvetica Neue LT Std Bold';}
 
 .ignore{display:none;}
-.container>div.row{height:100%;background-color:#fff;}
-.container.body-content{height:100%; background-color:#fff;}
-.schools{height:100%;background-color:#fff;padding:0;}
+.container>div.row{height:auto;background-color:#fff;}
+.container.body-content{height:auto; background-color:#fff;}
+.schools{height:auto;background-color:#fff;padding:0;}
 .schools .toptiles{float:right;padding-left: 15px;}
 .hr-green{border: 0;height: 10px;margin-top: 10px;}
 
